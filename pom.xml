@@ -6,7 +6,8 @@
 
     <groupId>fishing.sunshine</groupId>
     <artifactId>fishing</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <repositories>
         <repository>

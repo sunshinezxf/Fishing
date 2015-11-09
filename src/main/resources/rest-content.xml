@@ -57,7 +57,7 @@
         <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/>
     </bean>
 
-    <bean id="shiroRealm" class="platform.sunshine.security.ShiroRealm">
+    <bean id="shiroRealm" class="fishing.sunshine.security.ShiroRealm">
     </bean>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
