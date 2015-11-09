@@ -22,7 +22,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="${path.concat('/index')}">Diaoyu114管理平台</a>
+            <a class="navbar-brand" href="${path.concat('/index')}">Diaoyu114&nbsp;管理平台</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">

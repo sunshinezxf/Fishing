@@ -23,4 +23,11 @@ public class PlatformController {
         view.setViewName("login");
         return view;
     }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ModelAndView login(String username, String password) {
+        ModelAndView view = new ModelAndView();
+
+        return view;
+    }
 }
