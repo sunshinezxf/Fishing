@@ -27,7 +27,21 @@ public class PlatformController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView login(String username, String password) {
         ModelAndView view = new ModelAndView();
+        view.setViewName("redirect:/dashboard");
+        return view;
+    }
 
+    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    public ModelAndView dashboard() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("dashboard");
+        return view;
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public ModelAndView logout() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("redirect:/index");
         return view;
     }
 }
