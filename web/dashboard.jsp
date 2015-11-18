@@ -57,6 +57,17 @@
                 <li class="active"><a href="${path.concat('/dashboard')}"><i class="fa fa-desktop"></i> 首页<span
                         class="sr-only">(current)</span></a></li>
                 <li><a data-toggle="collapse" data-parent="#accordion" href="#article-management"><i
+                        class="fa fa-book"></i> 鱼种管理<i
+                        class="pull-right fa fa-caret-down"></i></a>
+                    <ul id="article-management" class="nav nav-collapse collapse">
+                        <li><a class="sub-nav" href="${path.concat('/fishtype/create')}"><i class="fa fa-edit"></i>
+                            添加鱼种</a>
+                        </li>
+                        <li><a class="sub-nav" href="${path.concat('/article/manage')}"><i class="fa fa-tasks"></i> 鱼种概览</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a data-toggle="collapse" data-parent="#accordion" href="#article-management"><i
                         class="fa fa-book"></i> 钓场管理<i
                         class="pull-right fa fa-caret-down"></i></a>
                     <ul id="article-management" class="nav nav-collapse collapse">
