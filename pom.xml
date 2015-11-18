@@ -245,6 +245,13 @@
             <version>1.2.7</version>
         </dependency>
 
+        <!-- apache template engine -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+        </dependency>
+
     </dependencies>
 
     <build>
