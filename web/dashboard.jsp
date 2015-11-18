@@ -13,8 +13,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon"
-          href="${path.concat('/material/ico/logo.ico')}"/>
     <link rel="stylesheet"
           href="${path.concat('/material/plugins/bootstrap-3.3.5-dist/css/bootstrap.css')}"/>
     <link rel="stylesheet" type="text/css"
@@ -32,8 +30,9 @@
     <title>首页</title>
     <script>
         $(function () {
-            $("#article-management").collapse('hide');
-            $("#account-management").collapse('hide');
+            $("#fish-type-management").collapse('hide');
+            $("#fish-zone-management").collapse('hide');
+            $("#fish-man-management").collapse('hide');
         });
     </script>
 </head>
@@ -56,10 +55,10 @@
             <ul class="nav nav-sidebar" id="accordion" aria-multiselectable="true">
                 <li class="active"><a href="${path.concat('/dashboard')}"><i class="fa fa-desktop"></i> 首页<span
                         class="sr-only">(current)</span></a></li>
-                <li><a data-toggle="collapse" data-parent="#accordion" href="#article-management"><i
+                <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-type-management"><i
                         class="fa fa-book"></i> 鱼种管理<i
                         class="pull-right fa fa-caret-down"></i></a>
-                    <ul id="article-management" class="nav nav-collapse collapse">
+                    <ul id="fish-type-management" class="nav nav-collapse collapse">
                         <li><a class="sub-nav" href="${path.concat('/fishtype/create')}"><i class="fa fa-edit"></i>
                             添加鱼种</a>
                         </li>
@@ -67,14 +66,27 @@
                         </li>
                     </ul>
                 </li>
-                <li><a data-toggle="collapse" data-parent="#accordion" href="#article-management"><i
+                <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-zone-management"><i
                         class="fa fa-book"></i> 钓场管理<i
                         class="pull-right fa fa-caret-down"></i></a>
-                    <ul id="article-management" class="nav nav-collapse collapse">
-                        <li><a class="sub-nav" href="${path.concat('/article/create')}"><i class="fa fa-edit"></i>
+                    <ul id="fish-zone-management" class="nav nav-collapse collapse">
+                        <li><a class="sub-nav" href="${path.concat('/fishzone/create')}"><i class="fa fa-edit"></i>
                             添加钓场</a>
                         </li>
-                        <li><a class="sub-nav" href="${path.concat('/article/manage')}"><i class="fa fa-tasks"></i> 钓场概览</a>
+                        <li><a class="sub-nav" href="${path.concat('/fishzone/manage')}"><i class="fa fa-tasks"></i>
+                            钓场概览</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-man-management"><i
+                        class="fa fa-book"></i> 承包人管理<i
+                        class="pull-right fa fa-caret-down"></i></a>
+                    <ul id="fish-man-management" class="nav nav-collapse collapse">
+                        <li><a class="sub-nav" href="${path.concat('/fishman/create')}"><i class="fa fa-edit"></i>
+                            添加承包人</a>
+                        </li>
+                        <li><a class="sub-nav" href="${path.concat('/fishman/manage')}"><i class="fa fa-tasks"></i>
+                            承包人概览</a>
                         </li>
                     </ul>
                 </li>
