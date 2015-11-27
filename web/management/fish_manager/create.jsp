@@ -1,14 +1,14 @@
 <%--
   Created by IntelliJ IDEA.
   User: sunshine
-  Date: 15/9/12
-  Time: 18:46
+  Date: 11/27/15
+  Time: 19:35
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="path" value="${pageContext.request.contextPath}"></c:set>
-<html lang="zh_CN">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,12 +27,12 @@
     <script type="text/javascript"
             src="${path.concat('/material/plugins/bootstrap-3.3.5-dist/js/bootstrap.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/dashboard.js')}"></script>
-    <title>首页</title>
+    <title>添加承包人</title>
     <script>
         $(function () {
             $("#fish-type-management").collapse('hide');
             $("#fish-zone-management").collapse('hide');
-            $("#fish-man-management").collapse('hide');
+            $("#fish-man-management").collapse('show');
         });
     </script>
 </head>
@@ -62,7 +62,8 @@
                         <li><a class="sub-nav" href="${path.concat('/fishtype/create')}"><i class="fa fa-edit"></i>
                             添加鱼种</a>
                         </li>
-                        <li><a class="sub-nav" href="${path.concat('/article/manage')}"><i class="fa fa-tasks"></i> 鱼种概览</a>
+                        <li><a class="sub-nav" href="${path.concat('/fishtype/manage')}"><i class="fa fa-tasks"></i>
+                            鱼种概览</a>
                         </li>
                     </ul>
                 </li>
@@ -70,11 +71,10 @@
                         class="fa fa-book"></i> 钓场管理<i
                         class="pull-right fa fa-caret-down"></i></a>
                     <ul id="fish-zone-management" class="nav nav-collapse collapse">
-                        <li><a class="sub-nav" href="${path.concat('/fishzone/create')}"><i class="fa fa-edit"></i>
+                        <li><a class="sub-nav" href="${path.concat('/article/create')}"><i class="fa fa-edit"></i>
                             添加钓场</a>
                         </li>
-                        <li><a class="sub-nav" href="${path.concat('/fishzone/manage')}"><i class="fa fa-tasks"></i>
-                            钓场概览</a>
+                        <li><a class="sub-nav" href="${path.concat('/article/manage')}"><i class="fa fa-tasks"></i> 钓场概览</a>
                         </li>
                     </ul>
                 </li>
@@ -96,14 +96,37 @@
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <div class="row">
             <div class="col-md-12 col-lg-12">
-                <h1><i class="fa fa-home"></i> 首页 </h1>
+                <h1><i class="fa fa-home"></i> 承包人管理 </h1>
                 <ol class="breadcrumb">
                     <li><a href="${path.concat('/dashboard')}">首页</a></li>
-                    <li class="active">首页</li>
+                    <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-man-management">承包人管理</a></li>
+                    <li class="active">添加承包人</li>
                 </ol>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-12 col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" for="fish-man-insert">姓名</label>
 
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="fish-man-insert" placeholder="承包人姓名"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" for="fish-man-phone">电话</label>
+
+                        <div class="col-sm-9">
+                            <input type="tel" class="form-control" id="fish-man-phone" placeholder="承包人电话"/>
+                        </div>
+                        <button class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
+                    </div>
+                    <hr/>
+                    <button class="btn btn-primary btn-group-sm col-sm-1">
+                        添加
+                    </button>
+                </form>
             </div>
         </div>
     </div>

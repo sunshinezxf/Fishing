@@ -30,7 +30,7 @@
     <title>添加鱼种</title>
     <script>
         $(function () {
-            $("#fish-type-management").collapse('hide');
+            $("#fish-type-management").collapse('show');
             $("#fish-zone-management").collapse('hide');
             $("#fish-man-management").collapse('hide');
         });
@@ -53,7 +53,7 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar" id="accordion" aria-multiselectable="true">
-                <li class="active"><a href="${path.concat('/dashboard')}"><i class="fa fa-desktop"></i> 首页<span
+                <li><a href="${path.concat('/dashboard')}"><i class="fa fa-desktop"></i> 首页<span
                         class="sr-only">(current)</span></a></li>
                 <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-type-management"><i
                         class="fa fa-book"></i> 鱼种管理<i
@@ -103,8 +103,23 @@
                     <li class="active">添加鱼种</li>
                 </ol>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-12 col-lg-12">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label" for="fish-type-insert">鱼种</label>
 
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="fish-type-insert" placeholder="鱼种"/>
+                        </div>
+                        <button class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
+                    </div>
+                    <hr/>
+                    <button class="btn btn-primary btn-group-sm col-sm-1">
+                        添加
+                    </button>
+                </form>
             </div>
         </div>
     </div>
