@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fish">
+    <resultMap id="fishVo" type="fishing.sunshine.model.Fish">
+        <result property="fishId" column="fish_type_id"/>
+        <result property="fishName" column="fish_type_name"/>
+        <result property="createAt" column="create_time"/>
+    </resultMap>
+
+    <!-- 插入一条鱼类 -->
+    <insert id="insertFish" parameterMap="fishing.sunshine.model.Fish" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO fish_type(fish_type_id, fish_type_name, create_time)
+        VALUES (#{fishId}, #{fishName}, #{createAt}, #{delFlag})
+    </insert>
+
+    <!-- 根据条件查询鱼类 -->
+    <select id="queryFish">
+
+    </select>
+</mapper>

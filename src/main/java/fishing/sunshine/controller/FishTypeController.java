@@ -17,6 +17,4 @@ public class FishTypeController {
         view.setViewName("management/fish_type/create");
         return view;
     }
-
-
 }
