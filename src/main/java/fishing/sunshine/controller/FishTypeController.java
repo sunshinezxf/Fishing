@@ -44,7 +44,18 @@ public class FishTypeController {
             view.setViewName("redirect:/fishtype/create");
             return view;
         }
-        view.setViewName("management/fish_type/overview");
+        view.setViewName("redirect:/fishtype/overview");
         return view;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/overview")
+    public ModelAndView overview() {
+
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/check")
+    public String check(@Valid FishForm form) {
+
+        return "valid";
     }
 }

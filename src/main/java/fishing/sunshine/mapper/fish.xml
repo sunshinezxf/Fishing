@@ -8,7 +8,7 @@
     </resultMap>
 
     <!-- 插入一条鱼类 -->
-    <insert id="insertFish" parameterMap="fishing.sunshine.model.Fish" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertFish" parameterType="fishing.sunshine.model.Fish" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO fish_type(fish_type_id, fish_type_name, create_time, del_flag)
         VALUES (#{fishId}, #{fishName}, #{createAt}, #{delFlag})
     </insert>

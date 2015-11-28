@@ -34,6 +34,17 @@
             $("#fish-zone-management").collapse('hide');
             $("#fish-man-management").collapse('hide');
         });
+        $(document).ready(function () {
+            $("#confirm-fish").click(function () {
+
+                var fishName = $("#fish-type-insert").val();
+                var url = "${path.concat("/fishtype/create")}";
+                console.debug(fishName);
+                $.post(url, {fishName: fishName}, function (result) {
+
+                });
+            });
+        });
     </script>
 </head>
 <body>
@@ -106,7 +117,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 col-lg-12">
-                <form class="form-horizontal">
+                <div id="insert-fish-form" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-1 control-label" for="fish-type-insert">鱼种</label>
 
@@ -116,10 +127,10 @@
                         <button class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
                     </div>
                     <hr/>
-                    <button class="btn btn-primary btn-group-sm col-sm-1">
+                    <button id="confirm-fish" class="btn btn-primary btn-group-sm col-sm-1">
                         添加
                     </button>
-                </form>
+                </div>
             </div>
         </div>
     </div>

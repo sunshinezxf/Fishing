@@ -4,6 +4,6 @@
 
 <configuration>
     <mappers>
-
+        <mapper resource="fishing/sunshine/mapper/fish.xml"/>
     </mappers>
 </configuration>
