@@ -50,7 +50,9 @@ public class FishTypeController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/overview")
     public ModelAndView overview() {
+        ModelAndView view = new ModelAndView();
 
+        return view;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/check")
