@@ -7,7 +7,7 @@ import fishing.sunshine.util.ResultData;
  * Created by sunshine on 11/27/15.
  */
 public interface FishDao {
-    //ResultData queryFishes();
+    ResultData queryFish(Fish fish);
 
     ResultData insertFish(Fish fish);
 

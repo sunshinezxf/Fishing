@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by sunshine on 11/27/15.
  */
@@ -18,7 +20,6 @@ public class FishDaoImpl extends BaseDao implements FishDao {
 
     @Transactional
     public ResultData insertFish(Fish fish) {
-        logger.debug("class: FishDaoImpl; method: insertFish;");
         ResultData result = new ResultData();
         try {
             sqlSession.insert("fish.insertFish", fish);
@@ -31,10 +32,18 @@ public class FishDaoImpl extends BaseDao implements FishDao {
         }
     }
 
+    @Override
     public ResultData queryFish(Fish fish) {
-        logger.debug("class: FishDaoImpl; method: queryFish");
         ResultData result = new ResultData();
-        
-        return result;
+        try {
+            List<Fish> list = sqlSession.selectList("fish.queryFish", fish);
+            result.setData(list);
+        } catch (Exception e) {
+            logger.debug(e.toString());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        } finally {
+            return result;
+        }
     }
 }

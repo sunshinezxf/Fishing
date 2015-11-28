@@ -8,4 +8,6 @@ import fishing.sunshine.util.ResultData;
  */
 public interface FishService {
     ResultData addFishType(Fish fish);
+
+    ResultData queryFishType(Fish fish);
 }

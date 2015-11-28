@@ -1,6 +1,7 @@
 package fishing.sunshine.model;
 
-import fishing.sunshine.util.IDGenerator;
+
+import fishing.sunshine.form.FishForm;
 
 /**
  * Created by sunshine on 11/27/15.
@@ -11,7 +12,11 @@ public class Fish extends SunshineEntity {
 
     public Fish() {
         super();
-        this.fishId = IDGenerator.generate("FIS");
+    }
+
+    public Fish(FishForm form) {
+        this();
+        this.fishName = form.getFishName();
     }
 
     public String getFishId() {
