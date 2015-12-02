@@ -10,34 +10,10 @@
  * controls using jQuery UI. See http://datatables.net/manual/styling/jqueryui
  * for further information.
  */
-(function( factory ){
-	if ( typeof define === 'function' && define.amd ) {
-		// AMD
-		define( ['jquery', 'datatables.net'], function ( $ ) {
-			return factory( $, window, document );
-		} );
-	}
-	else if ( typeof exports === 'object' ) {
-		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				root = window;
-			}
+(function(window, document, undefined){
 
-			if ( ! $ || ! $.fn.dataTable ) {
-				$ = require('datatables.net')(root, $).$;
-			}
-
-			return factory( $, root, root.document );
-		};
-	}
-	else {
-		// Browser
-		factory( jQuery, window, document );
-	}
-}(function( $, window, document, undefined ) {
-'use strict';
-var DataTable = $.fn.dataTable;
+var factory = function( $, DataTable ) {
+"use strict";
 
 
 var sort_prefix = 'css_right ui-icon ui-icon-';
@@ -159,6 +135,22 @@ if ( DataTable.TableTools ) {
 	} );
 }
 
+}; // /factory
 
-return DataTable;
-}));
+
+// Define as an AMD module if possible
+if ( typeof define === 'function' && define.amd ) {
+	define( ['jquery', 'datatables'], factory );
+}
+else if ( typeof exports === 'object' ) {
+    // Node/CommonJS
+    factory( require('jquery'), require('datatables') );
+}
+else if ( jQuery ) {
+	// Otherwise simply initialise as normal, stopping multiple evaluation
+	factory( jQuery, jQuery.fn.dataTable );
+}
+
+
+})(window, document);
+

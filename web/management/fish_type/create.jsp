@@ -36,13 +36,15 @@
         });
         $(document).ready(function () {
             $("#confirm-fish").click(function () {
+                //1st step: verify input
 
-                var fishName = $("#fish-type-insert").val();
+                //2nd step: construct the form
                 var url = "${path.concat("/fishtype/create")}";
-                console.debug(fishName);
-                $.post(url, {fishName: fishName}, function (result) {
+                $("#insert-fish-form").attr("action", url);
+                $("#insert-fish-form").attr("method", "post");
 
-                });
+                //3rd step: submit the form
+                $("#insert-fish-form").submit();
             });
         });
     </script>
@@ -73,7 +75,7 @@
                         <li><a class="sub-nav" href="${path.concat('/fishtype/create')}"><i class="fa fa-edit"></i>
                             添加鱼种</a>
                         </li>
-                        <li><a class="sub-nav" href="${path.concat('/fishtype/manage')}"><i class="fa fa-tasks"></i>
+                        <li><a class="sub-nav" href="${path.concat('/fishtype/overview')}"><i class="fa fa-tasks"></i>
                             鱼种概览</a>
                         </li>
                     </ul>
@@ -85,7 +87,8 @@
                         <li><a class="sub-nav" href="${path.concat('/article/create')}"><i class="fa fa-edit"></i>
                             添加钓场</a>
                         </li>
-                        <li><a class="sub-nav" href="${path.concat('/article/manage')}"><i class="fa fa-tasks"></i> 钓场概览</a>
+                        <li><a class="sub-nav" href="${path.concat('/article/overview')}"><i class="fa fa-tasks"></i>
+                            钓场概览</a>
                         </li>
                     </ul>
                 </li>
@@ -117,20 +120,21 @@
         </div>
         <div class="row">
             <div class="col-md-12 col-lg-12">
-                <div id="insert-fish-form" class="form-horizontal">
+                <form id="insert-fish-form" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-1 control-label" for="fish-type-insert">鱼种</label>
 
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="fish-type-insert" placeholder="鱼种"/>
+                            <input type="text" class="form-control" id="fish-type-insert" name="fishName"
+                                   placeholder="鱼种"/>
                         </div>
-                        <button class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
+                        <button type="button" class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
                     </div>
                     <hr/>
-                    <button id="confirm-fish" class="btn btn-primary btn-group-sm col-sm-1">
+                    <button type="submit" id="confirm-fish" class="btn btn-primary btn-group-sm col-sm-1">
                         添加
                     </button>
-                </div>
+                </form>
             </div>
         </div>
     </div>

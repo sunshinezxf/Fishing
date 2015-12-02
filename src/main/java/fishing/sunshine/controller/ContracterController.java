@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @RequestMapping("/fishman")
 @RestController
-public class FishpondContracterController {
+public class ContracterController {
     @RequestMapping(method = RequestMethod.GET, value = "/create")
     public ModelAndView create() {
         ModelAndView view = new ModelAndView();

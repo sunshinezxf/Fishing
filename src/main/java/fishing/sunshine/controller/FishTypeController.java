@@ -51,13 +51,13 @@ public class FishTypeController {
     @RequestMapping(method = RequestMethod.GET, value = "/overview")
     public ModelAndView overview() {
         ModelAndView view = new ModelAndView();
-
+        view.setViewName("management/fish_type/overview");
         return view;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/check")
     public String check(@Valid FishForm form) {
-
+        
         return "valid";
     }
 }
