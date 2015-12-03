@@ -6,4 +6,8 @@
     <bean id="fishDao" class="fishing.sunshine.dao.impl.FishDaoImpl">
         <property name="sqlSession" ref="sqlSession"/>
     </bean>
+
+    <bean id="pondTypeDao" class="fishing.sunshine.dao.impl.PondTypeDaoImpl">
+        <property name="sqlSession" ref="sqlSession"/>
+    </bean>
 </beans>

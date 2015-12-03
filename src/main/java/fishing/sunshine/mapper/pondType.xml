@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pond">
+    <resultMap id="pondTypeVo" type="fishing.sunshine.model.PondType">
+        <result property="pondTypeId" column="fish_zone_type_id"></result>
+        <result property="pondTypeName" column="fish_zone_type_name"></result>
+        <result property="createAt" column="create_time"></result>
+    </resultMap>
+
+    <!-- 插入一条渔场的类型 -->
+    <insert id="insertPondType" parameterType="fishing.sunshine.model.PondType" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO fish_zone_type(fish_zone_type_id, fish_zone_type_name, create_time, del_flag)
+        VALUES (#{pondTypeId}, #{pondTypeName}, #{createAt}, 0)
+    </insert>
+
+    <!-- 查询渔场的类型是否已经存在 -->
+    <select id="queryPondType" parameterType="fishing.sunshine.model.PondType" resultMap="pondTypeVo">
+        SELECT fish_zone_type_id, fish_zone_type_name, create_time
+        FROM fish_zone_type
+        WHERE 1 = 1
+        AND del_flag = 0
+        <if test="pondTypeName != null and pondTypeName != ''">
+            AND fish_zone_type_name = #{pondTypeName}
+        </if>
+    </select>
+</mapper>

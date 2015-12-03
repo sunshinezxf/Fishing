@@ -4,4 +4,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     <bean id="fishService" class="fishing.sunshine.service.impl.FishServiceImpl"></bean>
+
+    <bean id="fishPondService" class="fishing.sunshine.service.impl.FishPondServiceImpl"></bean>
 </beans>
