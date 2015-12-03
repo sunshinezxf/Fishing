@@ -120,6 +120,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 col-lg-12">
+                <hr/>
                 <form id="insert-fish-form" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-1 control-label" for="fish-type-insert">鱼种</label>

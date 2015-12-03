@@ -28,8 +28,7 @@
             src="${path.concat('/material/plugins/jquery/jquery-migrate-1.2.1.min.js')}"></script>
     <script type="text/javascript"
             src="${path.concat('/material/plugins/bootstrap-3.3.5-dist/js/bootstrap.js')}"></script>
-
-
+    <script type="text/javascript" src="/material/plugins/datatable/js/jquery.dataTables.js"></script>
     <script type="text/javascript"
             src="${path.concat('/material/plugins/datatable/js/dataTables.bootstrap.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/dashboard.js')}"></script>
@@ -42,7 +41,24 @@
         });
 
         $(document).ready(function () {
-            $("#fish-type-list").DataTable();
+            $("#fish-type-list").DataTable({
+                "sPaginationType": "full_numbers",
+                "oLanguage": {
+                    "sLengthMenu": "每页显示 _MENU_ 条记录",
+                    "sZeroRecords": "抱歉， 没有找到",
+                    "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                    "sInfoEmpty": "没有数据",
+                    "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+                    "sZeroRecords": "没有检索到数据",
+                    "sSearch": "名称:",
+                    "oPaginate": {
+                        "sFirst": "首页",
+                        "sPrevious": "前一页",
+                        "sNext": "后一页",
+                        "sLast": "尾页"
+                    }
+                }
+            });
         });
     </script>
 </head>
@@ -102,28 +118,31 @@
                 </li>
             </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <div class="row">
-                <div class="col-md-12 col-lg-12">
-                    <h1><i class="fa fa-home"></i> 鱼种管理 </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="${path.concat('/dashboard')}">首页</a></li>
-                        <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-type-management">鱼种管理</a>
-                        </li>
-                        <li class="active">鱼种概览</li>
-                    </ol>
-                </div>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <h1><i class="fa fa-home"></i> 鱼种管理 </h1>
+                <ol class="breadcrumb">
+                    <li><a href="${path.concat('/dashboard')}">首页</a></li>
+                    <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-type-management">鱼种管理</a>
+                    </li>
+                    <li class="active">鱼种概览</li>
+                </ol>
             </div>
-            <div class="row">
-                <div class="col-md-12 col-lg-12">
-                    <table id="fish-type-list" cellspacing="0" width="100%">
-                        <thead>
-                        <th>编号</th>
-                        <th>名称</th>
-                        <th>添加日期</th>
-                        </thead>
-                    </table>
-                </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <hr/>
+                <table id="fish-type-list" cellspacing="0" width="100%">
+                    <thead>
+                    <th>编号</th>
+                    <th>名称</th>
+                    <th>添加日期</th>
+                    <th>操作</th>
+                    </thead>
+                </table>
+                <hr/>
             </div>
         </div>
     </div>
