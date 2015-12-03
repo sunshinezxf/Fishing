@@ -94,6 +94,35 @@
             </ul>
         </div>
     </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <h1><i class="fa fa-home"></i> 鱼种管理 </h1>
+                <ol class="breadcrumb">
+                    <li><a href="${path.concat('/dashboard')}">首页</a></li>
+                    <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-zone-management">渔场管理</a></li>
+                    <li class="active">添加渔场</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <hr/>
+                <form id="insert-fishzone-form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">鱼塘名称</label>
+
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="fish-zone-name" name="pondName"
+                                   placeholder="渔场名称"/>
+                        </div>
+                        <button type="button" class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

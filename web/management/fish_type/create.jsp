@@ -123,9 +123,9 @@
                 <hr/>
                 <form id="insert-fish-form" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-1 control-label" for="fish-type-insert">鱼种</label>
+                        <label class="col-sm-2 control-label" for="fish-type-insert">鱼种名称</label>
 
-                        <div class="col-sm-9">
+                        <div class="col-sm-8">
                             <input type="text" class="form-control" id="fish-type-insert" name="fishName"
                                    placeholder="鱼种"/>
                         </div>
