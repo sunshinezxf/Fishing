@@ -42,6 +42,9 @@
 
         $(document).ready(function () {
             $("#fish-type-list").DataTable({
+                searching: false,
+                ordering: false,
+                paging: false,
                 "sPaginationType": "full_numbers",
                 "oLanguage": {
                     "sLengthMenu": "每页显示 _MENU_ 条记录",

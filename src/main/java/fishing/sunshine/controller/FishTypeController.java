@@ -1,10 +1,12 @@
 package fishing.sunshine.controller;
 
+import com.alibaba.fastjson.JSON;
 import fishing.sunshine.form.FishForm;
 import fishing.sunshine.model.Fish;
 import fishing.sunshine.service.FishService;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,6 +60,11 @@ public class FishTypeController {
         ModelAndView view = new ModelAndView();
         view.setViewName("management/fish_type/overview");
         return view;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/overview")
+    public String overview(int draw, int start, int length) {
+        return JSONObject.valueToString(new Object());
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/check")
