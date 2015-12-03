@@ -84,10 +84,10 @@
                         class="fa fa-book"></i> 钓场管理<i
                         class="pull-right fa fa-caret-down"></i></a>
                     <ul id="fish-zone-management" class="nav nav-collapse collapse">
-                        <li><a class="sub-nav" href="${path.concat('/article/create')}"><i class="fa fa-edit"></i>
+                        <li><a class="sub-nav" href="${path.concat('/fishzone/create')}"><i class="fa fa-edit"></i>
                             添加钓场</a>
                         </li>
-                        <li><a class="sub-nav" href="${path.concat('/article/overview')}"><i class="fa fa-tasks"></i>
+                        <li><a class="sub-nav" href="${path.concat('/fishzone/overview')}"><i class="fa fa-tasks"></i>
                             钓场概览</a>
                         </li>
                     </ul>
