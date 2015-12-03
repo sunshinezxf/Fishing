@@ -14,13 +14,27 @@
     </insert>
 
     <!-- 根据条件查询鱼类 -->
-    <select id="queryFish">
+    <select id="queryFish" resultMap="fishVo" parameterType="fishing.sunshine.model.Fish">
         SELECT fish_type_id, fish_type_name, create_time
         FROM fish_type
         WHERE 1 = 1
         AND del_flag = 0
-        <if test="fish_type_name != null and fish_type_name != ''">
-            AND fish_type_name LIKE '%${fishName}%'
+        <if test="fishName != null and fishName != ''">
+            AND fish_type_name = #{fishName}
         </if>
     </select>
+
+    <!-- 删除/解删除一种已存在的鱼类 -->
+    <update id="updateFish" parameterType="fishing.sunshine.model.Fish">
+        UPDATE fish_type
+        <set>
+            <if test="delFlag = true">
+                del_flag = 1
+            </if>
+            <if test="delFlag = false">
+                del_flag = 0
+            </if>
+        </set>
+        WHERE fish_type_name = #{fishName}
+    </update>
 </mapper>

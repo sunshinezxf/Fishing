@@ -10,4 +10,6 @@ public interface FishService {
     ResultData addFishType(Fish fish);
 
     ResultData queryFishType(Fish fish);
+
+//    ResultData updateFishType(Fish fish);
 }

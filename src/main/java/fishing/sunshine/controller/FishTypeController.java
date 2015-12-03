@@ -39,6 +39,11 @@ public class FishTypeController {
             return view;
         }
         Fish fish = new Fish(form);
+        ResultData exist = fishService.queryFishType(fish);
+        if (exist.getResponseCode() != ResponseCode.RESPONSE_NULL) {
+            view.setViewName("redirect:/fishtype/create");
+            return view;
+        }
         ResultData create = fishService.addFishType(fish);
         if (create.getResponseCode() == ResponseCode.RESPONSE_ERROR) {
             view.setViewName("redirect:/fishtype/create");
@@ -56,8 +61,22 @@ public class FishTypeController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/check")
-    public String check(@Valid FishForm form) {
-        
-        return "valid";
+    public String check(@Valid FishForm form, BindingResult result) {
+        String message = "invalid";
+        if (result.hasErrors()) {
+            return message;
+        }
+        Fish fish = new Fish(form);
+        ResultData exist = fishService.queryFishType(fish);
+        //若已经存在,则返回invalid, 若存在错误,则返回invalid,若之前不存在,则返回valid
+        if (exist.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            return message;
+        } else if (exist.getResponseCode() == ResponseCode.RESPONSE_ERROR) {
+            return message;
+        } else if (exist.getResponseCode() == ResponseCode.RESPONSE_NULL) {
+            message = "valid";
+            return message;
+        }
+        return message;
     }
 }

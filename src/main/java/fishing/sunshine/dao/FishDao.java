@@ -11,5 +11,5 @@ public interface FishDao {
 
     ResultData insertFish(Fish fish);
 
-    //ResultData deleteFish(Fish fish);
+    ResultData deleteFish(Fish fish);
 }

@@ -46,4 +46,18 @@ public class FishDaoImpl extends BaseDao implements FishDao {
             return result;
         }
     }
+
+    @Transactional
+    @Override
+    public ResultData deleteFish(Fish fish) {
+        ResultData result = new ResultData();
+        try {
+            sqlSession.update("fish.updateFish", fish);
+        } catch (Exception e) {
+            logger.debug(e.toString());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        }
+        return result;
+    }
 }

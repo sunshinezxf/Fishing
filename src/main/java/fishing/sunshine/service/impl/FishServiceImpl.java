@@ -45,6 +45,9 @@ public class FishServiceImpl implements FishService {
         result.setResponseCode(query.getResponseCode());
         if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
             result.setData(query.getData());
+            if (((ArrayList<Fish>) result.getData()).size() == 0) {
+                result.setResponseCode(ResponseCode.RESPONSE_NULL);
+            }
         } else {
             result.setDescription(query.getDescription());
         }
