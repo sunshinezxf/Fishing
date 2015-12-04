@@ -8,4 +8,6 @@ import fishing.sunshine.util.ResultData;
  */
 public interface FishPondService {
     ResultData addFishPondType(PondType type);
+
+    ResultData queryFishPondType(PondType type);
 }
