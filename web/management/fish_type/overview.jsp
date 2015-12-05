@@ -105,6 +105,12 @@
                         </li>
                         <li><a class="sub-nav" href="${path.concat('/article/manage')}"><i class="fa fa-tasks"></i> 钓场概览</a>
                         </li>
+                        <li><a class="sub-nav" href="${path.concat('/zonetype/create')}"><i class="fa fa-edit"></i>
+                            添加类型</a>
+                        </li>
+                        <li><a class="sub-nav" href="${path.concat('/zonetype/overview')}"><i class="fa fa-tasks"></i>
+                            类型概览</a>
+                        </li>
                     </ul>
                 </li>
                 <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-man-management"><i

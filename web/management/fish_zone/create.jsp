@@ -77,6 +77,12 @@
                         <li><a class="sub-nav" href="${path.concat('/fishzone/overview')}"><i class="fa fa-tasks"></i>
                             钓场概览</a>
                         </li>
+                        <li><a class="sub-nav" href="${path.concat('/zonetype/create')}"><i class="fa fa-edit"></i>
+                            添加类型</a>
+                        </li>
+                        <li><a class="sub-nav" href="${path.concat('/zonetype/overview')}"><i class="fa fa-tasks"></i>
+                            类型概览</a>
+                        </li>
                     </ul>
                 </li>
                 <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-man-management"><i
@@ -110,7 +116,7 @@
                 <hr/>
                 <form id="insert-fishzone-form" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">鱼塘名称</label>
+                        <label class="col-sm-2 control-label" for="fish-zone-name">鱼塘名称</label>
 
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="fish-zone-name" name="pondName"
@@ -118,7 +124,24 @@
                         </div>
                         <button type="button" class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="fish-zone-address">地址简介</label>
 
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="fish-zone-address" name="pondAddress"
+                                   placeholder="钓场地址简介"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="fish-zone-fee">收费(元/小时)</label>
+
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="fish-zone-fee" name="pondFee"
+                                   placeholder="费用"/>
+                        </div>
+                    </div>
+                    <hr/>
+                    <button type="submit" id="confirm-zone" class="btn btn-primary btn-group-sm col-sm-1">添加</button>
                 </form>
             </div>
         </div>
