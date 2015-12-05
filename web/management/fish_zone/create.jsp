@@ -125,6 +125,20 @@
                         <button type="button" class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="zone-longitude">经度</label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="zone-longitude" name="longitude"
+                                   placeholder="经度"/>
+                        </div>
+                        <label class="col-sm-2 control-label" for="zone-latitude">纬度</label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="zone-latitude" name="latitude"
+                                   placeholder="纬度"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-2 control-label" for="fish-zone-address">地址简介</label>
 
                         <div class="col-sm-8">
