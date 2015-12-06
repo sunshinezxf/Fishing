@@ -29,8 +29,9 @@ public class PondTypeDaoImpl extends BaseDao implements PondTypeDao {
             logger.debug(e.getMessage());
             result.setResponseCode(ResponseCode.RESPONSE_ERROR);
             result.setDescription(e.getMessage());
+        } finally {
+            return result;
         }
-        return result;
     }
 
     @Override
@@ -43,7 +44,8 @@ public class PondTypeDaoImpl extends BaseDao implements PondTypeDao {
             logger.debug(e.getMessage());
             result.setResponseCode(ResponseCode.RESPONSE_ERROR);
             result.setDescription(e.getMessage());
+        } finally {
+            return result;
         }
-        return result;
     }
 }
