@@ -60,7 +60,7 @@ public class PondTypeController {
     @RequestMapping(method = RequestMethod.GET, value = "/overview")
     public ModelAndView overview() {
         ModelAndView view = new ModelAndView();
-        view.setViewName("management/fish_zone_type/create");
+        view.setViewName("management/fish_zone_type/overview");
         return view;
     }
 }

@@ -24,7 +24,7 @@ public class PondTypeDaoImpl extends BaseDao implements PondTypeDao {
     public ResultData insertPondType(PondType type) {
         ResultData result = new ResultData();
         try {
-            sqlSession.insert("pond.insertFishType", type);
+            sqlSession.insert("pond.insertPondType", type);
         } catch (Exception e) {
             logger.debug(e.getMessage());
             result.setResponseCode(ResponseCode.RESPONSE_ERROR);

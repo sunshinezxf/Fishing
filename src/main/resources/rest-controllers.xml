@@ -6,4 +6,6 @@
     <bean id="platformController" class="fishing.sunshine.controller.PlatformController"></bean>
 
     <bean id="contractorController" class="fishing.sunshine.controller.ContractorController"></bean>
+
+    <bean id="pondTypeController" class="fishing.sunshine.controller.PondTypeController"></bean>
 </beans>

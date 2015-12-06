@@ -3,6 +3,7 @@ package fishing.sunshine.service.impl;
 import fishing.sunshine.dao.PondTypeDao;
 import fishing.sunshine.model.PondType;
 import fishing.sunshine.service.FishPondService;
+import fishing.sunshine.util.IDGenerator;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,14 @@ public class FishPondServiceImpl implements FishPondService {
     @Override
     public ResultData addFishPondType(PondType type) {
         ResultData result = new ResultData();
-        pondTypeDao.insertPondType(type);
+        type.setPondTypeId(IDGenerator.generate("POT"));
+        ResultData insert = pondTypeDao.insertPondType(type);
+        result.setResponseCode(insert.getResponseCode());
+        if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(type);
+        } else {
+            result.setDescription(insert.getDescription());
+        }
         return result;
     }
 

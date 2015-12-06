@@ -146,6 +146,11 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">承包人</label>
 
+                        <div class="col-sm-3">
+                            <select class="form-control">
+                                <option>请选择钓场承包人</option>
+                            </select>
+                        </div>
                         <div class="col-sm-8"></div>
                     </div>
                     <div class="form-group">

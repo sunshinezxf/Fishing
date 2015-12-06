@@ -34,6 +34,19 @@
             $("#fish-zone-management").collapse('show');
             $("#fish-man-management").collapse('hide');
         });
+        $(document).ready(function () {
+            $("#confirm-pond-type").click(function () {
+                //1st step: verify input
+
+                //2nd step: construct the form
+                var url = "${path.concat("/zonetype/create")}";
+                $("#insert-pond-type-form").attr("action", url);
+                $("#insert-pond-type-form").attr("method", "post");
+
+                //3rd step: submit the form
+                $("#insert-pond-type-form").submit();
+            })
+        });
     </script>
 </head>
 <body>
