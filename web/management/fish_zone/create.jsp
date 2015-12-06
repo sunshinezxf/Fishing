@@ -154,6 +154,26 @@
                                    placeholder="费用"/>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">可否夜钓</label>
+
+                        <div class="col-sm-8">
+                            <label class="radio-inline">
+                                <input type="radio" name="nightable" id="fish-zone-night-permit" value="true"> 可以
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="nightable" id="fish-zone-night-deny" value="false"
+                                       checked="checked"> 不可以
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">主要鱼种</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">钓场简介</label>
+                        
+                    </div>
                     <hr/>
                     <button type="submit" id="confirm-zone" class="btn btn-primary btn-group-sm col-sm-1">添加</button>
                 </form>
