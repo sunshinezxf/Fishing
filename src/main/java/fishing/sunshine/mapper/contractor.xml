@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="contractor">
+    <resultMap id="contractorVo" type="fishing.sunshine.model.Contractor">
+        <result property="contractorId" column="fish_man_id"></result>
+        <result property="name" column="fish_man_name"></result>
+        <result property="phone" column="fish_man_tel"></result>
+        <result property="createAt" column="create_time"></result>
+    </resultMap>
+
+    <!-- 插入一条承包人记录 -->
+    <insert id="insertContractor" parameterType="fishing.sunshine.model.Contractor" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO fish_man(fish_man_id, fish_man_name, fish_man_tel, create_time, del_flag)
+        VALUES (#{contractorId}, #{name}, #{phone}, #{createAt}, #{delFlag})
+    </insert>
+</mapper>

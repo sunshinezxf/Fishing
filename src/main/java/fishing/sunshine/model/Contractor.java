@@ -5,18 +5,27 @@ import fishing.sunshine.form.ContracterForm;
 /**
  * Created by sunshine on 12/5/15.
  */
-public class Contracter extends SunshineEntity {
+public class Contractor extends SunshineEntity {
+    private String contractorId;
     private String name;
     private String phone;
 
-    public Contracter() {
+    public Contractor() {
         super();
     }
 
-    public Contracter(ContracterForm form) {
+    public Contractor(ContracterForm form) {
         this();
         this.name = form.getContracterName();
         this.phone = form.getContracterPhone();
+    }
+
+    public String getContractorId() {
+        return contractorId;
+    }
+
+    public void setContractorId(String contractorId) {
+        this.contractorId = contractorId;
     }
 
     public String getName() {
