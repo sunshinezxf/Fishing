@@ -3,6 +3,7 @@ package fishing.sunshine.service.impl;
 import fishing.sunshine.dao.ContractorDao;
 import fishing.sunshine.model.Contractor;
 import fishing.sunshine.service.ContractorService;
+import fishing.sunshine.util.IDGenerator;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
 import org.slf4j.Logger;
@@ -23,7 +24,14 @@ public class ContractorServiceImpl implements ContractorService {
     @Override
     public ResultData addContractor(Contractor contractor) {
         ResultData result = new ResultData();
-        
+        contractor.setContractorId(IDGenerator.generate("CON"));
+        ResultData insert = contractorDao.insertContractor(contractor);
+        result.setResponseCode(insert.getResponseCode());
+        if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(contractor);
+        } else {
+            result.setDescription(insert.getDescription());
+        }
         return result;
     }
 

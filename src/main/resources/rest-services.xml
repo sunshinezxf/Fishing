@@ -6,5 +6,6 @@
     <bean id="fishService" class="fishing.sunshine.service.impl.FishServiceImpl"></bean>
 
     <bean id="fishPondService" class="fishing.sunshine.service.impl.FishPondServiceImpl"></bean>
-    
+
+    <bean id="contractorService" class="fishing.sunshine.service.impl.ContractorServiceImpl"></bean>
 </beans>

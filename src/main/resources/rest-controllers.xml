@@ -4,4 +4,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     <bean id="platformController" class="fishing.sunshine.controller.PlatformController"></bean>
+
+    <bean id="contractorController" class="fishing.sunshine.controller.ContractorController"></bean>
 </beans>

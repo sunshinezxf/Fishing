@@ -34,6 +34,19 @@
             $("#fish-zone-management").collapse('hide');
             $("#fish-man-management").collapse('show');
         });
+        $(document).ready(function () {
+            $("#confirm-contractor").click(function () {
+                //1st step: verify input
+
+                //2nd step: construct the form
+                var url = "${path.concat("/fishman/create")}";
+                $("#insert-contractor-form").attr("action", url);
+                $("#insert-contractor-form").attr("method", "post");
+
+                //3rd step: submit the form
+                $("#insert-contractor-form").submit();
+            });
+        });
     </script>
 </head>
 <body>
@@ -113,24 +126,26 @@
         </div>
         <div class="row">
             <div class="col-md-12 col-lg-12">
-                <form class="form-horizontal">
+                <form id="insert-contractor-form" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-1 control-label" for="fish-man-insert">姓名</label>
 
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="fish-man-insert" placeholder="承包人姓名"/>
+                            <input type="text" class="form-control" id="fish-man-insert" name="contracterName"
+                                   placeholder="承包人姓名"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-1 control-label" for="fish-man-phone">电话</label>
 
                         <div class="col-sm-9">
-                            <input type="tel" class="form-control" id="fish-man-phone" placeholder="承包人电话"/>
+                            <input type="tel" class="form-control" id="fish-man-phone" name="contracterPhone"
+                                   placeholder="承包人电话"/>
                         </div>
                         <button class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
                     </div>
                     <hr/>
-                    <button class="btn btn-primary btn-group-sm col-sm-1">
+                    <button id="confirm-contractor" class="btn btn-primary btn-group-sm col-sm-1">
                         添加
                     </button>
                 </form>
