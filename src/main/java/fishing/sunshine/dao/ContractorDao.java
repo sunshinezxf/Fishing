@@ -8,4 +8,6 @@ import fishing.sunshine.util.ResultData;
  */
 public interface ContractorDao {
     ResultData insertContractor(Contractor contractor);
+
+    ResultData queryContractor(Contractor contractor);
 }

@@ -30,6 +30,7 @@ public class ContractorDaoImpl extends BaseDao implements ContractorDao {
         }
     }
 
+    @Override
     public ResultData queryContractor(Contractor contractor) {
         ResultData result = new ResultData();
         try {
@@ -43,4 +44,6 @@ public class ContractorDaoImpl extends BaseDao implements ContractorDao {
             return result;
         }
     }
+
+
 }

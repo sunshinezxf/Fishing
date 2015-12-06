@@ -8,4 +8,6 @@ import fishing.sunshine.util.ResultData;
  */
 public interface ContractorService {
     ResultData addContractor(Contractor contractor);
+
+    ResultData queryContractor(Contractor contractor);
 }
