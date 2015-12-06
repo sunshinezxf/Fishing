@@ -18,14 +18,27 @@
     <link rel="stylesheet" type="text/css"
           href="${path.concat('/material/plugins/Font-Awesome-master/css/font-awesome.css')}"/>
     <link rel="stylesheet" type="text/css"
+          href="${path.concat('/material/plugins/summernote-master/dist/summernote.css')}"/>
+    <link rel="stylesheet" type="text/css"
           href="${path.concat('/material/css/dashboard.css')}"/>
     <link rel="stylesheet" type="text/css" href="${path.concat('/material/css/customize.css')}"/>
+    <link rel="stylesheet" type="text/css"
+          href="${path.concat('/material/plugins/bootstrap-fileinput/fileinput.css')}"/>
+    <link rel="stylesheet" type="text/css"
+          href="${path.concat('/material/plugins/bootstrap-fileupload/fileupload.css')}"/>
     <script type="text/javascript"
             src="${path.concat('/material/plugins/jquery/jquery-1.11.3.min.js')}"></script>
     <script type="text/javascript"
             src="${path.concat('/material/plugins/jquery/jquery-migrate-1.2.1.min.js')}"></script>
     <script type="text/javascript"
             src="${path.concat('/material/plugins/bootstrap-3.3.5-dist/js/bootstrap.js')}"></script>
+    <script type="text/javascript"
+            src="${path.concat('/material/plugins/summernote-master/dist/summernote.js')}"></script>
+    <script type="text/javascript"
+            src="${path.concat('/material/plugins/summernote-master/lang/summernote-zh-CN.js')}"></script>
+    <script type="text/javascript" src="${path.concat('/material/plugins/bootstrap-fileinput/fileinput.js')}"></script>
+    <script type="text/javascript"
+            src="${path.concat('/material/plugins/bootstrap-fileupload/fileupload.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/dashboard.js')}"></script>
     <title>添加渔场</title>
     <script>
@@ -33,6 +46,12 @@
             $("#fish-type-management").collapse('hide');
             $("#fish-zone-management").collapse('show');
             $("#fish-man-management").collapse('hide');
+        });
+        $(document).ready(function () {
+            $("#pond-introduction").summernote({
+                lang: "zh-CN",
+                height: 280
+            });
         });
     </script>
 </head>
@@ -125,6 +144,11 @@
                         <button type="button" class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-2 control-label">承包人</label>
+
+                        <div class="col-sm-8"></div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-2 control-label" for="zone-longitude">经度</label>
 
                         <div class="col-sm-3">
@@ -169,10 +193,44 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">主要鱼种</label>
+
+                        <div class="col-sm-8">
+                            <c:if test="${not empty fishList}">
+                                <c:forEach var="item" items="${fishList}" varStatus="no">
+                                    <c:if test="${no.index % 5 == 0}"><div class="form-group col-sm-12"> </c:if>
+                                    <label class="checkbox-inline col-sm-2">
+                                        <input type="checkbox" id="${item.fishId}"
+                                               value="${item.fishId}"> <span
+                                            for="${item.fishId}">${item.fishName}</span>
+                                    </label>
+                                    <c:if test="${no.index %5 == 4 or no.last}"></div></c:if>
+                                </c:forEach>
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">钓场图片</label>
+
+                        <div class="col-sm-8">
+                            <div class="fileinput file-input-new fileinput-inline" data-provides="fileinput">
+                                <div class="fileinput-preview thumbnail">
+                                    <img src="${path.concat('/material/image/blank.gif')}" alt="">
+                                </div>
+                                <div>
+                                    <span class="btn btn-default btn-success btn-file">
+                                        <span class="file-input-new">选择图片</span>
+                                        <input type="file" name="pondThumbnail"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">钓场简介</label>
-                        
+
+                        <div class="col-sm-9">
+                            <textarea id="pond-introduction" name="pondIntroduction" class="form-control"></textarea>
+                        </div>
                     </div>
                     <hr/>
                     <button type="submit" id="confirm-zone" class="btn btn-primary btn-group-sm col-sm-1">添加</button>
