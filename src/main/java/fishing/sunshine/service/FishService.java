@@ -1,6 +1,7 @@
 package fishing.sunshine.service;
 
 import fishing.sunshine.model.Fish;
+import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.ResultData;
 
 /**
@@ -11,5 +12,6 @@ public interface FishService {
 
     ResultData queryFishType(Fish fish);
 
+    ResultData queryFishTypeByPage(DataTableParam param);
 //    ResultData updateFishType(Fish fish);
 }

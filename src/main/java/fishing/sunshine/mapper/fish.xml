@@ -22,6 +22,7 @@
         <if test="fishName != null and fishName != ''">
             AND fish_type_name = #{fishName}
         </if>
+        ORDER BY create_time ASC
     </select>
 
     <!-- 删除/解删除一种已存在的鱼类 -->

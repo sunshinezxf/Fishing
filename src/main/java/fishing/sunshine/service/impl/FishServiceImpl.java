@@ -3,6 +3,7 @@ package fishing.sunshine.service.impl;
 import fishing.sunshine.dao.FishDao;
 import fishing.sunshine.model.Fish;
 import fishing.sunshine.service.FishService;
+import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.IDGenerator;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by sunshine on 11/28/15.
@@ -48,6 +48,19 @@ public class FishServiceImpl implements FishService {
             if (((ArrayList<Fish>) result.getData()).size() == 0) {
                 result.setResponseCode(ResponseCode.RESPONSE_NULL);
             }
+        } else {
+            result.setDescription(query.getDescription());
+        }
+        return result;
+    }
+
+    @Override
+    public ResultData queryFishTypeByPage(DataTableParam param) {
+        ResultData result = new ResultData();
+        ResultData query = fishDao.queryFishByPage(param);
+        result.setResponseCode(query.getResponseCode());
+        if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(query.getData());
         } else {
             result.setDescription(query.getDescription());
         }

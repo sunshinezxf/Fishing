@@ -1,15 +1,14 @@
 package fishing.sunshine.controller;
 
-import com.alibaba.fastjson.JSON;
 import fishing.sunshine.form.FishForm;
 import fishing.sunshine.model.Fish;
 import fishing.sunshine.service.FishService;
 import fishing.sunshine.util.DataTableParam;
-import fishing.sunshine.util.DataTableResult;
+import fishing.sunshine.util.DataTablePage;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,9 +64,15 @@ public class FishTypeController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/overview")
-    public DataTableResult<Fish> overview(DataTableParam param) {
-        DataTableResult<Fish> result = new DataTableResult<Fish>();
-
+    public DataTablePage<Fish> overview(DataTableParam param) {
+        DataTablePage<Fish> result = new DataTablePage<Fish>();
+        if (StringUtils.isEmpty(param)) {
+            return result;
+        }
+        ResultData content = fishService.queryFishTypeByPage(param);
+        if (content.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result = (DataTablePage<Fish>) content.getData();
+        }
         return result;
     }
 

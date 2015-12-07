@@ -3,13 +3,19 @@ package fishing.sunshine.dao.impl;
 import fishing.sunshine.dao.BaseDao;
 import fishing.sunshine.dao.FishDao;
 import fishing.sunshine.model.Fish;
+import fishing.sunshine.util.DataTablePage;
+import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
+import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sunshine on 11/27/15.
@@ -57,6 +63,37 @@ public class FishDaoImpl extends BaseDao implements FishDao {
             logger.debug(e.toString());
             result.setResponseCode(ResponseCode.RESPONSE_ERROR);
             result.setDescription(e.getMessage());
+        } finally {
+            return result;
+        }
+    }
+
+    @Override
+    public ResultData queryFishByPage(DataTableParam param) {
+        ResultData result = new ResultData();
+        DataTablePage<Fish> page = new DataTablePage<Fish>();
+        page.setDraw(param.getDraw());
+        Fish fish = new Fish();
+        Map<String, String> args = param.getArgs();
+        if (!StringUtils.isEmpty(args) && !StringUtils.isEmpty(args.get("fishName"))) {
+            fish.setFishName(args.get("fishName"));
+        }
+        ResultData total = queryFish(fish);
+        if (result.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(total.getDescription());
+            return result;
+        }
+        page.setRecordsTotal(((ArrayList<Fish>) total.getData()).size());
+        try {
+            List<Fish> list = sqlSession.selectList("fish.queryFish", fish, new RowBounds(param.getStart(), param.getLength()));
+            page.setData(list);
+            result.setData(page);
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+            return result;
         } finally {
             return result;
         }

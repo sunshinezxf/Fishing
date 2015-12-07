@@ -1,6 +1,7 @@
 package fishing.sunshine.dao;
 
 import fishing.sunshine.model.Fish;
+import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.ResultData;
 
 /**
@@ -12,4 +13,6 @@ public interface FishDao {
     ResultData insertFish(Fish fish);
 
     ResultData deleteFish(Fish fish);
+
+    ResultData queryFishByPage(DataTableParam param);
 }
