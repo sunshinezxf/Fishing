@@ -151,7 +151,7 @@
                                 <option>-- 请选择钓场承包人 --</option>
                                 <c:if test="${not empty contractorList}">
                                     <c:forEach var="item" items="${contractorList}" varStatus="no">
-                                        <option>${item.name}(${item.phone})</option>
+                                        <option>${item.name}&nbsp;(&nbsp;${item.phone}&nbsp;)</option>
                                     </c:forEach>
                                 </c:if>
                             </select>

@@ -105,7 +105,7 @@
                         <li><a class="sub-nav" href="${path.concat('/fishman/create')}"><i class="fa fa-edit"></i>
                             添加承包人</a>
                         </li>
-                        <li><a class="sub-nav" href="${path.concat('/fishman/manage')}"><i class="fa fa-tasks"></i>
+                        <li><a class="sub-nav" href="${path.concat('/fishman/overview')}"><i class="fa fa-tasks"></i>
                             承包人概览</a>
                         </li>
                     </ul>
