@@ -17,11 +17,11 @@
           href="${path.concat('/material/plugins/bootstrap-3.3.5-dist/css/bootstrap.css')}"/>
     <link rel="stylesheet" type="text/css"
           href="${path.concat('/material/plugins/Font-Awesome-master/css/font-awesome.css')}"/>
-    <link rel="stylesheet" type="text/css"
-          href="${path.concat('/material/plugins/datatable/css/jquery.dataTables.css')}"/>
+    <link rel="stylesheet" href="${path.concat('/material/plugins/datatable/css/dataTables.bootstrap.css')}"/>
     <link rel="stylesheet" type="text/css"
           href="${path.concat('/material/css/dashboard.css')}"/>
     <link rel="stylesheet" type="text/css" href="${path.concat('/material/css/customize.css')}"/>
+    <link rel="stylesheet" type="text/css" href="${path.concat('/material/css/page.css')}"/>
     <script type="text/javascript"
             src="${path.concat('/material/plugins/jquery/jquery-1.11.3.min.js')}"></script>
     <script type="text/javascript"
@@ -40,24 +40,86 @@
             $("#fish-man-management").collapse('hide');
         });
 
+        Date.prototype.format = function (format) {
+            var o = {
+                "M+": this.getMonth() + 1,
+                // month
+                "d+": this.getDate(),
+                // day
+                "h+": this.getHours(),
+                // hour
+                "m+": this.getMinutes(),
+                // minute
+                "s+": this.getSeconds(),
+                // second
+                "q+": Math.floor((this.getMonth() + 3) / 3),
+                // quarter
+                "S": this.getMilliseconds()
+                // millisecond
+            };
+            if (/(y+)/.test(format) || /(Y+)/.test(format)) {
+                format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            }
+            for (var k in o) {
+                if (new RegExp("(" + k + ")").test(format)) {
+                    format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+                }
+            }
+            return format;
+        };
+
         $(document).ready(function () {
             $("#fish-type-list").DataTable({
                 searching: false,
                 ordering: false,
-                paging: false,
+                paging: true,
                 "sPaginationType": "full_numbers",
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bSort": false,
+                "bDeferRender": true,
+                "bProcessing": true,
+                "bServerSide": true,
+                "bInfoFiltered": false,
+                "sAjaxSource": '${path.concat('/fishtype/overview')}',
+                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    $(nRow).removeClass('dataTable');
+                    $(nRow).css("text-align", "left");
+                    return nRow;
+                },
+                "fnInitComplete": function () {
+                    $("#fish-type-list").removeClass('no-footer');
+                },
+                "fnServerData": function (sSource, aoData, fnCallback) {
+                    $.ajax({
+                        "dataType": "json",
+                        "type": "POST",
+                        "url": sSource,
+                        "data": aoData,
+                        "success": fnCallback
+                    })
+                },
+                "aoColumns": [
+                    {"sTitle": "名称", "sWidth": "10%", "mData": "fishName"},
+                    {
+                        "sTitle": "添加日期", "sWidth": "10%", "mRender": function (data, type, full) {
+                        return ((new Date(full.createAt)).format("yyyy-MM-dd hh:mm:ss"));
+                    }
+                    }
+                ],
                 "oLanguage": {
+                    "sProcessing": "正在加载中",
                     "sLengthMenu": "每页显示 _MENU_ 条记录",
                     "sZeroRecords": "抱歉， 没有找到",
-                    "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
-                    "sInfoEmpty": "没有数据",
-                    "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+                    "sInfo": "从 _START_ 到 _END_, 共 _TOTAL_ 条数据",
+                    "sInfoEmpty": "暂无数据",
+                    "sInfoFiltered": "数据表中共 _MAX_ 条记录)",
                     "sZeroRecords": "没有检索到数据",
                     "sSearch": "名称:",
                     "oPaginate": {
                         "sFirst": "首页",
-                        "sPrevious": "前一页",
-                        "sNext": "后一页",
+                        "sPrevious": "上一页",
+                        "sNext": "下一页",
                         "sLast": "尾页"
                     }
                 }
@@ -142,16 +204,8 @@
         </div>
         <div class="row">
             <div class="col-md-12 col-lg-12">
-                <hr/>
-                <table id="fish-type-list" cellspacing="0" width="100%">
-                    <thead>
-                    <th>编号</th>
-                    <th>名称</th>
-                    <th>添加日期</th>
-                    <th>操作</th>
-                    </thead>
+                <table id="fish-type-list" class="table table-striped table-bordered" cellspacing="1" width="100%">
                 </table>
-                <hr/>
             </div>
         </div>
     </div>

@@ -6,40 +6,49 @@ import java.util.Map;
  * Created by sunshine on 12/7/15.
  */
 public class DataTableParam {
-    private int draw;
-    private int start;
-    private int length;
-    private Map<String, String> args;
+    private int iDisplayStart;
+    private int iDisplayLength;
+    private String sEcho;
+    private Map params;
 
-    public int getDraw() {
-        return draw;
+    public int getiDisplayStart() {
+        return iDisplayStart;
     }
 
-    public void setDraw(int draw) {
-        this.draw = draw;
+    public void setiDisplayStart(int iDisplayStart) {
+        this.iDisplayStart = iDisplayStart;
     }
 
-    public int getStart() {
-        return start;
+    public int getiDisplayLength() {
+        return iDisplayLength;
     }
 
-    public void setStart(int start) {
-        this.start = start;
+    public void setiDisplayLength(int iDisplayLength) {
+        this.iDisplayLength = iDisplayLength;
     }
 
-    public int getLength() {
-        return length;
+    public String getsEcho() {
+        return sEcho;
     }
 
-    public void setLength(int length) {
-        this.length = length;
+    public void setsEcho(String sEcho) {
+        this.sEcho = sEcho;
     }
 
-    public Map<String, String> getArgs() {
-        return args;
+    public void setParams(Map params) {
+        this.params = params;
     }
 
-    public void setArgs(Map<String, String> args) {
-        this.args = args;
+    public Map getParams() {
+        return params;
+    }
+
+    public int getPageNum() {
+        int num = 0;
+        if (getiDisplayStart() != 0) {
+            num = getiDisplayStart() / getiDisplayLength();
+            return num;
+        }
+        return num;
     }
 }

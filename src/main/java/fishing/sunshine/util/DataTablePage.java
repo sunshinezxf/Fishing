@@ -6,25 +6,33 @@ import java.util.List;
  * Created by sunshine on 12/7/15.
  */
 public class DataTablePage<T> {
-    private int draw;
-    private int recordsTotal;
+    private String sEcho;
+    private long iTotalRecords;
+    private long iTotalDisplayRecords;
     private List<T> data;
-    private String error;
 
-    public int getDraw() {
-        return draw;
+    public String getsEcho() {
+        return sEcho;
     }
 
-    public void setDraw(int draw) {
-        this.draw = draw;
+    public void setsEcho(String sEcho) {
+        this.sEcho = sEcho;
     }
 
-    public int getRecordsTotal() {
-        return recordsTotal;
+    public long getiTotalRecords() {
+        return iTotalRecords;
     }
 
-    public void setRecordsTotal(int recordsTotal) {
-        this.recordsTotal = recordsTotal;
+    public void setiTotalRecords(int iTotalRecords) {
+        this.iTotalRecords = iTotalRecords;
+    }
+
+    public long getiTotalDisplayRecords() {
+        return iTotalDisplayRecords;
+    }
+
+    public void setiTotalDisplayRecords(long iTotalDisplayRecords) {
+        this.iTotalDisplayRecords = iTotalDisplayRecords;
     }
 
     public List<T> getData() {
@@ -33,13 +41,5 @@ public class DataTablePage<T> {
 
     public void setData(List<T> data) {
         this.data = data;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
     }
 }

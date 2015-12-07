@@ -72,11 +72,11 @@ public class FishDaoImpl extends BaseDao implements FishDao {
     public ResultData queryFishByPage(DataTableParam param) {
         ResultData result = new ResultData();
         DataTablePage<Fish> page = new DataTablePage<Fish>();
-        page.setDraw(param.getDraw());
+        page.setsEcho(param.getsEcho());
         Fish fish = new Fish();
-        Map<String, String> args = param.getArgs();
+        Map args = param.getParams();
         if (!StringUtils.isEmpty(args) && !StringUtils.isEmpty(args.get("fishName"))) {
-            fish.setFishName(args.get("fishName"));
+            fish.setFishName(String.valueOf(args.get("fishName")));
         }
         ResultData total = queryFish(fish);
         if (result.getResponseCode() != ResponseCode.RESPONSE_OK) {
@@ -84,9 +84,10 @@ public class FishDaoImpl extends BaseDao implements FishDao {
             result.setDescription(total.getDescription());
             return result;
         }
-        page.setRecordsTotal(((ArrayList<Fish>) total.getData()).size());
+        page.setiTotalRecords(((ArrayList<Fish>) total.getData()).size());
+        page.setiTotalDisplayRecords(((ArrayList<Fish>) total.getData()).size());
         try {
-            List<Fish> list = sqlSession.selectList("fish.queryFish", fish, new RowBounds(param.getStart(), param.getLength()));
+            List<Fish> list = sqlSession.selectList("fish.queryFish", fish, new RowBounds(param.getiDisplayStart(), param.getiDisplayLength()));
             page.setData(list);
             result.setData(page);
         } catch (Exception e) {
