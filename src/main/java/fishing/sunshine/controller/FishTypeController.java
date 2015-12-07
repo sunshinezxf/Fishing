@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import fishing.sunshine.form.FishForm;
 import fishing.sunshine.model.Fish;
 import fishing.sunshine.service.FishService;
+import fishing.sunshine.util.DataTableParam;
+import fishing.sunshine.util.DataTableResult;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
 import org.json.JSONObject;
@@ -63,8 +65,10 @@ public class FishTypeController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/overview")
-    public String overview(int draw, int start, int length) {
-        return JSONObject.valueToString(new Object());
+    public DataTableResult<Fish> overview(DataTableParam param) {
+        DataTableResult<Fish> result = new DataTableResult<Fish>();
+
+        return result;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/check")
