@@ -148,7 +148,12 @@
 
                         <div class="col-sm-3">
                             <select class="form-control">
-                                <option>请选择钓场承包人</option>
+                                <option>-- 请选择钓场承包人 --</option>
+                                <c:if test="${not empty contractorList}">
+                                    <c:forEach var="item" items="${contractorList}" varStatus="no">
+                                        <option>${item.name}(${item.phone})</option>
+                                    </c:forEach>
+                                </c:if>
                             </select>
                         </div>
                         <div class="col-sm-8"></div>

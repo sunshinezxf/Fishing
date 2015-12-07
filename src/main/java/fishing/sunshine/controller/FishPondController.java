@@ -1,6 +1,8 @@
 package fishing.sunshine.controller;
 
+import fishing.sunshine.model.Contractor;
 import fishing.sunshine.model.Fish;
+import fishing.sunshine.service.ContractorService;
 import fishing.sunshine.service.FishService;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -25,6 +28,9 @@ public class FishPondController {
     @Autowired
     private FishService fishService;
 
+    @Autowired
+    private ContractorService contractorService;
+
     @RequestMapping(method = RequestMethod.GET, value = "/create")
     public ModelAndView create() {
         ModelAndView view = new ModelAndView();
@@ -32,6 +38,11 @@ public class FishPondController {
         ResultData fishResult = fishService.queryFishType(paramOfFishType);
         if (fishResult.getResponseCode() == ResponseCode.RESPONSE_OK) {
             view.addObject("fishList", fishResult.getData());
+        }
+        Contractor paramOfContractor = new Contractor();
+        ResultData contractorResult = contractorService.queryContractor(paramOfContractor);
+        if (contractorResult.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            view.addObject("contractorList", contractorResult.getData());
         }
         view.setViewName("/management/fish_zone/create");
         return view;

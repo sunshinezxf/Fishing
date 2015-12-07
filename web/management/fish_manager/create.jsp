@@ -128,17 +128,17 @@
             <div class="col-md-12 col-lg-12">
                 <form id="insert-contractor-form" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-1 control-label" for="fish-man-insert">姓名</label>
+                        <label class="col-sm-2 control-label" for="fish-man-insert">承包人姓名</label>
 
-                        <div class="col-sm-9">
+                        <div class="col-sm-8">
                             <input type="text" class="form-control" id="fish-man-insert" name="contracterName"
                                    placeholder="承包人姓名"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-1 control-label" for="fish-man-phone">电话</label>
+                        <label class="col-sm-2 control-label" for="fish-man-phone">承包人电话</label>
 
-                        <div class="col-sm-9">
+                        <div class="col-sm-8">
                             <input type="tel" class="form-control" id="fish-man-phone" name="contracterPhone"
                                    placeholder="承包人电话"/>
                         </div>
