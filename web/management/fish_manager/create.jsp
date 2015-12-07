@@ -75,7 +75,7 @@
                         <li><a class="sub-nav" href="${path.concat('/fishtype/create')}"><i class="fa fa-edit"></i>
                             添加鱼种</a>
                         </li>
-                        <li><a class="sub-nav" href="${path.concat('/fishtype/manage')}"><i class="fa fa-tasks"></i>
+                        <li><a class="sub-nav" href="${path.concat('/fishtype/overview')}"><i class="fa fa-tasks"></i>
                             鱼种概览</a>
                         </li>
                     </ul>
