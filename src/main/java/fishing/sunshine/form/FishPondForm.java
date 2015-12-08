@@ -43,4 +43,92 @@ public class FishPondForm extends SunshineEntity {
         this.thumbnail = request.getFile("pondThumbnail");
         this.introduction = request.getParameter("pondIntroduction");
     }
+
+    public String getPondName() {
+        return pondName;
+    }
+
+    public void setPondName(String pondName) {
+        this.pondName = pondName;
+    }
+
+    public String getContractorId() {
+        return contractorId;
+    }
+
+    public void setContractorId(String contractorId) {
+        this.contractorId = contractorId;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getPondAddress() {
+        return pondAddress;
+    }
+
+    public void setPondAddress(String pondAddress) {
+        this.pondAddress = pondAddress;
+    }
+
+    public String getPondFee() {
+        return pondFee;
+    }
+
+    public void setPondFee(String pondFee) {
+        this.pondFee = pondFee;
+    }
+
+    public boolean isNightable() {
+        return nightable;
+    }
+
+    public void setNightable(boolean nightable) {
+        this.nightable = nightable;
+    }
+
+    public String[] getPondTypes() {
+        return pondTypes;
+    }
+
+    public void setPondTypes(String[] pondTypes) {
+        this.pondTypes = pondTypes;
+    }
+
+    public String[] getFishTypes() {
+        return fishTypes;
+    }
+
+    public void setFishTypes(String[] fishTypes) {
+        this.fishTypes = fishTypes;
+    }
+
+    public MultipartFile getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(MultipartFile thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
 }

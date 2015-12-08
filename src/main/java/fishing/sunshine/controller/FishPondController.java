@@ -3,6 +3,7 @@ package fishing.sunshine.controller;
 import fishing.sunshine.form.FishPondForm;
 import fishing.sunshine.model.Contractor;
 import fishing.sunshine.model.Fish;
+import fishing.sunshine.model.FishPond;
 import fishing.sunshine.model.PondType;
 import fishing.sunshine.service.ContractorService;
 import fishing.sunshine.service.FileUploadService;
@@ -68,6 +69,7 @@ public class FishPondController {
     public ModelAndView create(MultipartHttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         FishPondForm form = new FishPondForm(request);
+        FishPond fishPond = new FishPond(form);
         view.setViewName("redirect:/fishzone/create");
         return view;
     }
