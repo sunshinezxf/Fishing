@@ -2,7 +2,9 @@ package fishing.sunshine.controller;
 
 import fishing.sunshine.model.Contractor;
 import fishing.sunshine.model.Fish;
+import fishing.sunshine.model.PondType;
 import fishing.sunshine.service.ContractorService;
+import fishing.sunshine.service.FishPondService;
 import fishing.sunshine.service.FishService;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
@@ -31,6 +33,9 @@ public class FishPondController {
     @Autowired
     private ContractorService contractorService;
 
+    @Autowired
+    private FishPondService fishPondService;
+
     @RequestMapping(method = RequestMethod.GET, value = "/create")
     public ModelAndView create() {
         ModelAndView view = new ModelAndView();
@@ -43,6 +48,11 @@ public class FishPondController {
         ResultData contractorResult = contractorService.queryContractor(paramOfContractor);
         if (contractorResult.getResponseCode() == ResponseCode.RESPONSE_OK) {
             view.addObject("contractorList", contractorResult.getData());
+        }
+        PondType type = new PondType();
+        ResultData typeResult = fishPondService.queryFishPondType(type);
+        if (typeResult.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            view.addObject("typeList", typeResult.getData());
         }
         view.setViewName("/management/fish_zone/create");
         return view;

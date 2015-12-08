@@ -122,7 +122,7 @@
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <div class="row">
             <div class="col-md-12 col-lg-12">
-                <h1><i class="fa fa-home"></i> 鱼种管理 </h1>
+                <h1><i class="fa fa-home"></i> 渔场管理 </h1>
                 <ol class="breadcrumb">
                     <li><a href="${path.concat('/dashboard')}">首页</a></li>
                     <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-zone-management">渔场管理</a></li>
@@ -202,6 +202,24 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-2 control-label">渔场类型</label>
+
+                        <div class="col-sm-8">
+                            <c:if test="${not empty typeList}">
+                                <c:forEach var="item" items="${typeList}" varStatus="no">
+                                    <c:if test="${no.index % 5 == 0}">
+                                        <div class="form-group col-sm-12"> </c:if>
+                                    <label class="checkbox-inline col-sm-2">
+                                        <input type="checkbox" id="${item.pondTypeId}"
+                                               value="${item.pondTypeId}"> <span
+                                            for="${item.pondTypeId}">${item.pondTypeName}</span>
+                                    </label>
+                                    <c:if test="${no.index % 5 == 4 or no.last}"></div></c:if>
+                                </c:forEach>
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-2 control-label">主要鱼种</label>
 
                         <div class="col-sm-8">
@@ -239,11 +257,13 @@
                         <label class="col-sm-2 control-label">钓场简介</label>
 
                         <div class="col-sm-9">
-                            <textarea id="pond-introduction" name="pondIntroduction" class="form-control"></textarea>
+                                <textarea id="pond-introduction" name="pondIntroduction"
+                                          class="form-control"></textarea>
                         </div>
                     </div>
                     <hr/>
-                    <button type="submit" id="confirm-zone" class="btn btn-primary btn-group-sm col-sm-1">添加</button>
+                    <button type="submit" id="confirm-zone" class="btn btn-primary btn-group-sm col-sm-1">添加
+                    </button>
                 </form>
             </div>
         </div>
