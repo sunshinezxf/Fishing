@@ -69,7 +69,14 @@ public class FishPondController {
     public ModelAndView create(MultipartHttpServletRequest request) {
         ModelAndView view = new ModelAndView();
         FishPondForm form = new FishPondForm(request);
+        String context = request.getSession().getServletContext().getRealPath("/");
+        ResultData saveThumbnail = fileUploadService.uploadPicture(form.getThumbnail(), context);
+        if (saveThumbnail.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            view.setViewName("redirect:/fishzone/create");
+            return view;
+        }
         FishPond fishPond = new FishPond(form);
+        fishPond.setThumbnail(String.valueOf(saveThumbnail.getData()));
         view.setViewName("redirect:/fishzone/create");
         return view;
     }

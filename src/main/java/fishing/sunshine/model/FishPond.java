@@ -17,11 +17,11 @@ public class FishPond extends SunshineEntity {
     private String fishPondAddress;
     private double fishPondFee;
     private boolean nightable;
-    private List<PondType> pondTypes;
-    private List<Fish> fishes;
-    private MultipartFile thumbnail;
+    private String thumbnail;
     private String introduction;
     private Contractor contractor;
+    private List<PondType> pondTypes;
+    private List<Fish> fishes;
 
     public FishPond() {
         super();
@@ -46,7 +46,6 @@ public class FishPond extends SunshineEntity {
             fish.setFishId(item);
             fishes.add(fish);
         }
-        this.thumbnail = form.getThumbnail();
         this.introduction = form.getIntroduction();
         Contractor contractor = new Contractor();
         contractor.setContractorId(form.getContractorId());
@@ -125,11 +124,11 @@ public class FishPond extends SunshineEntity {
         this.fishes = fishes;
     }
 
-    public MultipartFile getThumbnail() {
+    public String getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(MultipartFile thumbnail) {
+    public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
 
