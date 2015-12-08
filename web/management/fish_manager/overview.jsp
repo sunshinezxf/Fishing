@@ -40,6 +40,65 @@
             $("#fish-zone-management").collapse('hide');
             $("#fish-man-management").collapse('show');
         });
+
+        $(document).ready(function () {
+            $("#fish-man-list").DataTable({
+                searching: false,
+                ordering: false,
+                paging: true,
+                "sPaginationType": "full_numbers",
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bSort": false,
+                "bDeferRender": true,
+                "bProcessing": true,
+                "bServerSide": true,
+                "bInfoFiltered": false,
+                "sAjaxSource": '${path.concat('/fishman/overview')}',
+                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    $(nRow).removeClass('dataTable');
+                    $(nRow).css("text-align", "left");
+                    return nRow;
+                },
+                "fnInitComplete": function () {
+                    $("#fish-man-list").removeClass('no-footer');
+                },
+                "fnServerData": function (sSource, aoData, fnCallback) {
+                    $.ajax({
+                        "dataType": "json",
+                        "type": "POST",
+                        "url": sSource,
+                        "data": aoData,
+                        "success": fnCallback
+                    })
+                },
+                "aoColumns": [
+                    {"sTitle": "名称", "sWidth": "10%", "mData": "name"},
+                    {"sTitle": "电话", "sWidth": "10%", "mData": "phone"},
+                    {
+                        "sTitle": "添加日期", "sWidth": "10%", "mRender": function (data, type, full) {
+                        return ((new Date(full.createAt)).format("yyyy-MM-dd hh:mm:ss"));
+                    }
+                    }
+                ],
+                "oLanguage": {
+                    "sProcessing": "正在加载中",
+                    "sLengthMenu": "每页显示 _MENU_ 条记录",
+                    "sZeroRecords": "抱歉， 没有找到",
+                    "sInfo": "从 _START_ 到 _END_, 共 _TOTAL_ 条数据",
+                    "sInfoEmpty": "暂无数据",
+                    "sInfoFiltered": "数据表中共 _MAX_ 条记录)",
+                    "sZeroRecords": "没有检索到数据",
+                    "sSearch": "名称:",
+                    "oPaginate": {
+                        "sFirst": "首页",
+                        "sPrevious": "上一页",
+                        "sNext": "下一页",
+                        "sLast": "尾页"
+                    }
+                }
+            });
+        })
     </script>
 </head>
 <body>
@@ -115,6 +174,12 @@
                     </li>
                     <li class="active">承包人概览</li>
                 </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <table id="fish-man-list" class="table table-striped table-bordered" cellspacing="1" width="100%">
+                </table>
             </div>
         </div>
     </div>
