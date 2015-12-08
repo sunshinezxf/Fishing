@@ -1,9 +1,11 @@
 package fishing.sunshine.controller;
 
+import fishing.sunshine.form.FishPondForm;
 import fishing.sunshine.model.Contractor;
 import fishing.sunshine.model.Fish;
 import fishing.sunshine.model.PondType;
 import fishing.sunshine.service.ContractorService;
+import fishing.sunshine.service.FileUploadService;
 import fishing.sunshine.service.FishPondService;
 import fishing.sunshine.service.FishService;
 import fishing.sunshine.util.ResponseCode;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.lang.reflect.Array;
@@ -36,6 +39,9 @@ public class FishPondController {
     @Autowired
     private FishPondService fishPondService;
 
+    @Autowired
+    private FileUploadService fileUploadService;
+
     @RequestMapping(method = RequestMethod.GET, value = "/create")
     public ModelAndView create() {
         ModelAndView view = new ModelAndView();
@@ -55,6 +61,14 @@ public class FishPondController {
             view.addObject("typeList", typeResult.getData());
         }
         view.setViewName("/management/fish_zone/create");
+        return view;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/create")
+    public ModelAndView create(MultipartHttpServletRequest request) {
+        ModelAndView view = new ModelAndView();
+        FishPondForm form = new FishPondForm(request);
+        view.setViewName("redirect:/fishzone/create");
         return view;
     }
 }

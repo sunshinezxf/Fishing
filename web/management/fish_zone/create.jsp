@@ -52,6 +52,26 @@
                 lang: "zh-CN",
                 height: 280
             });
+
+            $("#confirm-zone").click(function (e) {
+                var introduction = $("#pond-introduction").code();
+                $("#pond-introduction").attr("value", introduction);
+                console.debug(introduction);
+
+                //1st step, verify input
+                console.debug($("#fish-zone-name").val());
+                console.debug($("#fish-pond-manager").val());
+                console.debug($("#zone-longitude").val());
+                console.debug($("#zone-latitude").val());
+                //2nd step, construct the form
+                var url = "${path.concat('/fishzone/create')}"
+                $("#insert-fishzone-form").attr("action", url);
+                $("#insert-fishzone-form").attr("method", "post");
+                $("#insert-fishzone-form").attr("enctype", "multipart/form-data");
+
+                //3rd step, submit the form
+                $("#insert-fishzone-form").submit();
+            });
         });
     </script>
 </head>
@@ -139,7 +159,7 @@
 
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="fish-zone-name" name="pondName"
-                                   placeholder="渔场名称"/>
+                                   placeholder="渔场名称" required="" autocomplete="off"/>
                         </div>
                         <button type="button" class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
                     </div>
@@ -147,11 +167,11 @@
                         <label class="col-sm-2 control-label">承包人</label>
 
                         <div class="col-sm-3">
-                            <select class="form-control">
+                            <select class="form-control" id="fish-pond-manager" name="contractorId">
                                 <option>-- 请选择钓场承包人 --</option>
                                 <c:if test="${not empty contractorList}">
                                     <c:forEach var="item" items="${contractorList}" varStatus="no">
-                                        <option>${item.name}&nbsp;(&nbsp;${item.phone}&nbsp;)</option>
+                                        <option value="${item.contractorId}">${item.name}&nbsp;(&nbsp;${item.phone}&nbsp;)</option>
                                     </c:forEach>
                                 </c:if>
                             </select>
@@ -177,7 +197,7 @@
 
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="fish-zone-address" name="pondAddress"
-                                   placeholder="钓场地址简介"/>
+                                   placeholder="钓场地址简介" required="" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -210,7 +230,7 @@
                                     <c:if test="${no.index % 5 == 0}">
                                         <div class="form-group col-sm-12"> </c:if>
                                     <label class="checkbox-inline col-sm-2">
-                                        <input type="checkbox" id="${item.pondTypeId}"
+                                        <input type="checkbox" id="${item.pondTypeId}" name="pondType"
                                                value="${item.pondTypeId}"> <span
                                             for="${item.pondTypeId}">${item.pondTypeName}</span>
                                     </label>
@@ -227,7 +247,7 @@
                                 <c:forEach var="item" items="${fishList}" varStatus="no">
                                     <c:if test="${no.index % 5 == 0}"><div class="form-group col-sm-12"> </c:if>
                                     <label class="checkbox-inline col-sm-2">
-                                        <input type="checkbox" id="${item.fishId}"
+                                        <input type="checkbox" id="${item.fishId}" name="fishType"
                                                value="${item.fishId}"> <span
                                             for="${item.fishId}">${item.fishName}</span>
                                     </label>

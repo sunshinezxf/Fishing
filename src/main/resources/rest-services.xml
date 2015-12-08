@@ -8,4 +8,6 @@
     <bean id="fishPondService" class="fishing.sunshine.service.impl.FishPondServiceImpl"></bean>
 
     <bean id="contractorService" class="fishing.sunshine.service.impl.ContractorServiceImpl"></bean>
+
+    <bean id="fileUploadService" class="fishing.sunshine.service.impl.FileUploadServiceImpl"></bean>
 </beans>
