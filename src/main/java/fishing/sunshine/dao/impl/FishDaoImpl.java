@@ -79,7 +79,7 @@ public class FishDaoImpl extends BaseDao implements FishDao {
             fish.setFishName(String.valueOf(args.get("fishName")));
         }
         ResultData total = queryFish(fish);
-        if (result.getResponseCode() != ResponseCode.RESPONSE_OK) {
+        if (total.getResponseCode() != ResponseCode.RESPONSE_OK) {
             result.setResponseCode(ResponseCode.RESPONSE_ERROR);
             result.setDescription(total.getDescription());
             return result;

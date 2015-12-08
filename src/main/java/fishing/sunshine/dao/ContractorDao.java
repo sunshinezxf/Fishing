@@ -1,6 +1,7 @@
 package fishing.sunshine.dao;
 
 import fishing.sunshine.model.Contractor;
+import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.ResultData;
 
 /**
@@ -10,4 +11,6 @@ public interface ContractorDao {
     ResultData insertContractor(Contractor contractor);
 
     ResultData queryContractor(Contractor contractor);
+
+    ResultData queryContractorByPage(DataTableParam param);
 }
