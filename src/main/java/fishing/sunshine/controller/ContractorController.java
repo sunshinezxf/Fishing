@@ -3,11 +3,14 @@ package fishing.sunshine.controller;
 import fishing.sunshine.form.ContracterForm;
 import fishing.sunshine.model.Contractor;
 import fishing.sunshine.service.ContractorService;
+import fishing.sunshine.util.DataTablePage;
+import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,5 +65,18 @@ public class ContractorController {
         ModelAndView view = new ModelAndView();
         view.setViewName("management/fish_manager/overview");
         return view;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/overview")
+    public DataTablePage<Contractor> overview(DataTableParam param) {
+        DataTablePage<Contractor> result = new DataTablePage<Contractor>();
+        if (StringUtils.isEmpty(param)) {
+            return result;
+        }
+        ResultData content = contractorService.queryContractorByPage(param);
+        if (content.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result = (DataTablePage<Contractor>) content.getData();
+        }
+        return result;
     }
 }
