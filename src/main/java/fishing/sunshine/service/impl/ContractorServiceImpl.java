@@ -3,6 +3,7 @@ package fishing.sunshine.service.impl;
 import fishing.sunshine.dao.ContractorDao;
 import fishing.sunshine.model.Contractor;
 import fishing.sunshine.service.ContractorService;
+import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.IDGenerator;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
@@ -45,6 +46,19 @@ public class ContractorServiceImpl implements ContractorService {
             if (((ArrayList<Contractor>) query.getData()).size() == 0) {
                 result.setResponseCode(ResponseCode.RESPONSE_NULL);
             }
+        } else {
+            result.setDescription(query.getDescription());
+        }
+        return result;
+    }
+
+    @Override
+    public ResultData queryContractorByPage(DataTableParam param) {
+        ResultData result = new ResultData();
+        ResultData query = contractorDao.queryContractorByPage(param);
+        result.setResponseCode(query.getResponseCode());
+        if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(query.getData());
         } else {
             result.setDescription(query.getDescription());
         }
