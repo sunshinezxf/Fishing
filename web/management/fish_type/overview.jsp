@@ -32,6 +32,7 @@
     <script type="text/javascript"
             src="${path.concat('/material/plugins/datatable/js/dataTables.bootstrap.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/dashboard.js')}"></script>
+    <script type="text/javascript" src="${path.concat('/material/js/date.js')}"></script>
     <title>鱼种概览</title>
     <script>
         $(function () {
@@ -39,34 +40,6 @@
             $("#fish-zone-management").collapse('hide');
             $("#fish-man-management").collapse('hide');
         });
-
-        Date.prototype.format = function (format) {
-            var o = {
-                "M+": this.getMonth() + 1,
-                // month
-                "d+": this.getDate(),
-                // day
-                "h+": this.getHours(),
-                // hour
-                "m+": this.getMinutes(),
-                // minute
-                "s+": this.getSeconds(),
-                // second
-                "q+": Math.floor((this.getMonth() + 3) / 3),
-                // quarter
-                "S": this.getMilliseconds()
-                // millisecond
-            };
-            if (/(y+)/.test(format) || /(Y+)/.test(format)) {
-                format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            }
-            for (var k in o) {
-                if (new RegExp("(" + k + ")").test(format)) {
-                    format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
-                }
-            }
-            return format;
-        };
 
         $(document).ready(function () {
             $("#fish-type-list").DataTable({
@@ -182,7 +155,7 @@
                         <li><a class="sub-nav" href="${path.concat('/fishman/create')}"><i class="fa fa-edit"></i>
                             添加承包人</a>
                         </li>
-                        <li><a class="sub-nav" href="${path.concat('/fishman/manage')}"><i class="fa fa-tasks"></i>
+                        <li><a class="sub-nav" href="${path.concat('/fishman/overview')}"><i class="fa fa-tasks"></i>
                             承包人概览</a>
                         </li>
                     </ul>

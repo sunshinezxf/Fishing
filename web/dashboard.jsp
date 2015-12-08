@@ -74,7 +74,7 @@
                         <li><a class="sub-nav" href="${path.concat('/fishzone/create')}"><i class="fa fa-edit"></i>
                             添加钓场</a>
                         </li>
-                        <li><a class="sub-nav" href="${path.concat('/fishzone/manage')}"><i class="fa fa-tasks"></i>
+                        <li><a class="sub-nav" href="${path.concat('/fishzone/overview')}"><i class="fa fa-tasks"></i>
                             钓场概览</a>
                         </li>
                         <li><a class="sub-nav" href="${path.concat('/zonetype/create')}"><i class="fa fa-edit"></i>
@@ -92,7 +92,7 @@
                         <li><a class="sub-nav" href="${path.concat('/fishman/create')}"><i class="fa fa-edit"></i>
                             添加承包人</a>
                         </li>
-                        <li><a class="sub-nav" href="${path.concat('/fishman/manage')}"><i class="fa fa-tasks"></i>
+                        <li><a class="sub-nav" href="${path.concat('/fishman/overview')}"><i class="fa fa-tasks"></i>
                             承包人概览</a>
                         </li>
                     </ul>
