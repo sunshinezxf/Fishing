@@ -3,6 +3,7 @@ package fishing.sunshine.service.impl;
 import fishing.sunshine.dao.PondTypeDao;
 import fishing.sunshine.model.PondType;
 import fishing.sunshine.service.FishPondService;
+import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.IDGenerator;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
@@ -43,6 +44,19 @@ public class FishPondServiceImpl implements FishPondService {
             if (((ArrayList<PondType>) result.getData()).size() == 0) {
                 result.setResponseCode(ResponseCode.RESPONSE_NULL);
             }
+        } else {
+            result.setDescription(query.getDescription());
+        }
+        return result;
+    }
+
+    @Override
+    public ResultData queryFishPondTypeByPage(DataTableParam param) {
+        ResultData result = new ResultData();
+        ResultData query = pondTypeDao.queryPondTypeByPage(param);
+        result.setResponseCode(query.getResponseCode());
+        if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(query.getData());
         } else {
             result.setDescription(query.getDescription());
         }

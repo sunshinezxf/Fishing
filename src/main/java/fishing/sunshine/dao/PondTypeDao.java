@@ -1,6 +1,7 @@
 package fishing.sunshine.dao;
 
 import fishing.sunshine.model.PondType;
+import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.ResultData;
 
 /**
@@ -10,4 +11,6 @@ public interface PondTypeDao {
     ResultData insertPondType(PondType type);
 
     ResultData queryPondType(PondType type);
+
+    ResultData queryPondTypeByPage(DataTableParam param);
 }

@@ -94,7 +94,6 @@ public class FishDaoImpl extends BaseDao implements FishDao {
             logger.debug(e.getMessage());
             result.setResponseCode(ResponseCode.RESPONSE_ERROR);
             result.setDescription(e.getMessage());
-            return result;
         } finally {
             return result;
         }

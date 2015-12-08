@@ -1,6 +1,7 @@
 package fishing.sunshine.service;
 
 import fishing.sunshine.model.PondType;
+import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.ResultData;
 
 /**
@@ -10,4 +11,6 @@ public interface FishPondService {
     ResultData addFishPondType(PondType type);
 
     ResultData queryFishPondType(PondType type);
+
+    ResultData queryFishPondTypeByPage(DataTableParam param);
 }
