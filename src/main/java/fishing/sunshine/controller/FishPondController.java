@@ -9,6 +9,8 @@ import fishing.sunshine.service.ContractorService;
 import fishing.sunshine.service.FileUploadService;
 import fishing.sunshine.service.FishPondService;
 import fishing.sunshine.service.FishService;
+import fishing.sunshine.util.DataTablePage;
+import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
 import org.slf4j.Logger;
@@ -84,5 +86,19 @@ public class FishPondController {
         }
         view.setViewName("redirect:/fishzone/overview");
         return view;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/overview")
+    public ModelAndView overview() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("/management/fish_zone/overview");
+        return view;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/overview")
+    public DataTablePage<FishPond> overview(DataTableParam param) {
+        DataTablePage<FishPond> result = new DataTablePage<FishPond>();
+
+        return result;
     }
 }
