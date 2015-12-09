@@ -77,7 +77,12 @@ public class FishPondController {
         }
         FishPond fishPond = new FishPond(form);
         fishPond.setThumbnail(String.valueOf(saveThumbnail.getData()));
-        view.setViewName("redirect:/fishzone/create");
+        ResultData createResult = fishPondService.addFishPond(fishPond);
+        if (createResult.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            view.setViewName("redirect:/fishzone/create");
+            return view;
+        }
+        view.setViewName("redirect:/fishzone/overview");
         return view;
     }
 }

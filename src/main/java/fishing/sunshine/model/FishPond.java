@@ -11,7 +11,6 @@ import java.util.List;
 public class FishPond extends SunshineEntity {
     private String fishPondId;
     private String fishPondName;
-    private String fish_zone_thumbnail;
     private String introduction;
     private double fishPondFee;
     private boolean nightable;
@@ -66,14 +65,6 @@ public class FishPond extends SunshineEntity {
 
     public void setFishPondName(String fishPondName) {
         this.fishPondName = fishPondName;
-    }
-
-    public String getFish_zone_thumbnail() {
-        return fish_zone_thumbnail;
-    }
-
-    public void setFish_zone_thumbnail(String fish_zone_thumbnail) {
-        this.fish_zone_thumbnail = fish_zone_thumbnail;
     }
 
     public double getLongitude() {

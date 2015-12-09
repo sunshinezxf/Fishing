@@ -45,7 +45,7 @@
     <insert id="insertFishPond" parameterType="fishing.sunshine.model.FishPond" useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO fish_zone(fish_zone_id, fish_zone_name, fish_zone_thumbnail, fish_zone_intro, fish_zone_charge, fish_zone_night_enable, fish_zone_longitude, fish_zone_latitude, fish_zone_address_description, fish_man_id, create_time, del_flag)
-        VALUES (#{fishPondId}, #{fishPondName}, #{thumbnail}, #{introduction}, #{fishPondFee}, #{nightable}, #{longitude}, #{latitude}, #{fishPondAddress}, #{createAt}, #{contractor.contractorId}, #{delFlag})
+        VALUES (#{fishPondId}, #{fishPondName}, #{thumbnail}, #{introduction}, #{fishPondFee}, #{nightable}, #{longitude}, #{latitude}, #{fishPondAddress}, #{contractor.contractorId}, #{createAt}, #{delFlag})
     </insert>
 
     <!-- 插入渔场和浴场类型关联 -->

@@ -1,12 +1,16 @@
 package fishing.sunshine.service.impl;
 
+import fishing.sunshine.dao.FishPondDao;
 import fishing.sunshine.dao.PondTypeDao;
+import fishing.sunshine.model.FishPond;
 import fishing.sunshine.model.PondType;
 import fishing.sunshine.service.FishPondService;
 import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.IDGenerator;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +21,13 @@ import java.util.ArrayList;
  */
 @Service("FishPondService")
 public class FishPondServiceImpl implements FishPondService {
+    private Logger logger = LoggerFactory.getLogger(FishPondServiceImpl.class);
+
     @Autowired
     private PondTypeDao pondTypeDao;
+
+    @Autowired
+    private FishPondDao fishPondDao;
 
     @Override
     public ResultData addFishPondType(PondType type) {
@@ -59,6 +68,21 @@ public class FishPondServiceImpl implements FishPondService {
             result.setData(query.getData());
         } else {
             result.setDescription(query.getDescription());
+        }
+        return result;
+    }
+
+    @Override
+    public ResultData addFishPond(FishPond fishPond) {
+        ResultData result = new ResultData();
+        fishPond.setFishPondId(IDGenerator.generate("FPD"));
+        ResultData insert = fishPondDao.insertFishPond(fishPond);
+        result.setResponseCode(insert.getResponseCode());
+        if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(fishPond);
+        } else {
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(insert.getDescription());
         }
         return result;
     }

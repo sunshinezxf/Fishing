@@ -30,7 +30,7 @@ public class PondTypeDaoImpl extends BaseDao implements PondTypeDao {
     public ResultData insertPondType(PondType type) {
         ResultData result = new ResultData();
         try {
-            sqlSession.insert("pond.insertPondType", type);
+            sqlSession.insert("type.insertPondType", type);
         } catch (Exception e) {
             logger.debug(e.getMessage());
             result.setResponseCode(ResponseCode.RESPONSE_ERROR);
@@ -44,7 +44,7 @@ public class PondTypeDaoImpl extends BaseDao implements PondTypeDao {
     public ResultData queryPondType(PondType type) {
         ResultData result = new ResultData();
         try {
-            List<PondType> list = sqlSession.selectList("pond.queryPondType", type);
+            List<PondType> list = sqlSession.selectList("type.queryPondType", type);
             result.setData(list);
         } catch (Exception e) {
             logger.debug(e.getMessage());
@@ -74,7 +74,7 @@ public class PondTypeDaoImpl extends BaseDao implements PondTypeDao {
         page.setiTotalRecords(((ArrayList<PondType>) total.getData()).size());
         page.setiTotalDisplayRecords(((ArrayList<PondType>) total.getData()).size());
         try {
-            List<PondType> list = sqlSession.selectList("pond.queryPondType", type, new RowBounds(param.getiDisplayStart(), param.getiDisplayLength()));
+            List<PondType> list = sqlSession.selectList("type.queryPondType", type, new RowBounds(param.getiDisplayStart(), param.getiDisplayLength()));
             page.setData(list);
             result.setData(page);
         } catch (Exception e) {
