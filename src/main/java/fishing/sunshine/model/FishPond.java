@@ -1,7 +1,6 @@
 package fishing.sunshine.model;
 
 import fishing.sunshine.form.FishPondForm;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +11,14 @@ import java.util.List;
 public class FishPond extends SunshineEntity {
     private String fishPondId;
     private String fishPondName;
+    private String fish_zone_thumbnail;
+    private String introduction;
+    private double fishPondFee;
+    private boolean nightable;
     private double longitude;
     private double latitude;
     private String fishPondAddress;
-    private double fishPondFee;
-    private boolean nightable;
     private String thumbnail;
-    private String introduction;
     private Contractor contractor;
     private List<PondType> pondTypes;
     private List<Fish> fishes;
@@ -66,6 +66,14 @@ public class FishPond extends SunshineEntity {
 
     public void setFishPondName(String fishPondName) {
         this.fishPondName = fishPondName;
+    }
+
+    public String getFish_zone_thumbnail() {
+        return fish_zone_thumbnail;
+    }
+
+    public void setFish_zone_thumbnail(String fish_zone_thumbnail) {
+        this.fish_zone_thumbnail = fish_zone_thumbnail;
     }
 
     public double getLongitude() {

@@ -7,6 +7,7 @@ import fishing.sunshine.form.PondTypeForm;
  */
 public class PondType extends SunshineEntity {
     private String pondTypeId;
+    
     private String pondTypeName;
 
     public PondType() {
