@@ -16,4 +16,6 @@ public interface FishPondService {
     ResultData queryFishPondTypeByPage(DataTableParam param);
 
     ResultData addFishPond(FishPond fishPond);
+
+    ResultData queryFishPond(FishPond fishPond);
 }

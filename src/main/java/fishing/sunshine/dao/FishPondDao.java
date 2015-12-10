@@ -1,6 +1,7 @@
 package fishing.sunshine.dao;
 
 import fishing.sunshine.model.FishPond;
+import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.ResultData;
 
 /**
@@ -8,4 +9,8 @@ import fishing.sunshine.util.ResultData;
  */
 public interface FishPondDao {
     ResultData insertFishPond(FishPond fishPond);
+
+    ResultData queryFishPond(FishPond fishPond);
+
+    ResultData queryFishPondByPage(DataTableParam param);
 }

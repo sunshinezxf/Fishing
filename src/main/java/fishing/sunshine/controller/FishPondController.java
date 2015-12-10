@@ -16,6 +16,7 @@ import fishing.sunshine.util.ResultData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,6 +80,11 @@ public class FishPondController {
         }
         FishPond fishPond = new FishPond(form);
         fishPond.setThumbnail(String.valueOf(saveThumbnail.getData()));
+        ResultData exist = fishPondService.queryFishPond(fishPond);
+        if (exist.getResponseCode() != ResponseCode.RESPONSE_NULL) {
+            view.setViewName("redirect:/fishzone/create");
+            return view;
+        }
         ResultData createResult = fishPondService.addFishPond(fishPond);
         if (createResult.getResponseCode() != ResponseCode.RESPONSE_OK) {
             view.setViewName("redirect:/fishzone/create");
@@ -98,7 +104,10 @@ public class FishPondController {
     @RequestMapping(method = RequestMethod.POST, value = "/overview")
     public DataTablePage<FishPond> overview(DataTableParam param) {
         DataTablePage<FishPond> result = new DataTablePage<FishPond>();
-
+        if (StringUtils.isEmpty(param)) {
+            return result;
+        }
+        
         return result;
     }
 }

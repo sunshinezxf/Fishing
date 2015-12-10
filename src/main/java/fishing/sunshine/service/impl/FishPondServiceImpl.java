@@ -86,4 +86,20 @@ public class FishPondServiceImpl implements FishPondService {
         }
         return result;
     }
+
+    @Override
+    public ResultData queryFishPond(FishPond fishPond) {
+        ResultData result = new ResultData();
+        ResultData query = fishPondDao.queryFishPond(fishPond);
+        result.setResponseCode(query.getResponseCode());
+        if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(query.getData());
+            if (((ArrayList<FishPond>) query.getData()).size() == 0) {
+                result.setResponseCode(ResponseCode.RESPONSE_NULL);
+            }
+        } else {
+            result.setDescription(query.getDescription());
+        }
+        return result;
+    }
 }
