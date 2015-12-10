@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sunshine on 12/3/15.
@@ -129,7 +130,12 @@ public class FishPondController {
             view.setViewName("/error");
             return view;
         }
-        view.addObject("fishPond", fishPond);
+        List<FishPond> list = (List<FishPond>) content.getData();
+        if (list.size() != 1) {
+            view.setViewName("/error");
+            return view;
+        }
+        view.addObject("fishPond", list.get(0));
         view.setViewName("/client/fish_pond/view");
         return view;
     }

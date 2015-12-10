@@ -17,11 +17,11 @@
           href="${path.concat('/material/plugins/bootstrap-3.3.5-dist/css/bootstrap.css')}"/>
     <link rel="stylesheet" type="text/css"
           href="${path.concat('/material/plugins/Font-Awesome-master/css/font-awesome.css')}"/>
-    <link rel="stylesheet" type="text/css"
-          href="${path.concat('/material/plugins/datatable/css/jquery.dataTables.css')}"/>
+    <link rel="stylesheet" href="${path.concat('/material/plugins/datatable/css/dataTables.bootstrap.css')}"/>
     <link rel="stylesheet" type="text/css"
           href="${path.concat('/material/css/dashboard.css')}"/>
     <link rel="stylesheet" type="text/css" href="${path.concat('/material/css/customize.css')}"/>
+    <link rel="stylesheet" type="text/css" href="${path.concat('/material/css/page.css')}"/>
     <script type="text/javascript"
             src="${path.concat('/material/plugins/jquery/jquery-1.11.3.min.js')}"></script>
     <script type="text/javascript"
@@ -172,7 +172,7 @@
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <div class="row">
             <div class="col-md-12 col-lg-12">
-                <h1><i class="fa fa-home"></i> 鱼种管理 </h1>
+                <h1><i class="fa fa-home"></i> 承包人管理 </h1>
                 <ol class="breadcrumb">
                     <li><a href="${path.concat('/dashboard')}">首页</a></li>
                     <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-man-management">承包人管理</a>

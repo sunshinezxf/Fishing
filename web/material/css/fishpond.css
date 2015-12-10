@@ -1,0 +1,25 @@
+h4 {
+    margin-bottom: 5px
+}
+
+.h6 {
+    display: inline;
+    padding: .3em .6em .3em 0;
+}
+
+.col-sm-1 {
+    padding: 0;
+    width: 5%;
+}
+
+.pond-fee, .pond-type, .pond-feature {
+    margin: 0.3em 0;
+}
+
+.pond-introduction {
+    margin: 0.6em 0;
+}
+
+.introduction {
+    padding: 0.2em 0.2em;
+}

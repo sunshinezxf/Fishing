@@ -201,7 +201,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="fish-zone-fee">收费(元/小时)</label>
+                        <label class="col-sm-2 control-label" for="fish-zone-fee">收费(元/斤)</label>
 
                         <div class="col-sm-8">
                             <input type="number" class="form-control" id="fish-zone-fee" name="pondFee"
