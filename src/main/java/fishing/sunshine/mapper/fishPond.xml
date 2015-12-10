@@ -1,43 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pond">
-
     <resultMap id="fishVo" type="fishing.sunshine.model.Fish">
-        <result property="fishId" column="ft.fish_type_id"></result>
-        <result property="fishName" column="ft.fish_type_name"></result>
-        <result property="createAt" column="ft.create_time"></result>
+        <result property="fishId" column="fish_type_id"></result>
+        <result property="fishName" column="fish_type_name"></result>
+        <result property="createAt" column="create_time"></result>
     </resultMap>
 
     <resultMap id="pondTypeVo" type="fishing.sunshine.model.PondType">
-        <result property="pondTypeId" column="fzt.fish_zone_type_id"></result>
-        <result property="pondTypeName" column="fzt.fish_zone_type_name"></result>
-        <result property="createAt" column="fzt.create_time"></result>
+        <result property="pondTypeId" column="fish_zone_type_id"></result>
+        <result property="pondTypeName" column="fish_zone_type_name"></result>
+        <result property="createAt" column="create_time"></result>
     </resultMap>
 
     <resultMap id="contractorVo" type="fishing.sunshine.model.Contractor">
-        <result property="contractorId" column="fm.fish_man_id"></result>
-        <result property="name" column="fm.fish_man_name"></result>
-        <result property="phone" column="fm.fish_man_tel"></result>
-        <result property="createAt" column="fm.create_time"></result>
+        <result property="contractorId" column="fish_man_id"></result>
+        <result property="name" column="fish_man_name"></result>
+        <result property="phone" column="fish_man_tel"></result>
+        <result property="createAt" column="create_time"></result>
     </resultMap>
 
     <resultMap id="fishPondVo" type="fishing.sunshine.model.FishPond">
-        <result property="fishPondId" column="fz.fish_zone_id"></result>
-        <result property="fishPondName" column="fz.fish_zone_name"></result>
-        <result property="thumbnail" column="fz.fish_zone_thumbnail"></result>
-        <result property="introduction" column="fz.fish_zone_intro"></result>
-        <result property="fishPondFee" column="fz.fish_zone_charge"></result>
-        <result property="nightable" column="fz.fish_zone_night_enable"></result>
-        <result property="longitude" column="fz.fish_zone_longitude"></result>
-        <result property="latitude" column="fz.fish_zone_latitude"></result>
-        <result property="fishPondAddress" column="fz.fish_zone_address_description"></result>
-        <result property="createAt" column="fz.create_time"></result>
-        <association property="contractor" column="fm.fish_man_id" javaType="fishing.sunshine.model.Contractor"
-                     resultMap="contractorVo"></association>
-        <collection property="pondTypes" column="fzt.fish_zone_type_id"
-                    ofType="fishing.sunshine.model.PondType" javaType="ArrayList"></collection>
-        <collection property="fishes" column="ft.fish_type_id" ofType="fishing.sunshine.model.Fish"
-                    javaType="ArrayList"></collection>
+        <result property="fishPondId" column="fish_zone_id"></result>
+        <result property="fishPondName" column="fish_zone_name"></result>
+        <result property="thumbnail" column="fish_zone_thumbnail"></result>
+        <result property="introduction" column="fish_zone_intro"></result>
+        <result property="fishPondFee" column="fish_zone_charge"></result>
+        <result property="nightable" column="fish_zone_night_enable"></result>
+        <result property="longitude" column="fish_zone_longitude"></result>
+        <result property="latitude" column="fish_zone_latitude"></result>
+        <result property="fishPondAddress" column="fish_zone_address_description"></result>
+        <result property="createAt" column="create_time"></result>
+        <association property="contractor" column="{fishPondId = fish_zone_id}" select="queryContractor"></association>
+        <collection property="pondTypes" column="{fishPondId = fish_zone_id}" select="queryPondType"></collection>
+        <collection property="fishes" column="{fishPondId = fish_zone_id}" select="queryFish"></collection>
     </resultMap>
 
     <!-- 插入一条渔场记录, 包括插入渔场信息, 渔场和鱼类关联信息,渔场和浴场类型关联信息 -->
@@ -56,41 +52,64 @@
         VALUES (#{bindingId}, #{type.pondTypeId}, #{pond.fishPondId}, #{createAt}, #{delFlag})
     </insert>
 
-    <!-- 插入渔场和鱼的类型关联  //todo-->
+    <!-- 插入渔场和鱼的类型关联 -->
     <insert id="insertPondFishBind" parameterType="fishing.sunshine.model.PondFishBinding" useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO fish_type_mapping(fish_type_mapping_id, fish_type_id, fish_zone_id, create_time, del_flag)
         VALUES (#{bindingId}, #{fish.fishId}, #{fishPond.fishPondId}, #{createAt}, #{delFlag})
     </insert>
 
-    <!-- 查询渔场信息 -->
-    <select id="queryFishPond" resultMap="fishPondVo" parameterType="fishing.sunshine.model.FishPond">
-        SELECT fz.fish_zone_id, fz.fish_zone_name, fz.fish_zone_thumbnail, fz.fish_zone_intro,
-        fz.fish_zone_charge, fz.fish_zone_night_enable, fz.fish_zone_longitude, fz.fish_zone_latitude,
-        fz.fish_zone_address_description, fz.create_time,
-        fm.fish_man_id, fm.fish_man_name, fm.fish_man_tel, fm.create_time,
-        fzt.fish_zone_type_id, fzt.fish_zone_type_name, fzt.create_time,
-        ft.fish_type_id, ft.fish_type_name, ft.create_time
-        FROM fish_zone fz, fish_man fm, fish_type_mapping ftm, fish_type ft, fish_zone_type_mapping fztm, fish_zone_type
-        fzt
+    <select id="queryFishPond" parameterType="fishing.sunshine.model.FishPond" resultMap="fishPondVo">
+        SELECT fish_zone_id, fish_zone_name, fish_zone_thumbnail, fish_zone_intro, fish_zone_charge,
+        fish_zone_night_enable, fish_zone_longitude, fish_zone_latitude, fish_zone_address_description,
+        create_time
+        FROM fish_zone
         WHERE 1 = 1
+        AND del_flag = 0
+        <if test="fishPondId != null and fishPondId != ''">
+            AND fish_zone_id = #{fishPondId}
+        </if>
+        <if test="fishPondName != null and fishPondName != ''">
+            AND fish_zone_name = #{fishPondName}
+        </if>
+    </select>
+
+    <select id="queryContractor" parameterType="java.util.HashMap" resultMap="contractorVo">
+        SELECT fm.fish_man_id, fm.fish_man_name, fm.fish_man_tel, fm.create_time
+        FROM fish_man fm, fish_zone fz
+        WHERE 1 = 1
+        AND fm.del_flag = 0
         AND fz.del_flag = 0
-        AND ftm.del_flag = 0
-        AND ft.del_flag = 0
-        AND fztm.del_flag = 0
-        AND fzt.del_flag = 0
-        AND fz.fish_man_id = fm.fish_man_id
-        AND ftm.fish_zone_id = fz.fish_zone_id
-        AND ftm.fish_type_id = ft.fish_type_id
-        AND fztm.fish_zone_id = fz.fish_zone_id
-        AND fztm.fish_zone_type_id = fzt.fish_zone_type_id
         <if test="fishPondId != null and fishPondId != ''">
             AND fz.fish_zone_id = #{fishPondId}
         </if>
-        <if test="fishPondName != null and fishPondName != ''">
-            AND fz.fish_zone_name = #{fishPondName}
-        </if>
-        ORDER BY fz.create_time ASC
+        AND fm.fish_man_id = fz.fish_man_id
+        ORDER BY fm.create_time ASC
     </select>
 
+    <select id="queryFish" parameterType="java.util.HashMap" resultMap="fishVo">
+        SELECT ft.fish_type_id, ft.fish_type_name, ft.create_time
+        FROM fish_type ft, fish_type_mapping ftm
+        WHERE 1 = 1
+        AND ft.del_flag = 0
+        AND ftm.del_flag = 0
+        AND ft.fish_type_id = ftm.fish_type_id
+        <if test="fishPondId != null and fishPondId != ''">
+            AND ftm.fish_zone_id = #{fishPondId}
+        </if>
+        ORDER BY ft.create_time ASC
+    </select>
+
+    <select id="queryPondType" parameterType="java.util.HashMap" resultMap="pondTypeVo">
+        SELECT fzt.fish_zone_type_id, fzt.fish_zone_type_name, fzt.create_time
+        FROM fish_zone_type fzt, fish_zone_type_mapping fztm
+        WHERE 1 = 1
+        AND fzt.del_flag = 0
+        AND fztm.del_flag = 0
+        AND fzt.fish_zone_type_id = fztm.fish_zone_type_id
+        <if test="fishPondId != null and fishPondId != ''">
+            AND fztm.fish_zone_id = #{fishPondId}
+        </if>
+        ORDER BY fzt.create_time ASC
+    </select>
 </mapper>

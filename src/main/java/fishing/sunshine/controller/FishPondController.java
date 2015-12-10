@@ -107,7 +107,10 @@ public class FishPondController {
         if (StringUtils.isEmpty(param)) {
             return result;
         }
-        
+        ResultData content = fishPondService.queryFishPondByPage(param);
+        if (content.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result = (DataTablePage<FishPond>) content.getData();
+        }
         return result;
     }
 }

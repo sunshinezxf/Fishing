@@ -102,4 +102,17 @@ public class FishPondServiceImpl implements FishPondService {
         }
         return result;
     }
+
+    @Override
+    public ResultData queryFishPondByPage(DataTableParam param) {
+        ResultData result = new ResultData();
+        ResultData query = fishPondDao.queryFishPondByPage(param);
+        result.setResponseCode(query.getResponseCode());
+        if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(query.getData());
+        } else {
+            result.setDescription(query.getDescription());
+        }
+        return result;
+    }
 }
