@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -112,5 +113,24 @@ public class FishPondController {
             result = (DataTablePage<FishPond>) content.getData();
         }
         return result;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{fishPondId}")
+    public ModelAndView view(@PathVariable String fishPondId) {
+        ModelAndView view = new ModelAndView();
+        if (StringUtils.isEmpty(fishPondId)) {
+            view.setViewName("/error");
+            return view;
+        }
+        FishPond fishPond = new FishPond();
+        fishPond.setFishPondId(fishPondId);
+        ResultData content = fishPondService.queryFishPond(fishPond);
+        if (content.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            view.setViewName("/error");
+            return view;
+        }
+        view.addObject("fishPond", fishPond);
+        view.setViewName("/client/fish_pond/view");
+        return view;
     }
 }

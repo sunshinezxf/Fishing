@@ -79,6 +79,11 @@
                         "sTitle": "添加日期", "sWidth": "10%", "mRender": function (data, type, full) {
                         return ((new Date(full.createAt)).format("yyyy-MM-dd hh:mm:ss"));
                     }
+                    },
+                    {
+                        "sTitle": "操作", "sWidth": "10%", "mRender": function (data, type, full) {
+                        return "";
+                    }
                     }
                 ],
                 "oLanguage": {
