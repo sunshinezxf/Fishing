@@ -30,6 +30,9 @@
     </div>
     <h4>
         ${fishPond.fishPondName}
+        (
+        <small><span class="glyphicon glyphicon-user"></span>${fishPond.contractor.name}</small>
+        )
     </h4>
 
 
