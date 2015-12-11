@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manager">
+    <resultMap id="accountVo" type="fishing.sunshine.model.Account">
+        <result property="accountId" column="fish_manage_id"></result>
+        <result property="username" column="fish_manage_account"></result>
+        <result property="password" column="fish_manage_password"></result>
+        <result property="createAt" column="create_time"></result>
+    </resultMap>
+
+    <select id="queryAccount" parameterType="fishing.sunshine.model.Account" resultMap="accountVo">
+        SELECT fish_manage_id, fish_manage_account, fish_manage_password, create_time
+        FROM fish_manage
+        WHERE 1 = 1
+        AND del_flag = 0
+        <if test="username != null and username != ''">
+            AND fish_manage_account = #{username}
+        </if>
+        <if test="password != null and password != ''">
+            AND fish_manage_password = #{password}
+        </if>
+    </select>
+</mapper>

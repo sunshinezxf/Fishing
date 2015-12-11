@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sunshine on 11/28/15.
@@ -45,7 +45,7 @@ public class FishServiceImpl implements FishService {
         result.setResponseCode(query.getResponseCode());
         if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
             result.setData(query.getData());
-            if (((ArrayList<Fish>) result.getData()).size() == 0) {
+            if (((List<Fish>) result.getData()).size() == 0) {
                 result.setResponseCode(ResponseCode.RESPONSE_NULL);
             }
         } else {
