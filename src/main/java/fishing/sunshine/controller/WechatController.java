@@ -1,5 +1,6 @@
 package fishing.sunshine.controller;
 
+import com.gson.util.Tools;
 import fishing.sunshine.util.CommonValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,14 @@ public class WechatController {
     @RequestMapping(method = RequestMethod.GET, value = "/" + CommonValue.TOKEN)
     @ResponseBody
     public String check(HttpServletRequest request) {
-        
+        String signature = request.getParameter("signature");// 微信加密签名
+        String timestamp = request.getParameter("timestamp");// 时间戳
+        String nonce = request.getParameter("nonce");// 随机数
+        String echostr = request.getParameter("echostr");//
+        // 验证
+        if (Tools.checkSignature(CommonValue.TOKEN, signature, timestamp, nonce)) {
+            return echostr;
+        }
         return "";
     }
 }
