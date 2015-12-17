@@ -13,6 +13,8 @@
 
     <bean id="fileUploadService" class="fishing.sunshine.service.impl.FileUploadServiceImpl"></bean>
 
+    <bean id="locationService" class="fishing.sunshine.service.impl.LocationServiceImpl"></bean>
+
     <bean id="messageProcessingHandler" class="fishing.sunshine.handler.MessageProcessingHandlerImpl"></bean>
 
     <bean id="wxMpMessageHandler" class="fishing.sunshine.handler.WxMpMessageHandlerImpl"></bean>
