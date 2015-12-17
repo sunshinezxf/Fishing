@@ -12,4 +12,8 @@
     <bean id="contractorService" class="fishing.sunshine.service.impl.ContractorServiceImpl"></bean>
 
     <bean id="fileUploadService" class="fishing.sunshine.service.impl.FileUploadServiceImpl"></bean>
+
+    <bean id="messageProcessingHandler" class="fishing.sunshine.handler.MessageProcessingHandlerImpl"></bean>
+
+    <bean id="wxMpMessageHandler" class="fishing.sunshine.handler.WxMpMessageHandlerImpl"></bean>
 </beans>
