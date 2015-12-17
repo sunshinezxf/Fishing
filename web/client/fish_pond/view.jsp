@@ -13,7 +13,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
     <link rel="stylesheet" href="${path.concat('/material/plugins/bootstrap-3.3.5-dist/css/bootstrap.min.css')}"/>
     <link rel="stylesheet" href="${path.concat('/material/plugins/weui/weui.min.css')}"/>
     <link rel="stylesheet" href="${path.concat('/material/css/fishpond.css')}"/>
@@ -40,7 +40,7 @@
 
     <div class="pond-fee">
         <span class="h6">收费&nbsp;</span>
-        <span class="h6">${fishPond.fishPondFee}元/斤</span>
+        <span class="h6">${fishPond.fishPondFee}</span>
     </div>
 
     <div class="pond-type">
