@@ -22,19 +22,6 @@
     <script type="text/javascript"
             src="${path.concat('/material/plugins/bootstrap-3.3.5-dist/js/bootstrap.min.js')}"></script>
     <title>${fishPond.fishPondName}</title>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var ip_address = "${ip}";
-            //获取当前的地址经纬度信息
-            var message = $.get("http://apis.map.qq.com/ws/location/v1/ip", {
-                ip: ip_address,
-                key: "D3EBZ-F3QHJ-KJVFC-FDXKG-4U3J5-VCB5K"
-            });
-            var json = eval('(' + message + ')');
-            alert(json);
-            console.debug(json);
-        });
-    </script>
 </head>
 <body ontouchstart>
 <div class="container">
@@ -51,7 +38,7 @@
 
     <p>
         <a id="show_map_sheet"
-           href="http://apis.map.qq.com/uri/v1/routeplan?type=drive&from=当前位置&fromcoord=39.980683,116.302&to=${fishPond.fishPondName}&tocoord=${fishPond.latitude},${fishPond.longitude}&policy=1&referer=fishing"><span
+           href="http://apis.map.qq.com/uri/v1/routeplan?type=drive&to=${fishPond.fishPondName}&tocoord=${fishPond.latitude},${fishPond.longitude}&policy=1&referer=fishing"><span
                 class="glyphicon glyphicon-map-marker"></span>&nbsp;${fishPond.fishPondAddress}</a></p>
 
     <div class="pond-fee">
