@@ -1,0 +1,17 @@
+package fishing.sunshine.dao;
+
+import fishing.sunshine.model.Location;
+import fishing.sunshine.util.DataTableParam;
+import fishing.sunshine.util.ResultData;
+
+/**
+ * Created by sunshine on 12/20/15.
+ */
+public interface LocationDao {
+
+    ResultData queryLocation(Location location);
+
+    ResultData insertLocation(Location location);
+
+    ResultData queryLocationByPage(DataTableParam param);
+}

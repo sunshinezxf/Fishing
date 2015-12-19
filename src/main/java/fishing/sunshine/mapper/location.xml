@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="location">
+    <resultMap id="locationVo" type="fishing.sunshine.model.Location">
+        <result property="locationId" column="location_summary_id"></result>
+        <result property="wechat" column="wechat_id"></result>
+        <result property="longitude" column="longitude"></result>
+        <result property="latitude" column="latitude"></result>
+        <result property="createAt" column="create_time"></result>
+    </resultMap>
+
+    <!-- 插入一条上传的地址信息 -->
+    <insert id="insertLocation" parameterType="fishing.sunshine.model.Location" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO location_summary(location_summary_id, wechat_id, longitude, latitude, create_time, del_flag)
+        VALUES (#{locationId}, #{wechat}, #{longitude}, #{latitude}, #{createAt}, #{delFlag})
+    </insert>
+</mapper>

@@ -6,6 +6,8 @@ import com.gson.bean.TextOutMessage;
 import com.gson.inf.MessageProcessingHandler;
 import fishing.sunshine.model.Location;
 import fishing.sunshine.service.LocationService;
+import fishing.sunshine.util.ResponseCode;
+import fishing.sunshine.util.ResultData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,49 +23,86 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
     @Autowired
     private LocationService locationService;
 
+    private OutMessage outMessage;
+
     @Override
-    public OutMessage eventTypeMsg(InMessage inMessage) {
-        if (inMessage.getEvent().equals("CLICK")) {
-            if (inMessage.getEventKey().equals("location")) {
-                return location(inMessage);
-            }
+    public void allType(InMessage inMessage) {
+
+    }
+
+    @Override
+    public void textTypeMsg(InMessage inMessage) {
+
+    }
+
+    @Override
+    public void locationTypeMsg(InMessage inMessage) {
+        outMessage = new TextOutMessage();
+        ResultData result = location(inMessage);
+        if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            ((TextOutMessage) outMessage).setContent(String.valueOf(result.getData()));
+        } else {
+            ((TextOutMessage) outMessage).setContent("Location upload failed.");
         }
-        return null;
     }
 
     @Override
-    public OutMessage linkTypeMsg(InMessage inMessage) {
-        return null;
+    public void imageTypeMsg(InMessage inMessage) {
+
     }
 
     @Override
-    public OutMessage locationTypeMsg(InMessage inMessage) {
-        return null;
+    public void videoTypeMsg(InMessage inMessage) {
+
     }
 
     @Override
-    public OutMessage textTypeMsg(InMessage inMessage) {
-        return null;
+    public void linkTypeMsg(InMessage inMessage) {
+
     }
 
     @Override
-    public OutMessage imageTypeMsg(InMessage inMessage) {
-        return null;
+    public void voiceTypeMsg(InMessage inMessage) {
+
     }
 
     @Override
-    public OutMessage voiceTypeMsg(InMessage inMessage) {
-        return null;
+    public void verifyTypeMsg(InMessage inMessage) {
+
     }
 
-    private OutMessage location(InMessage message) {
-        TextOutMessage result = new TextOutMessage();
-        result.setContent("地理位置: 经度为" + message.getLocationX() + ", 纬度为" + message.getLocationY());
+    @Override
+    public void eventTypeMsg(InMessage inMessage) {
+        if (inMessage.getEvent().equals("LOCATION")) {
+            
+        }
+    }
+
+    @Override
+    public void afterProcess(InMessage inMessage, OutMessage outMessage) {
+
+    }
+
+    @Override
+    public void setOutMessage(OutMessage outMessage) {
+        this.outMessage = outMessage;
+    }
+
+    @Override
+    public OutMessage getOutMessage() {
+        return outMessage;
+    }
+
+    private ResultData location(InMessage message) {
+        ResultData result = new ResultData();
         Location location = new Location();
         location.setWechat(message.getFromUserName());
-        location.setLongitude(message.getLocationX());
-        location.setLatitude(message.getLocationY());
-        locationService.addLocation(location);
+        location.setLatitude(Double.parseDouble(message.getLocation_X()));
+        location.setLongitude(Double.parseDouble(message.getLocation_Y()));
+        ResultData insert = locationService.addLocation(location);
+        if (insert.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData("Location upload success! Longitude: " + location.getLongitude() + ", latitude: " + location.getLatitude());
+        }
         return result;
     }
 }

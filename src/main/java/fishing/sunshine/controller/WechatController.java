@@ -63,7 +63,6 @@ public class WechatController {
             logger.debug(xmlMessage);
 
             InMessage inMessage = (InMessage) content.fromXML(xmlMessage);
-            logger.debug(inMessage.getEventKey());
 
             //加载处理器
             Class<?> clazz = messageProcessingHandler.getClass();
