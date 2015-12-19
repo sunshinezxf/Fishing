@@ -9,10 +9,7 @@ import fishing.sunshine.service.ContractorService;
 import fishing.sunshine.service.FileUploadService;
 import fishing.sunshine.service.FishPondService;
 import fishing.sunshine.service.FishService;
-import fishing.sunshine.util.DataTablePage;
-import fishing.sunshine.util.DataTableParam;
-import fishing.sunshine.util.ResponseCode;
-import fishing.sunshine.util.ResultData;
+import fishing.sunshine.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,8 +115,9 @@ public class FishPondController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{fishPondId}")
-    public ModelAndView view(@PathVariable String fishPondId) {
+    public ModelAndView view(@PathVariable String fishPondId, HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
+        String ip = IPTool.getIP(request);
         if (StringUtils.isEmpty(fishPondId)) {
             view.setViewName("/error");
             return view;
@@ -135,6 +134,7 @@ public class FishPondController {
             view.setViewName("/error");
             return view;
         }
+        view.addObject("ip", ip);
         view.addObject("fishPond", list.get(0));
         view.setViewName("/client/fish_pond/view");
         return view;
