@@ -27,7 +27,7 @@
     <script type="text/javascript"
             src="${path.concat('/material/plugins/bootstrap-3.3.5-dist/js/bootstrap.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/dashboard.js')}"></script>
-    <title>添加渔场类型</title>
+    <title>添加钓场类型</title>
     <script>
         $(function () {
             $("#fish-type-management").collapse('hide');
@@ -116,11 +116,11 @@
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <div class="row">
             <div class="col-md-12 col-lg-12">
-                <h1><i class="fa fa-home"></i> 渔场管理 </h1>
+                <h1><i class="fa fa-home"></i> 钓场管理 </h1>
                 <ol class="breadcrumb">
                     <li><a href="${path.concat('/dashboard')}">首页</a></li>
-                    <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-zone-management">渔场管理</a></li>
-                    <li class="active">添加类型</li>
+                    <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-zone-management">钓场管理</a></li>
+                    <li class="active">添加钓场类型</li>
                 </ol>
             </div>
         </div>
@@ -133,7 +133,7 @@
 
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="pond-type-insert" name="pondTypeName"
-                                   placeholder="渔场类型">
+                                   placeholder="钓场类型">
                         </div>
                         <button type="button" class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
                     </div>

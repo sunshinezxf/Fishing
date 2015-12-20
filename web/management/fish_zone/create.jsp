@@ -40,7 +40,7 @@
     <script type="text/javascript"
             src="${path.concat('/material/plugins/bootstrap-fileupload/fileupload.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/dashboard.js')}"></script>
-    <title>添加渔场</title>
+    <title>添加钓场</title>
     <script>
         $(function () {
             $("#fish-type-management").collapse('hide');
@@ -142,11 +142,11 @@
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <div class="row">
             <div class="col-md-12 col-lg-12">
-                <h1><i class="fa fa-home"></i> 渔场管理 </h1>
+                <h1><i class="fa fa-home"></i> 钓场管理 </h1>
                 <ol class="breadcrumb">
                     <li><a href="${path.concat('/dashboard')}">首页</a></li>
-                    <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-zone-management">渔场管理</a></li>
-                    <li class="active">添加渔场</li>
+                    <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-zone-management">钓场管理</a></li>
+                    <li class="active">添加钓场</li>
                 </ol>
             </div>
         </div>
@@ -159,7 +159,7 @@
 
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="fish-zone-name" name="pondName"
-                                   placeholder="渔场名称" required="" autocomplete="off"/>
+                                   placeholder="钓场名称" required="" autocomplete="off"/>
                         </div>
                         <button type="button" class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
                     </div>
@@ -222,7 +222,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">渔场类型</label>
+                        <label class="col-sm-2 control-label">钓场类型</label>
 
                         <div class="col-sm-8">
                             <c:if test="${not empty typeList}">

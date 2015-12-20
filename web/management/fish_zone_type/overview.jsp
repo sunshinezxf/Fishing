@@ -33,7 +33,7 @@
             src="${path.concat('/material/plugins/datatable/js/dataTables.bootstrap.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/dashboard.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/date.js')}"></script>
-    <title>渔场类型概览</title>
+    <title>钓场类型概览</title>
     <script>
         $(function () {
             $("#fish-type-management").collapse('hide');
@@ -171,12 +171,12 @@
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <div class="row">
             <div class="col-md-12 col-lg-12">
-                <h1><i class="fa fa-home"></i> 渔场管理 </h1>
+                <h1><i class="fa fa-home"></i> 钓场管理 </h1>
                 <ol class="breadcrumb">
                     <li><a href="${path.concat('/dashboard')}">首页</a></li>
-                    <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-zone-management">渔场类型管理</a>
+                    <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-zone-management">钓场类型管理</a>
                     </li>
-                    <li class="active">渔场类型概览</li>
+                    <li class="active">钓场类型概览</li>
                 </ol>
             </div>
         </div>
