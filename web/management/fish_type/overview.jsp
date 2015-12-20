@@ -81,7 +81,7 @@
                     },
                     {
                         "sTitle": "操作", "sWidth": "10%", "mRender": function (data, type, full) {
-                        return "";
+                        return "<button type='button' class='btn btn-success btn-group-sm control-box' id='" + full.fishId + "'>修改</button>";
                     }
                     }
                 ],

@@ -12,10 +12,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 /**
  * Created by sunshine on 11/18/15.
@@ -74,6 +76,20 @@ public class FishTypeController {
             result = (DataTablePage<Fish>) content.getData();
         }
         return result;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/modify")
+    public ModelAndView modify(@RequestParam("fishId") String fishId) {
+        ModelAndView view = new ModelAndView();
+        Fish fish = new Fish();
+        fish.setFishId(fishId);
+        ResultData content = fishService.queryFishType(fish);
+        if (content.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            Fish target = ((ArrayList<Fish>) content.getData()).get(0);
+            view.addObject("fish", target);
+        }
+        view.setViewName("/management/fish_type/edit");
+        return view;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/check")
