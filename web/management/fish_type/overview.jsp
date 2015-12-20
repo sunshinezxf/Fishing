@@ -81,7 +81,8 @@
                     },
                     {
                         "sTitle": "操作", "sWidth": "10%", "mRender": function (data, type, full) {
-                        return "<button type='button' class='btn btn-success btn-group-sm control-box' id='" + full.fishId + "'>修改</button>";
+                        var url = "${path.concat('/fishtype/edit/')}" + full.fishId;
+                        return "<button type='button' class='btn btn-success btn-group-sm control-box' onclick=\"javascript:location.href='" + url + "'\" id='" + full.fishId + "'>修改</button>";
                     }
                     }
                 ],

@@ -19,6 +19,9 @@
         FROM fish_type
         WHERE 1 = 1
         AND del_flag = 0
+        <if test="fishId != null and fishId != ''">
+            AND fish_type_id = #{fishId}
+        </if>
         <if test="fishName != null and fishName != ''">
             AND fish_type_name = #{fishName}
         </if>
