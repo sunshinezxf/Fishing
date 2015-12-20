@@ -1,5 +1,6 @@
 package fishing.sunshine.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.gson.bean.Articles;
 import com.gson.bean.InMessage;
 import com.gson.bean.OutMessage;
@@ -52,7 +53,7 @@ public class WechatController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/" + CommonValue.WECHAT_TOKEN)
     public String handle(HttpServletRequest request, HttpServletResponse response) {
-        response.setContentType("text/xml");
+        response.setContentType("text/xml;charset=utf-8");
         OutMessage result;
         ServletInputStream stream;
         try {
@@ -60,7 +61,6 @@ public class WechatController {
             XStream content = XStreamFactory.init(false);
             content.alias("xml", InMessage.class);
             String xmlMessage = Tools.inputStream2String(stream);
-            logger.debug(xmlMessage);
 
             InMessage inMessage = (InMessage) content.fromXML(xmlMessage);
 
@@ -68,9 +68,12 @@ public class WechatController {
             Class<?> clazz = messageProcessingHandler.getClass();
             //取得消息类型
             String type = inMessage.getMsgType();
+            logger.debug("INPUT: " + JSONObject.toJSONString(inMessage));
             Method method = clazz.getMethod(type + "TypeMsg", InMessage.class);
-            result = (OutMessage) method.invoke(messageProcessingHandler, inMessage);
-
+            method.invoke(messageProcessingHandler, inMessage);
+            Method getOutMessage = clazz.getMethod("getOutMessage");
+            result = (OutMessage) getOutMessage.invoke(messageProcessingHandler);
+            logger.debug("CONTENT: " + JSONObject.toJSONString(result));
             if (result == null) {
                 result = new TextOutMessage();
                 ((TextOutMessage) result).setContent(CommonValue.WECHAT_WARNING);
@@ -92,6 +95,10 @@ public class WechatController {
             content.alias("xml", result.getClass());
             content.alias("item", Articles.class);
             String xml = content.toXML(result);
+
+            Method afterProcess = clazz.getMethod("afterProcess", new Class[]{InMessage.class, OutMessage.class});
+            afterProcess.invoke(messageProcessingHandler, new Object[]{inMessage, result});
+
             return xml;
         } catch (IOException e) {
             logger.debug(e.getMessage());

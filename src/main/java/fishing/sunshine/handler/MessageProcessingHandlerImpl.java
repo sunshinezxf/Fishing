@@ -4,8 +4,11 @@ import com.gson.bean.InMessage;
 import com.gson.bean.OutMessage;
 import com.gson.bean.TextOutMessage;
 import com.gson.inf.MessageProcessingHandler;
+import fishing.sunshine.model.FishFan;
 import fishing.sunshine.model.Location;
+import fishing.sunshine.service.FishFanService;
 import fishing.sunshine.service.LocationService;
+import fishing.sunshine.util.CommonValue;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
 import org.slf4j.Logger;
@@ -22,6 +25,9 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
 
     @Autowired
     private LocationService locationService;
+
+    @Autowired
+    private FishFanService fishFanService;
 
     private OutMessage outMessage;
 
@@ -42,7 +48,7 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
         if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
             ((TextOutMessage) outMessage).setContent(String.valueOf(result.getData()));
         } else {
-            ((TextOutMessage) outMessage).setContent("Location upload failed.");
+            ((TextOutMessage) outMessage).setContent("Upload fail.");
         }
     }
 
@@ -73,6 +79,9 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
 
     @Override
     public void eventTypeMsg(InMessage inMessage) {
+        if (inMessage.getEvent().equals("subscribe")) {
+
+        }
         if (inMessage.getEvent().equals("LOCATION")) {
 
         }
@@ -80,7 +89,9 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
 
     @Override
     public void afterProcess(InMessage inMessage, OutMessage outMessage) {
-
+        TextOutMessage message = new TextOutMessage();
+        message.setContent(CommonValue.WECHAT_WARNING);
+        this.outMessage = message;
     }
 
     @Override
@@ -91,6 +102,14 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
     @Override
     public OutMessage getOutMessage() {
         return outMessage;
+    }
+
+    private ResultData subscribe(InMessage message) {
+        ResultData result = new ResultData();
+        FishFan fan = new FishFan();
+        fan.setFishFanId(message.getFromUserName());
+
+        return result;
     }
 
     /**
@@ -107,10 +126,10 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
         location.setLongitude(Double.parseDouble(message.getLocation_Y()));
         ResultData insert = locationService.addLocation(location);
         if (insert.getResponseCode() == ResponseCode.RESPONSE_OK) {
-            result.setData("Location upload success! Longitude: " + location.getLongitude() + ", latitude: " + location.getLatitude());
+            result.setData("LONG: " + location.getLongitude() + ", LAT: " + location.getLatitude());
         }
         return result;
     }
 
-    
+
 }
