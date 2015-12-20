@@ -26,4 +26,8 @@
     <bean id="locationDao" class="fishing.sunshine.dao.impl.LocationDaoImpl">
         <property name="sqlSession" ref="sqlSession"/>
     </bean>
+
+    <bean id="fishFanDao" class="fishing.sunshine.dao.impl.FishFanDaoImpl">
+        <property name="sqlSession" ref="sqlSession"/>
+    </bean>
 </beans>

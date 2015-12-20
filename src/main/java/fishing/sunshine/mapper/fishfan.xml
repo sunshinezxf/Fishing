@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fan">
+    <resultMap id="fishFanVo" type="fishing.sunshine.model.FishFan">
+        <result property="fishFanId" column="fish_fan_id"></result>
+        <result property="username" column="fish_fan_name"></result>
+        <result property="createAt" column="create_time"></result>
+    </resultMap>
+
+    <!-- 插入一条关注者的信息 -->
+    <insert id="insertFishFan" parameterType="fishing.sunshine.model.FishFan" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO fish_fan(fish_fan_id, fish_fan_name, create_time, del_flag)
+        VALUES (#{fishFanId}, #{username}, #{createAt}, #{delFlag})
+    </insert>
+</mapper>

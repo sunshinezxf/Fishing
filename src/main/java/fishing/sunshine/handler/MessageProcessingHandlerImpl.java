@@ -74,7 +74,7 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
     @Override
     public void eventTypeMsg(InMessage inMessage) {
         if (inMessage.getEvent().equals("LOCATION")) {
-            
+
         }
     }
 
@@ -93,6 +93,12 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
         return outMessage;
     }
 
+    /**
+     * 通过发送地址消息来上传地理位置
+     *
+     * @param message
+     * @return
+     */
     private ResultData location(InMessage message) {
         ResultData result = new ResultData();
         Location location = new Location();
@@ -105,4 +111,6 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
         }
         return result;
     }
+
+    
 }
