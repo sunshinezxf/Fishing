@@ -12,7 +12,7 @@ public class FishPond extends SunshineEntity {
     private String fishPondId;
     private String fishPondName;
     private String introduction;
-    private double fishPondFee;
+    private String fishPondFee;
     private boolean nightable;
     private double longitude;
     private double latitude;
@@ -31,7 +31,7 @@ public class FishPond extends SunshineEntity {
         this.longitude = Double.parseDouble(form.getLongitude());
         this.latitude = Double.parseDouble(form.getLatitude());
         this.fishPondAddress = form.getPondAddress();
-        this.fishPondFee = Double.parseDouble(form.getPondFee());
+        this.fishPondFee = form.getPondFee();
         this.nightable = form.isNightable();
         pondTypes = new ArrayList<PondType>();
         for (String item : form.getPondTypes()) {
@@ -91,11 +91,11 @@ public class FishPond extends SunshineEntity {
         this.fishPondAddress = fishPondAddress;
     }
 
-    public double getFishPondFee() {
+    public String getFishPondFee() {
         return fishPondFee;
     }
 
-    public void setFishPondFee(double fishPondFee) {
+    public void setFishPondFee(String fishPondFee) {
         this.fishPondFee = fishPondFee;
     }
 
