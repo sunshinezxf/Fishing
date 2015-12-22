@@ -72,6 +72,7 @@
         <if test="fishPondName != null and fishPondName != ''">
             AND fish_zone_name = #{fishPondName}
         </if>
+        ORDER BY create_time ASC
     </select>
 
     <select id="queryContractor" parameterType="java.util.HashMap" resultMap="contractorVo">

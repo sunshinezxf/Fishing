@@ -1,12 +1,13 @@
 <%--
   Created by IntelliJ IDEA.
   User: sunshine
-  Date: 11/18/15
-  Time: 20:49
+  Date: 12/22/15
+  Time: 21:20
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="path" value="${pageContext.request.contextPath}"></c:set>
 <html>
 <head>
@@ -40,18 +41,32 @@
     <script type="text/javascript"
             src="${path.concat('/material/plugins/bootstrap-fileupload/fileupload.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/dashboard.js')}"></script>
-    <title>添加钓场</title>
+    <title>修改钓场</title>
     <script>
         $(function () {
             $("#fish-type-management").collapse('hide');
             $("#fish-zone-management").collapse('show');
             $("#fish-man-management").collapse('hide');
         });
+
         $(document).ready(function () {
             $("#pond-introduction").summernote({
                 lang: "zh-CN",
                 height: 280
             });
+
+            var type_array = ${fishPond.pondTypes};
+            for (var i = 0; i < type_array.length; i++) {
+                var id = "#" + type_array[i].pondTypeId;
+                $(id).attr("checked", "checked");
+            }
+
+            var fish_array = ${fishPond.fishes};
+            for (var i = 0; i < fish_array.length; i++) {
+                var id = "#" + fish_array[i].fishId;
+                console.debug(id);
+                $(id).attr("checked", "checked");
+            }
 
             $("#confirm-zone").click(function (e) {
                 var introduction = $("#pond-introduction").code();
@@ -146,7 +161,7 @@
                 <ol class="breadcrumb">
                     <li><a href="${path.concat('/dashboard')}">首页</a></li>
                     <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-zone-management">钓场管理</a></li>
-                    <li class="active">添加钓场</li>
+                    <li class="active">修改钓场</li>
                 </ol>
             </div>
         </div>
@@ -159,7 +174,7 @@
 
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="fish-zone-name" name="pondName"
-                                   placeholder="钓场名称" required="" autocomplete="off"/>
+                                   placeholder="钓场名称" required="" value="${fishPond.fishPondName}" autocomplete="off"/>
                         </div>
                         <button type="button" class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
                     </div>
@@ -168,10 +183,15 @@
 
                         <div class="col-sm-3">
                             <select class="form-control" id="fish-pond-manager" name="contractorId">
-                                <option>-- 请选择钓场承包人 --</option>
+                                <option
+                                        <c:if test="${empty fishPond.contractor or empty fishPond.contractor.contractorId}">selected="selected"</c:if>>
+                                    -- 请选择钓场承包人 --
+                                </option>
                                 <c:if test="${not empty contractorList}">
                                     <c:forEach var="item" items="${contractorList}" varStatus="no">
-                                        <option value="${item.contractorId}">${item.name}&nbsp;(&nbsp;${item.phone}&nbsp;)</option>
+                                        <option value="${item.contractorId}"
+                                                <c:if test="${fishPond.contractor.contractorId == item.contractorId}">selected="selected"</c:if>>${item.name}&nbsp;(&nbsp;${item.phone}&nbsp;)
+                                        </option>
                                     </c:forEach>
                                 </c:if>
                             </select>
@@ -183,13 +203,13 @@
 
                         <div class="col-sm-3">
                             <input type="text" class="form-control" id="zone-longitude" name="longitude"
-                                   placeholder="经度" autocomplete="off"/>
+                                   placeholder="经度" value="${fishPond.longitude}" autocomplete="off"/>
                         </div>
                         <label class="col-sm-2 control-label" for="zone-latitude">纬度</label>
 
                         <div class="col-sm-3">
                             <input type="text" class="form-control" id="zone-latitude" name="latitude"
-                                   placeholder="纬度" autocomplete="off"/>
+                                   placeholder="纬度" value="${fishPond.latitude}" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -197,7 +217,8 @@
 
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="fish-zone-address" name="pondAddress"
-                                   placeholder="钓场地址简介" required="" autocomplete="off"/>
+                                   placeholder="钓场地址简介" required="" value="${fishPond.fishPondAddress}"
+                                   autocomplete="off"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -205,7 +226,7 @@
 
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="fish-zone-fee" name="pondFee"
-                                   placeholder="费用" autocomplete="off"/>
+                                   placeholder="费用" value="${fishPond.fishPondFee}" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -213,11 +234,12 @@
 
                         <div class="col-sm-8">
                             <label class="radio-inline">
-                                <input type="radio" name="nightable" id="fish-zone-night-permit" value="true"> 可以
+                                <input type="radio" name="nightable" id="fish-zone-night-permit" value="true"
+                                       <c:if test="${fishPond.nightable == true}">checked="checked"</c:if>> 可以
                             </label>
                             <label class="radio-inline">
                                 <input type="radio" name="nightable" id="fish-zone-night-deny" value="false"
-                                       checked="checked"> 不可以
+                                       <c:if test="${fishPond.nightable == false}">checked="checked"</c:if>> 不可以
                             </label>
                         </div>
                     </div>
@@ -282,7 +304,7 @@
                         </div>
                     </div>
                     <hr/>
-                    <button type="submit" id="confirm-zone" class="btn btn-primary btn-group-sm col-sm-1">添加
+                    <button type="submit" id="confirm-zone" class="btn btn-primary btn-group-sm btn-warning col-sm-1">修改
                     </button>
                 </form>
             </div>

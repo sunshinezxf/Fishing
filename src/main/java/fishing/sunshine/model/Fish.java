@@ -1,6 +1,7 @@
 package fishing.sunshine.model;
 
 
+import com.alibaba.fastjson.JSONObject;
 import fishing.sunshine.form.FishForm;
 
 /**
@@ -33,5 +34,10 @@ public class Fish extends SunshineEntity {
 
     public void setFishName(String fishName) {
         this.fishName = fishName;
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 }

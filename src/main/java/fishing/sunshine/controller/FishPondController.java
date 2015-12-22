@@ -139,4 +139,35 @@ public class FishPondController {
         view.setViewName("/client/fish_pond/view");
         return view;
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/edit/{fishPondId}")
+    public ModelAndView edit(@PathVariable("fishPondId") String fishPondId) {
+        ModelAndView view = new ModelAndView();
+        FishPond fishPond = new FishPond();
+        fishPond.setFishPondId(fishPondId);
+        ResultData content = fishPondService.queryFishPond(fishPond);
+        if (content.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            view.setViewName("redirect:/fishzone/overview");
+            return view;
+        }
+        FishPond target = ((ArrayList<FishPond>) content.getData()).get(0);
+        view.addObject("fishPond", target);
+        Fish paramOfFishType = new Fish();
+        ResultData fishResult = fishService.queryFishType(paramOfFishType);
+        if (fishResult.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            view.addObject("fishList", fishResult.getData());
+        }
+        Contractor paramOfContractor = new Contractor();
+        ResultData contractorResult = contractorService.queryContractor(paramOfContractor);
+        if (contractorResult.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            view.addObject("contractorList", contractorResult.getData());
+        }
+        PondType type = new PondType();
+        ResultData typeResult = fishPondService.queryFishPondType(type);
+        if (typeResult.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            view.addObject("typeList", typeResult.getData());
+        }
+        view.setViewName("/management/fish_zone/edit");
+        return view;
+    }
 }

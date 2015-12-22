@@ -28,6 +28,8 @@ public class FishPondForm extends SunshineEntity {
 
     private MultipartFile thumbnail;
 
+    private MultipartFile[] thumbnails;
+
     private String introduction;
 
     public FishPondForm(MultipartHttpServletRequest request) {
