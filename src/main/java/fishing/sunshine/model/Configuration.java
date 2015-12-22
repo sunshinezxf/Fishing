@@ -1,5 +1,7 @@
 package fishing.sunshine.model;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * Created by sunshine on 11/14/15.
  */
@@ -57,5 +59,10 @@ public class Configuration {
 
     public void setShareLink(String shareLink) {
         this.shareLink = shareLink;
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 }

@@ -1,5 +1,7 @@
 package fishing.sunshine.model;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * Created by sunshine on 12/9/15.
  */
@@ -30,5 +32,10 @@ public class PondFishBinding extends SunshineEntity {
 
     public void setFish(Fish fish) {
         this.fish = fish;
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 }

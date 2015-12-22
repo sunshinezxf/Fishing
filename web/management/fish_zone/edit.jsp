@@ -64,7 +64,6 @@
             var fish_array = ${fishPond.fishes};
             for (var i = 0; i < fish_array.length; i++) {
                 var id = "#" + fish_array[i].fishId;
-                console.debug(id);
                 $(id).attr("checked", "checked");
             }
 

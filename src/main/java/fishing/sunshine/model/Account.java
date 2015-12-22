@@ -1,5 +1,6 @@
 package fishing.sunshine.model;
 
+import com.alibaba.fastjson.JSONObject;
 import fishing.sunshine.form.LoginForm;
 import fishing.sunshine.util.Encryption;
 
@@ -43,5 +44,10 @@ public class Account extends SunshineEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 }

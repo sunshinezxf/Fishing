@@ -1,5 +1,7 @@
 package fishing.sunshine.model;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * Created by sunshine on 12/17/15.
  */
@@ -39,5 +41,10 @@ public class Location extends SunshineEntity {
 
     public void setWechat(String wechat) {
         this.wechat = wechat;
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 }

@@ -1,5 +1,7 @@
 package fishing.sunshine.model;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.sql.Timestamp;
 
 /**
@@ -30,4 +32,8 @@ public class SunshineEntity {
         this.delFlag = delFlag;
     }
 
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
+    }
 }

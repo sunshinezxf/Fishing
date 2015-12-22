@@ -1,5 +1,6 @@
 package fishing.sunshine.model;
 
+import com.alibaba.fastjson.JSONObject;
 import fishing.sunshine.form.FishPondForm;
 
 import java.util.ArrayList;
@@ -145,5 +146,10 @@ public class FishPond extends SunshineEntity {
 
     public void setContractor(Contractor contractor) {
         this.contractor = contractor;
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 }

@@ -1,5 +1,6 @@
 package fishing.sunshine.model;
 
+import com.alibaba.fastjson.JSONObject;
 import fishing.sunshine.form.ContracterForm;
 
 /**
@@ -42,5 +43,10 @@ public class Contractor extends SunshineEntity {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 }
