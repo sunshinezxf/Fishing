@@ -133,7 +133,7 @@
 
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="fish-type-insert" name="fishName"
-                                   placeholder="鱼种"/>
+                                   placeholder="鱼种" autocomplete="off"/>
                         </div>
                         <button type="button" class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
                     </div>
