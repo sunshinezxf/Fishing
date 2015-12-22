@@ -81,10 +81,12 @@ public class FishTypeController {
         Fish fish = new Fish();
         fish.setFishId(fishId);
         ResultData content = fishService.queryFishType(fish);
-        if (content.getResponseCode() == ResponseCode.RESPONSE_OK) {
-            Fish target = ((ArrayList<Fish>) content.getData()).get(0);
-            view.addObject("fish", target);
+        if (content.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            view.setViewName("redirect:/management/fish_type/overview");
+            return view;
         }
+        Fish target = ((ArrayList<Fish>) content.getData()).get(0);
+        view.addObject("fish", target);
         view.setViewName("/management/fish_type/edit");
         return view;
     }
@@ -109,7 +111,7 @@ public class FishTypeController {
 
         Fish update = new Fish(form);
         ResultData edit = fishService.updateFishType(previous, update);
-        if (edit.getResponseCode() == ResponseCode.RESPONSE_ERROR) {
+        if (edit.getResponseCode() != ResponseCode.RESPONSE_OK) {
             view.setViewName("redirect:/fishtype/edit/" + fishId);
             return view;
         }

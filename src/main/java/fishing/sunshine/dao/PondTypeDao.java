@@ -13,4 +13,6 @@ public interface PondTypeDao {
     ResultData queryPondType(PondType type);
 
     ResultData queryPondTypeByPage(DataTableParam param);
+
+    ResultData updatePondType(PondType type);
 }

@@ -7,21 +7,42 @@
         <result property="createAt" column="create_time"></result>
     </resultMap>
 
-    <!-- 插入一条渔场的类型 -->
+    <!-- 插入一条钓场的类型 -->
     <insert id="insertPondType" parameterType="fishing.sunshine.model.PondType" useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO fish_zone_type(fish_zone_type_id, fish_zone_type_name, create_time, del_flag)
         VALUES (#{pondTypeId}, #{pondTypeName}, #{createAt}, 0)
     </insert>
 
-    <!-- 查询渔场的类型是否已经存在 -->
+    <!-- 查询钓场的类型是否已经存在 -->
     <select id="queryPondType" parameterType="fishing.sunshine.model.PondType" resultMap="pondTypeVo">
         SELECT fish_zone_type_id, fish_zone_type_name, create_time
         FROM fish_zone_type
         WHERE 1 = 1
         AND del_flag = 0
+        <if test="pondTypeId != null and pondTypeId != ''">
+            AND fish_zone_type_id = #{pondTypeId}
+        </if>
         <if test="pondTypeName != null and pondTypeName != ''">
             AND fish_zone_type_name = #{pondTypeName}
         </if>
+        ORDER BY create_time ASC
     </select>
+
+    <!-- 更新一个钓场类型 -->
+    <update id="updatePondType" parameterType="fishing.sunshine.model.PondType">
+        UPDATE fish_zone_type
+        <set>
+            <if test="pondTypeName != null and pondTypeName != ''">
+                fish_zone_type_name = #{pondTypeName},
+            </if>
+            <if test="createAt != null and createAt != ''">
+                create_time = #{createAt}
+            </if>
+        </set>
+        WHERE 1 = 1
+        <if test="pondTypeId != null and pondTypeId != ''">
+            AND fish_zone_type_id = #{pondTypeId}
+        </if>
+    </update>
 </mapper>

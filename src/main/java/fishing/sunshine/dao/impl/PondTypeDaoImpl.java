@@ -85,4 +85,18 @@ public class PondTypeDaoImpl extends BaseDao implements PondTypeDao {
             return result;
         }
     }
+
+    @Override
+    public ResultData updatePondType(PondType type) {
+        ResultData result = new ResultData();
+        try {
+            sqlSession.update("type.updatePondType", type);
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        } finally {
+            return result;
+        }
+    }
 }

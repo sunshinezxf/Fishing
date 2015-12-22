@@ -12,12 +12,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 /**
  * Created by sunshine on 12/3/15.
@@ -78,5 +80,48 @@ public class PondTypeController {
             result = (DataTablePage<PondType>) content.getData();
         }
         return result;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/edit/{pondTypeId}")
+    public ModelAndView edit(@PathVariable("pondTypeId") String pondTypeId) {
+        ModelAndView view = new ModelAndView();
+        PondType type = new PondType();
+        type.setPondTypeId(pondTypeId);
+        ResultData content = fishPondService.queryFishPondType(type);
+        if (content.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            view.setViewName("redirect:/management/fish_zone_type/overview");
+            return view;
+        }
+        PondType target = ((ArrayList<PondType>) content.getData()).get(0);
+        view.addObject("type", target);
+        view.setViewName("/management/fish_zone_type/edit");
+        return view;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/edit/{pondTypeId}")
+    public ModelAndView edit(@PathVariable("pondTypeId") String pondTypeId, @Valid PondTypeForm form, BindingResult result) {
+        ModelAndView view = new ModelAndView();
+        if (result.hasErrors()) {
+            view.setViewName("redirect:/zonetype/edit/" + pondTypeId);
+            return view;
+        }
+
+        PondType type = new PondType();
+        type.setPondTypeId(pondTypeId);
+        ResultData query = fishPondService.queryFishPondType(type);
+        if (query.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            view.setViewName("redirect:/zonetype/create");
+            return view;
+        }
+        PondType previous = ((ArrayList<PondType>) query.getData()).get(0);
+
+        PondType update = new PondType(form);
+        ResultData edit = fishPondService.updateFishPondType(previous, update);
+        if (edit.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            view.setViewName("redirect:/zonetype/edit/" + pondTypeId);
+            return view;
+        }
+        view.setViewName("redirect:/zonetype/overview");
+        return view;
     }
 }

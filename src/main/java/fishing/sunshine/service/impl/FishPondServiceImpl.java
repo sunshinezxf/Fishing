@@ -73,6 +73,20 @@ public class FishPondServiceImpl implements FishPondService {
     }
 
     @Override
+    public ResultData updateFishPondType(PondType previous, PondType updated) {
+        ResultData result = new ResultData();
+        updated.setPondTypeId(previous.getPondTypeId());
+        ResultData update = pondTypeDao.updatePondType(updated);
+        result.setResponseCode(update.getResponseCode());
+        if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(update.getData());
+        } else {
+            result.setDescription(update.getDescription());
+        }
+        return result;
+    }
+
+    @Override
     public ResultData addFishPond(FishPond fishPond) {
         ResultData result = new ResultData();
         fishPond.setFishPondId(IDGenerator.generate("FPD"));

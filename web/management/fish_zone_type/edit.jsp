@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: sunshine
-  Date: 12/3/15
-  Time: 16:25
+  Date: 12/22/15
+  Time: 16:42
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -17,92 +17,35 @@
           href="${path.concat('/material/plugins/bootstrap-3.3.5-dist/css/bootstrap.css')}"/>
     <link rel="stylesheet" type="text/css"
           href="${path.concat('/material/plugins/Font-Awesome-master/css/font-awesome.css')}"/>
-    <link rel="stylesheet" href="${path.concat('/material/plugins/datatable/css/dataTables.bootstrap.css')}"/>
     <link rel="stylesheet" type="text/css"
           href="${path.concat('/material/css/dashboard.css')}"/>
     <link rel="stylesheet" type="text/css" href="${path.concat('/material/css/customize.css')}"/>
-    <link rel="stylesheet" type="text/css" href="${path.concat('/material/css/page.css')}"/>
     <script type="text/javascript"
             src="${path.concat('/material/plugins/jquery/jquery-1.11.3.min.js')}"></script>
     <script type="text/javascript"
             src="${path.concat('/material/plugins/jquery/jquery-migrate-1.2.1.min.js')}"></script>
     <script type="text/javascript"
             src="${path.concat('/material/plugins/bootstrap-3.3.5-dist/js/bootstrap.js')}"></script>
-    <script type="text/javascript" src="/material/plugins/datatable/js/jquery.dataTables.js"></script>
-    <script type="text/javascript"
-            src="${path.concat('/material/plugins/datatable/js/dataTables.bootstrap.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/dashboard.js')}"></script>
-    <script type="text/javascript" src="${path.concat('/material/js/date.js')}"></script>
-    <title>钓场类型概览</title>
+    <title>添加钓场类型</title>
     <script>
         $(function () {
             $("#fish-type-management").collapse('hide');
             $("#fish-zone-management").collapse('show');
             $("#fish-man-management").collapse('hide');
         });
-
         $(document).ready(function () {
-            $("#fish-zone-type-list").DataTable({
-                searching: false,
-                ordering: false,
-                paging: true,
-                "sPaginationType": "full_numbers",
-                "bPaginate": false,
-                "bLengthChange": false,
-                "bSort": false,
-                "bDeferRender": true,
-                "bProcessing": true,
-                "bServerSide": true,
-                "bInfoFiltered": false,
-                "sAjaxSource": '${path.concat('/zonetype/overview')}',
-                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                    $(nRow).removeClass('dataTable');
-                    $(nRow).css("text-align", "left");
-                    return nRow;
-                },
-                "fnInitComplete": function () {
-                    $("#fish-zone-type-list").removeClass('no-footer');
-                },
-                "fnServerData": function (sSource, aoData, fnCallback) {
-                    $.ajax({
-                        "dataType": "json",
-                        "type": "POST",
-                        "url": sSource,
-                        "data": aoData,
-                        "success": fnCallback
-                    })
-                },
-                "aoColumns": [
-                    {"sTitle": "名称", "sWidth": "10%", "mData": "pondTypeName"},
-                    {
-                        "sTitle": "添加日期", "sWidth": "10%", "mRender": function (data, type, full) {
-                        return ((new Date(full.createAt)).format("yyyy-MM-dd hh:mm:ss"));
-                    }
-                    },
-                    {
-                        "sTitle": "操作", "sWidth": "10%", "mRender": function (data, type, full) {
-                        var url = "${path.concat('/zonetype/edit/')}" + full.pondTypeId;
-                        return "<button type='button' class='btn btn-success btn-group-sm control-box' onclick=\"javascript:location.href='" + url + "'\" id='" + full.pondTypeId + "'>修改</button>";
-                    }
-                    }
-                ],
-                "oLanguage": {
-                    "sProcessing": "正在加载中",
-                    "sLengthMenu": "每页显示 _MENU_ 条记录",
-                    "sZeroRecords": "抱歉， 没有找到",
-                    "sInfo": "从 _START_ 到 _END_, 共 _TOTAL_ 条数据",
-                    "sInfoEmpty": "暂无数据",
-                    "sInfoFiltered": "数据表中共 _MAX_ 条记录)",
-                    "sZeroRecords": "没有检索到数据",
-                    "sSearch": "名称:",
-                    "oPaginate": {
-                        "sFirst": "首页",
-                        "sPrevious": "上一页",
-                        "sNext": "下一页",
-                        "sLast": "尾页"
-                    }
-                }
-            });
+            $("#confirm-pond-type").click(function () {
+                //1st step: verify input
+
+                //2nd step: construct the form
+                var url = "${path.concat("/zonetype/edit/")}${type.pondTypeId}";
+                $("#edit-pond-type-form").attr("action", url);
+                $("#edit-pond-type-form").attr("method", "post");
+
+                //3rd step: submit the form
+                $("#edit-pond-type-form").submit();
+            })
         });
     </script>
 </head>
@@ -146,6 +89,7 @@
                         </li>
                         <li><a class="sub-nav" href="${path.concat('/fishzone/overview')}"><i class="fa fa-tasks"></i>
                             钓场概览</a>
+                        </li>
                         <li><a class="sub-nav" href="${path.concat('/zonetype/create')}"><i class="fa fa-edit"></i>
                             添加类型</a>
                         </li>
@@ -175,16 +119,29 @@
                 <h1><i class="fa fa-home"></i> 钓场管理 </h1>
                 <ol class="breadcrumb">
                     <li><a href="${path.concat('/dashboard')}">首页</a></li>
-                    <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-zone-management">钓场类型管理</a>
-                    </li>
-                    <li class="active">钓场类型概览</li>
+                    <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-zone-management">钓场管理</a></li>
+                    <li class="active">修改钓场类型</li>
                 </ol>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 col-lg-12">
-                <table id="fish-zone-type-list" class="table table-striped table-bordered" cellspacing="1" width="100%">
-                </table>
+                <hr/>
+                <form id="edit-pond-type-form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">类型名称</label>
+
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="pond-type-insert" name="pondTypeName"
+                                   placeholder="钓场类型" value="${type.pondTypeName}" autocomplete="off">
+                        </div>
+                        <button type="button" class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
+                    </div>
+                    <hr/>
+                    <button type="submit" id="confirm-pond-type"
+                            class="btn btn-primary btn-group-sm btn-warning col-sm-1">修改
+                    </button>
+                </form>
             </div>
         </div>
     </div>
