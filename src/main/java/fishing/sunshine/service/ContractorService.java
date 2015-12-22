@@ -13,4 +13,6 @@ public interface ContractorService {
     ResultData queryContractor(Contractor contractor);
 
     ResultData queryContractorByPage(DataTableParam param);
+
+    ResultData updateContractor(Contractor previous, Contractor updated);
 }

@@ -66,4 +66,18 @@ public class ContractorServiceImpl implements ContractorService {
         }
         return result;
     }
+
+    @Override
+    public ResultData updateContractor(Contractor previous, Contractor updated) {
+        ResultData result = new ResultData();
+        updated.setContractorId(previous.getContractorId());
+        ResultData update = contractorDao.updateContractor(updated);
+        result.setResponseCode(update.getResponseCode());
+        if (update.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            update.setData(update.getData());
+        } else {
+            update.setDescription(update.getDescription());
+        }
+        return result;
+    }
 }

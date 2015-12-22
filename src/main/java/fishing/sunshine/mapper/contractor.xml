@@ -21,11 +21,35 @@
         FROM fish_man
         WHERE 1 = 1
         AND del_flag = 0
+        <if test="contractorId != null and contractorId != ''">
+            AND fish_man_id = #{contractorId}
+        </if>
         <if test="name != null and name != ''">
             AND fish_man_name LIKE "%${name}%"
         </if>
         <if test="phone != null and phone != ''">
             AND fish_man_tel = #{phone}
         </if>
+        ORDER BY create_time ASC
     </select>
+
+    <!-- 修改承包人记录 -->
+    <update id="updateContractor" parameterType="fishing.sunshine.model.Contractor">
+        UPDATE fish_man
+        <set>
+            <if test="name != null and name != ''">
+                fish_man_name = #{name},
+            </if>
+            <if test="phone != null and phone != ''">
+                fish_man_tel = #{phone},
+            </if>
+            <if test="createAt != null and createAt != ''">
+                create_time = #{createAt}
+            </if>
+        </set>
+        WHERE 1 = 1
+        <if test="contractorId != null and contractorId != ''">
+            AND fish_man_id = #{contractorId}
+        </if>
+    </update>
 </mapper>

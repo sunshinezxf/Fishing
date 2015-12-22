@@ -12,12 +12,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 /**
  * Created by sunshine on 11/27/15.
@@ -78,5 +80,46 @@ public class ContractorController {
             result = (DataTablePage<Contractor>) content.getData();
         }
         return result;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/edit/{contractorId}")
+    public ModelAndView edit(@PathVariable("contractorId") String contractorId) {
+        ModelAndView view = new ModelAndView();
+        Contractor contractor = new Contractor();
+        contractor.setContractorId(contractorId);
+        ResultData content = contractorService.queryContractor(contractor);
+        if (content.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            view.setViewName("redirect:/fishman/overview");
+            return view;
+        }
+        Contractor target = ((ArrayList<Contractor>) content.getData()).get(0);
+        view.addObject("contractor", target);
+        view.setViewName("management/fish_manager/edit");
+        return view;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/edit/{contractorId}")
+    public ModelAndView edit(@PathVariable("contractorId") String contractorId, @Valid ContracterForm form, BindingResult result) {
+        ModelAndView view = new ModelAndView();
+        if (result.hasErrors()) {
+            view.setViewName("redirect:/fishman/edit/" + contractorId);
+            return view;
+        }
+        Contractor contractor = new Contractor();
+        contractor.setContractorId(contractorId);
+        ResultData query = contractorService.queryContractor(contractor);
+        if (query.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            view.setViewName("redirect:/fishman/create");
+            return view;
+        }
+        Contractor previous = ((ArrayList<Contractor>) query.getData()).get(0);
+        Contractor update = new Contractor(form);
+        ResultData edit = contractorService.updateContractor(previous, update);
+        if (edit.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            view.setViewName("redirect:/fishman/edit/" + contractorId);
+            return view;
+        }
+        view.setViewName("redirect:/fishman/overview");
+        return view;
     }
 }

@@ -98,7 +98,6 @@ public class FishTypeController {
             view.setViewName("redirect:/fishtype/edit/" + fishId);
             return view;
         }
-
         Fish fish = new Fish();
         fish.setFishId(fishId);
         ResultData query = fishService.queryFishType(fish);
@@ -106,9 +105,7 @@ public class FishTypeController {
             view.setViewName("redirect:/fishtype/create");
             return view;
         }
-
         Fish previous = ((ArrayList<Fish>) query.getData()).get(0);
-
         Fish update = new Fish(form);
         ResultData edit = fishService.updateFishType(previous, update);
         if (edit.getResponseCode() != ResponseCode.RESPONSE_OK) {

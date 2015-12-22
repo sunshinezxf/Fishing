@@ -82,7 +82,8 @@
                     },
                     {
                         "sTitle": "操作", "sWidth": "10%", "mRender": function (data, type, full) {
-                        return "";
+                        var url = "${path.concat('/fishman/edit/')}" + full.contractorId;
+                        return "<button type='button' class='btn btn-success btn-group-sm control-box' onclick=\"javascript:location.href='" + url + "'\" id='" + full.contractorId + "'>修改</button>";
                     }
                     }
                 ],

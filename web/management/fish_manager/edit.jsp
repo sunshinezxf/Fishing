@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: sunshine
-  Date: 11/27/15
-  Time: 19:35
+  Date: 12/22/15
+  Time: 18:31
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -39,9 +39,9 @@
                 //1st step: verify input
 
                 //2nd step: construct the form
-                var url = "${path.concat("/fishman/create")}";
-                $("#insert-contractor-form").attr("action", url);
-                $("#insert-contractor-form").attr("method", "post");
+                var url = "${path.concat("/fishman/edit/")}${contractor.contractorId}";
+                $("#edit-contractor-form").attr("action", url);
+                $("#edit-contractor-form").attr("method", "post");
 
                 //3rd step: submit the form
                 $("#insert-contractor-form").submit();
@@ -126,13 +126,13 @@
         </div>
         <div class="row">
             <div class="col-md-12 col-lg-12">
-                <form id="insert-contractor-form" class="form-horizontal">
+                <form id="edit-contractor-form" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="fish-man-insert">承包人姓名</label>
 
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="fish-man-insert" name="contracterName"
-                                   placeholder="承包人姓名" autocomplete="off"/>
+                                   placeholder="承包人姓名" value="${contractor.name}" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -140,13 +140,13 @@
 
                         <div class="col-sm-8">
                             <input type="tel" class="form-control" id="fish-man-phone" name="contracterPhone"
-                                   placeholder="承包人电话" autocomplete="off"/>
+                                   placeholder="承包人电话" value="${contractor.phone}" autocomplete="off"/>
                         </div>
                         <button class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
                     </div>
                     <hr/>
-                    <button id="confirm-contractor" class="btn btn-primary btn-group-sm col-sm-1">
-                        添加
+                    <button id="confirm-contractor" class="btn btn-primary btn-group-sm btn-warning col-sm-1">
+                        修改
                     </button>
                 </form>
             </div>

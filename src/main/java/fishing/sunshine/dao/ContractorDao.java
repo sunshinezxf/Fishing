@@ -13,4 +13,6 @@ public interface ContractorDao {
     ResultData queryContractor(Contractor contractor);
 
     ResultData queryContractorByPage(DataTableParam param);
+
+    ResultData updateContractor(Contractor contractor);
 }

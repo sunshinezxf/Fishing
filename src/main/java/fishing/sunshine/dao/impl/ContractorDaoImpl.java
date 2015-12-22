@@ -86,4 +86,18 @@ public class ContractorDaoImpl extends BaseDao implements ContractorDao {
             return result;
         }
     }
+
+    @Override
+    public ResultData updateContractor(Contractor contractor) {
+        ResultData result = new ResultData();
+        try {
+            sqlSession.update("contractor.updateContractor", contractor);
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        } finally {
+            return result;
+        }
+    }
 }
