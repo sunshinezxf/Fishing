@@ -1,6 +1,7 @@
 package fishing.sunshine.service;
 
 import fishing.sunshine.model.Location;
+import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.ResultData;
 
 /**
@@ -8,4 +9,6 @@ import fishing.sunshine.util.ResultData;
  */
 public interface LocationService {
     ResultData addLocation(Location location);
+
+    ResultData queryLocationByPage(DataTableParam param);
 }

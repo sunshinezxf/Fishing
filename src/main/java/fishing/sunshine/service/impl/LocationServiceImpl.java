@@ -3,6 +3,7 @@ package fishing.sunshine.service.impl;
 import fishing.sunshine.dao.LocationDao;
 import fishing.sunshine.model.Location;
 import fishing.sunshine.service.LocationService;
+import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.IDGenerator;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
@@ -31,6 +32,19 @@ public class LocationServiceImpl implements LocationService {
             result.setData(location);
         } else {
             result.setDescription(insert.getDescription());
+        }
+        return result;
+    }
+
+    @Override
+    public ResultData queryLocationByPage(DataTableParam param) {
+        ResultData result = new ResultData();
+        ResultData query = locationDao.queryLocationByPage(param);
+        result.setResponseCode(query.getResponseCode());
+        if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(query.getData());
+        } else {
+            result.setDescription(query.getDescription());
         }
         return result;
     }
