@@ -78,13 +78,13 @@
                 console.debug($("#zone-longitude").val());
                 console.debug($("#zone-latitude").val());
                 //2nd step, construct the form
-                var url = "${path.concat('/fishzone/create')}"
-                $("#insert-fishzone-form").attr("action", url);
-                $("#insert-fishzone-form").attr("method", "post");
-                $("#insert-fishzone-form").attr("enctype", "multipart/form-data");
+                var url = "${path.concat('/fishzone/edit/')}${fishPond.fishPondId}";
+                $("#edit-fishzone-form").attr("action", url);
+                $("#edit-fishzone-form").attr("method", "post");
+                $("#edit-fishzone-form").attr("enctype", "multipart/form-data");
 
                 //3rd step, submit the form
-                $("#insert-fishzone-form").submit();
+                $("#edit-fishzone-form").submit();
             });
         });
     </script>
@@ -167,7 +167,7 @@
         <div class="row">
             <div class="col-md-12 col-lg-12">
                 <hr/>
-                <form id="insert-fishzone-form" class="form-horizontal">
+                <form id="edit-fishzone-form" class="form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="fish-zone-name">鱼塘名称</label>
 
@@ -283,7 +283,7 @@
                         <div class="col-sm-8">
                             <div class="fileinput file-input-new fileinput-inline" data-provides="fileinput">
                                 <div class="fileinput-preview thumbnail">
-                                    <img src="${path.concat('/material/image/blank.gif')}" alt="">
+                                    <img src="${path.concat(fishPond.thumbnail)}" alt="">
                                 </div>
                                 <div>
                                     <span class="btn btn-default btn-success btn-file">
@@ -299,7 +299,7 @@
 
                         <div class="col-sm-9">
                                 <textarea id="pond-introduction" name="pondIntroduction"
-                                          class="form-control"></textarea>
+                                          class="form-control">${fishPond.introduction}</textarea>
                         </div>
                     </div>
                     <hr/>
