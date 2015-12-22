@@ -57,8 +57,9 @@ public class FishDaoImpl extends BaseDao implements FishDao {
     @Override
     public ResultData deleteFish(Fish fish) {
         ResultData result = new ResultData();
+        fish.setDelFlag(true);
         try {
-            sqlSession.update("fish.updateFish", fish);
+            sqlSession.update("fish.deleteFish", fish);
         } catch (Exception e) {
             logger.debug(e.toString());
             result.setResponseCode(ResponseCode.RESPONSE_ERROR);
@@ -92,6 +93,20 @@ public class FishDaoImpl extends BaseDao implements FishDao {
             result.setData(page);
         } catch (Exception e) {
             logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        } finally {
+            return result;
+        }
+    }
+
+    @Override
+    public ResultData updateFish(Fish fish) {
+        ResultData result = new ResultData();
+        try {
+            sqlSession.update("fish.updateFish", fish);
+        } catch (Exception e) {
+            logger.debug(e.toString());
             result.setResponseCode(ResponseCode.RESPONSE_ERROR);
             result.setDescription(e.getMessage());
         } finally {

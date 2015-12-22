@@ -76,7 +76,7 @@ public class FishTypeController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/edit/{fishId}")
-    public ModelAndView modify(@PathVariable("fishId") String fishId) {
+    public ModelAndView edit(@PathVariable("fishId") String fishId) {
         ModelAndView view = new ModelAndView();
         Fish fish = new Fish();
         fish.setFishId(fishId);
@@ -86,6 +86,34 @@ public class FishTypeController {
             view.addObject("fish", target);
         }
         view.setViewName("/management/fish_type/edit");
+        return view;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/edit/{fishId}")
+    public ModelAndView edit(@PathVariable("fishId") String fishId, @Valid FishForm form, BindingResult result) {
+        ModelAndView view = new ModelAndView();
+        if (result.hasErrors()) {
+            view.setViewName("redirect:/fishtype/edit/" + fishId);
+            return view;
+        }
+
+        Fish fish = new Fish();
+        fish.setFishId(fishId);
+        ResultData query = fishService.queryFishType(fish);
+        if (query.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            view.setViewName("redirect:/fishtype/create");
+            return view;
+        }
+
+        Fish previous = ((ArrayList<Fish>) query.getData()).get(0);
+
+        Fish update = new Fish(form);
+        ResultData edit = fishService.updateFishType(previous, update);
+        if (edit.getResponseCode() == ResponseCode.RESPONSE_ERROR) {
+            view.setViewName("redirect:/fishtype/edit/" + fishId);
+            return view;
+        }
+        view.setViewName("redirect:/fishtype/overview");
         return view;
     }
 

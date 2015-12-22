@@ -15,4 +15,6 @@ public interface FishDao {
     ResultData deleteFish(Fish fish);
 
     ResultData queryFishByPage(DataTableParam param);
+
+    ResultData updateFish(Fish fish);
 }

@@ -29,7 +29,7 @@
     </select>
 
     <!-- 删除/解删除一种已存在的鱼类 -->
-    <update id="updateFish" parameterType="fishing.sunshine.model.Fish">
+    <update id="deleteFish" parameterType="fishing.sunshine.model.Fish">
         UPDATE fish_type
         <set>
             <if test="delFlag = true">
@@ -39,6 +39,29 @@
                 del_flag = 0
             </if>
         </set>
-        WHERE fish_type_name = #{fishName}
+        WHERE 1 = 1
+        <if test="fishId != null and fishId != ''">
+            AND fish_type_id = #{fishId}
+        </if>
+        <if test="fishName != null and fishName != ''">
+            AND fish_type_name = #{fishName}
+        </if>
+    </update>
+
+    <!-- 更新一种已存在的鱼类 -->
+    <update id="updateFish" parameterType="fishing.sunshine.model.Fish">
+        UPDATE fish_type
+        <set>
+            <if test="fishName != null and fishName != ''">
+                fish_type_name = #{fishName},
+            </if>
+            <if test="createAt != null and createAt != ''">
+                create_time = #{createAt}
+            </if>
+        </set>
+        WHERE 1 = 1
+        <if test="fishId != null and fishId != ''">
+            AND fish_type_id = #{fishId}
+        </if>
     </update>
 </mapper>

@@ -28,6 +28,26 @@
             src="${path.concat('/material/plugins/bootstrap-3.3.5-dist/js/bootstrap.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/dashboard.js')}"></script>
     <title>修改鱼种</title>
+    <script>
+        $(function () {
+            $("#fish-type-management").collapse('show');
+            $("#fish-zone-management").collapse('hide');
+            $("#fish-man-management").collapse('hide');
+        });
+        $(document).ready(function () {
+            $("#confirm-fish").click(function () {
+                //1st step: verify input
+
+                //2nd step: construct the form
+                var url = "${path.concat("/fishtype/edit/")}${fish.fishId}";
+                $("#edit-fish-form").attr("action", url);
+                $("#edit-fish-form").attr("method", "post");
+
+                //3rd step: submit the form
+                $("#insert-fish-form").submit();
+            });
+        });
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">

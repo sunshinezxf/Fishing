@@ -13,5 +13,6 @@ public interface FishService {
     ResultData queryFishType(Fish fish);
 
     ResultData queryFishTypeByPage(DataTableParam param);
-//    ResultData updateFishType(Fish fish);
+
+    ResultData updateFishType(Fish previous, Fish updated);
 }

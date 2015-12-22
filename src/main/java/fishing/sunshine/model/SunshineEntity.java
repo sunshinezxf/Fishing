@@ -29,4 +29,5 @@ public class SunshineEntity {
     public void setDelFlag(boolean delFlag) {
         this.delFlag = delFlag;
     }
+
 }

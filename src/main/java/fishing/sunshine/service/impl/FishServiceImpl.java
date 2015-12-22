@@ -66,4 +66,18 @@ public class FishServiceImpl implements FishService {
         }
         return result;
     }
+
+    @Override
+    public ResultData updateFishType(Fish previous, Fish updated) {
+        ResultData result = new ResultData();
+        updated.setFishId(previous.getFishId());
+        ResultData update = fishDao.updateFish(updated);
+        result.setResponseCode(update.getResponseCode());
+        if (update.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(update.getData());
+        } else {
+            result.setDescription(update.getDescription());
+        }
+        return result;
+    }
 }
