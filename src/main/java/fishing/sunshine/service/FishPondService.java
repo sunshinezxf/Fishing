@@ -21,5 +21,7 @@ public interface FishPondService {
 
     ResultData queryFishPond(FishPond fishPond);
 
+    ResultData updateFishPond(FishPond previous, FishPond updated);
+
     ResultData queryFishPondByPage(DataTableParam param);
 }

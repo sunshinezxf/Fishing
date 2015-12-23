@@ -118,6 +118,20 @@ public class FishPondServiceImpl implements FishPondService {
     }
 
     @Override
+    public ResultData updateFishPond(FishPond previous, FishPond updated) {
+        ResultData result = new ResultData();
+        updated.setFishPondId(previous.getFishPondId());
+        ResultData update = fishPondDao.updateFishPond(updated);
+        result.setResponseCode(update.getResponseCode());
+        if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(result.getData());
+        } else {
+            result.setDescription(result.getDescription());
+        }
+        return result;
+    }
+
+    @Override
     public ResultData queryFishPondByPage(DataTableParam param) {
         ResultData result = new ResultData();
         ResultData query = fishPondDao.queryFishPondByPage(param);

@@ -38,26 +38,97 @@
 
     <!-- 插入一条渔场记录, 包括插入渔场信息, 渔场和鱼类关联信息,渔场和浴场类型关联信息 -->
 
-    <!-- 插入浴场记录 -->
+    <!-- 插入钓场记录 -->
     <insert id="insertFishPond" parameterType="fishing.sunshine.model.FishPond" useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO fish_zone(fish_zone_id, fish_zone_name, fish_zone_thumbnail, fish_zone_intro, fish_zone_charge, fish_zone_night_enable, fish_zone_longitude, fish_zone_latitude, fish_zone_address_description, fish_man_id, create_time, del_flag)
         VALUES (#{fishPondId}, #{fishPondName}, #{thumbnail}, #{introduction}, #{fishPondFee}, #{nightable}, #{longitude}, #{latitude}, #{fishPondAddress}, #{contractor.contractorId}, #{createAt}, #{delFlag})
     </insert>
 
-    <!-- 插入渔场和浴场类型关联 -->
+    <!-- 更新钓场记录 -->
+    <update id="updateFishPond" parameterType="fishing.sunshine.model.FishPond">
+        UPDATE fish_zone
+        <set>
+            <if test="fishPondName != null and fishPondName != ''">
+                fish_zone_name = #{fishPondName},
+            </if>
+            <if test="thumbnail != null and thumbnail != ''">
+                fish_zone_thumbnail = #{thumbnail},
+            </if>
+            <if test="introduction != null and introduction != ''">
+                fish_zone_intro = #{introduction},
+            </if>
+            <if test="fishPondFee != null and fishPondFee != ''">
+                fish_zone_charge = #{fishPondFee},
+            </if>
+            <if test="nightable != null and nightable != ''">
+                fish_zone_night_enable = #{nightable},
+            </if>
+            <if test="longitude != null and longitude != ''">
+                fish_zone_longitude = #{longitude},
+            </if>
+            <if test="latitude != null and latitude != ''">
+                fish_zone_latitude = #{latitude},
+            </if>
+            <if test="fishPondAddress != null and fishPondAddress != ''">
+                fish_zone_address_description = #{fishPondAddress},
+            </if>
+            <if test="contractor != null and contractor != '' and contractor.contractorId != null and contractor.contractorId != ''">
+                fish_man_id = #{contractor.contractorId},
+            </if>
+            <if test="createAt != null and createAt != ''">
+                create_time = #{createAt}
+            </if>
+        </set>
+        WHERE 1 = 1
+        <if test="fishPondId != null and fishPondId != ''">
+            AND fish_zone_id = #{fishPondId}
+        </if>
+    </update>
+
+    <!-- 插入渔场和钓场类型关联 -->
     <insert id="insertTypePondBind" parameterType="fishing.sunshine.model.TypePondBinding" useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO fish_zone_type_mapping(fish_zone_type_mapping_id, fish_zone_type_id, fish_zone_id, create_time, del_flag)
         VALUES (#{bindingId}, #{type.pondTypeId}, #{pond.fishPondId}, #{createAt}, #{delFlag})
     </insert>
 
-    <!-- 插入渔场和鱼的类型关联 -->
+    <!-- 删除已没有的钓场和钓场类型关联 -->
+    <delete id="deleteTypePondBind" parameterType="fishing.sunshine.model.TypePondBinding">
+        DELETE FROM fish_zone_type_mapping
+        WHERE 1 = 1
+        <if test="bindingId != null and bindingId != ''">
+            AND fish_zone_type_mapping_id = #{bindingId}
+        </if>
+        <if test="type != null and type != '' and type.pondTypeId != null and type.pondTypeId != ''">
+            AND fish_zone_type_id = #{type.pondTypeId}
+        </if>
+        <if test="pond != null and pond != '' and pond.fishPondId != null and pond.fishPondId != ''">
+            AND fish_zone_id = #{pond.fishPondId}
+        </if>
+    </delete>
+
+    <!-- 插入钓场和鱼的类型关联 -->
     <insert id="insertPondFishBind" parameterType="fishing.sunshine.model.PondFishBinding" useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO fish_type_mapping(fish_type_mapping_id, fish_type_id, fish_zone_id, create_time, del_flag)
         VALUES (#{bindingId}, #{fish.fishId}, #{fishPond.fishPondId}, #{createAt}, #{delFlag})
     </insert>
+
+    <!-- 删除已没有的钓场和鱼类的关联 -->
+    <delete id="deletePondFishBind" parameterType="fishing.sunshine.model.PondFishBinding">
+        DELETE FROM fish_type_mapping
+        WHERE 1 = 1
+        <if test="bindingId != null and bindingId != ''">
+            AND fish_type_mapping_id = #{bindingId}
+        </if>
+        <if test="fish != null and fish != '' and fish.fishId != null and fish.fishId != ''">
+            AND fish_type_id = #{fish.fishId}
+        </if>
+        <if test="fishPond != null and fishPond != '' and fishPond.fishPondId != null and fishPond.fishPondId != ''">
+            and fish_zone_id = #{fishPond.fishPondId}
+        </if>
+    </delete>
 
     <select id="queryFishPond" parameterType="fishing.sunshine.model.FishPond" resultMap="fishPondVo">
         SELECT fish_zone_id, fish_zone_name, fish_zone_thumbnail, fish_zone_intro, fish_zone_charge,

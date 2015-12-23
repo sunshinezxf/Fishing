@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -168,6 +170,38 @@ public class FishPondController {
             view.addObject("typeList", typeResult.getData());
         }
         view.setViewName("/management/fish_zone/edit");
+        return view;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/edit/{fishPondId}")
+    public ModelAndView edit(@PathVariable("fishPondId") String fishPondId, MultipartHttpServletRequest request) {
+        ModelAndView view = new ModelAndView();
+        FishPond fishPond = new FishPond();
+        fishPond.setFishPondId(fishPondId);
+        ResultData query = fishPondService.queryFishPond(fishPond);
+        if (query.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            view.setViewName("redirect:/fishzone/create");
+            return view;
+        }
+        FishPond previous = ((ArrayList<FishPond>) query.getData()).get(0);
+        FishPondForm form = new FishPondForm(request);
+        FishPond updated = new FishPond(form);
+        String context = request.getSession().getServletContext().getRealPath("/");
+        ResultData saveThumbnail = fileUploadService.uploadPicture(form.getThumbnail(), context);
+        if (saveThumbnail.getResponseCode() == ResponseCode.RESPONSE_ERROR) {
+            view.setViewName("redirect:/fishzone/edit/" + fishPondId);
+            return view;
+        } else if (saveThumbnail.getResponseCode() == ResponseCode.RESPONSE_NULL) {
+            updated.setThumbnail(previous.getThumbnail());
+        } else {
+            fishPond.setThumbnail(String.valueOf(saveThumbnail.getData()));
+        }
+        ResultData edit = fishPondService.updateFishPond(previous, updated);
+        if (edit.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            view.setViewName("redirect:/fishzone/edit/" + fishPondId);
+            return view;
+        }
+        view.setViewName("redirect:/fishzone/overview");
         return view;
     }
 }

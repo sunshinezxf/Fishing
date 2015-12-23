@@ -66,6 +66,41 @@ public class FishPondDaoImpl extends BaseDao implements FishPondDao {
         }
     }
 
+    @Transactional
+    @Override
+    public ResultData updateFishPond(FishPond fishPond) {
+        ResultData result = new ResultData();
+        try {
+            sqlSession.update("pond.updateFishPond", fishPond);
+            PondFishBinding pfb = new PondFishBinding();
+            pfb.setFishPond(fishPond);
+            sqlSession.delete("pond.deletePondFishBind", pfb);
+            for (Fish item : fishPond.getFishes()) {
+                PondFishBinding binding = new PondFishBinding();
+                binding.setBindingId(IDGenerator.generate("PFB"));
+                binding.setFish(item);
+                binding.setFishPond(fishPond);
+                sqlSession.insert("pond.insertPondFishBind", binding);
+            }
+            TypePondBinding tpb = new TypePondBinding();
+            tpb.setPond(fishPond);
+            sqlSession.delete("pond.deleteTypePondBind", tpb);
+            for (PondType item : fishPond.getPondTypes()) {
+                TypePondBinding binding = new TypePondBinding();
+                binding.setBindingId(IDGenerator.generate("TPB"));
+                binding.setType(item);
+                binding.setPond(fishPond);
+                sqlSession.insert("pond.insertTypePondBind", binding);
+            }
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        } finally {
+            return result;
+        }
+    }
+
     @Override
     public ResultData queryFishPondByPage(DataTableParam param) {
         ResultData result = new ResultData();

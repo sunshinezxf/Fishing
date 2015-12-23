@@ -25,6 +25,17 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Override
     public ResultData uploadPicture(MultipartFile file, String base) {
         ResultData result = new ResultData();
+        try {
+            if (file == null || file.getBytes().length == 0) {
+                result.setResponseCode(ResponseCode.RESPONSE_NULL);
+                return result;
+            }
+        } catch (IOException e) {
+            logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+            return result;
+        }
         String PATH = "/material/upload";
         Date current = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");

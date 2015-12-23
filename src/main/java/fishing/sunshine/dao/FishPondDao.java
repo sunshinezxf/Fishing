@@ -12,5 +12,7 @@ public interface FishPondDao {
 
     ResultData queryFishPond(FishPond fishPond);
 
+    ResultData updateFishPond(FishPond fishPond);
+
     ResultData queryFishPondByPage(DataTableParam param);
 }
