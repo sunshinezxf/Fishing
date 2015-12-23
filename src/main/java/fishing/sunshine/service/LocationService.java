@@ -11,4 +11,6 @@ public interface LocationService {
     ResultData addLocation(Location location);
 
     ResultData queryLocationByPage(DataTableParam param);
+
+    ResultData deleteLocation(Location location);
 }

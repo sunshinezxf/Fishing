@@ -80,4 +80,18 @@ public class LocationDaoImpl extends BaseDao implements LocationDao {
             return result;
         }
     }
+
+    @Override
+    public ResultData deleteLocation(Location location) {
+        ResultData result = new ResultData();
+        try {
+            sqlSession.delete("location.deleteLocation", location);
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        } finally {
+            return result;
+        }
+    }
 }

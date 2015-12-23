@@ -29,4 +29,16 @@
         </if>
         ORDER BY create_time DESC
     </select>
+
+    <!-- 删除上传的地址的记录 -->
+    <delete id="deleteLocation" parameterType="fishing.sunshine.model.Location">
+        DELETE FROM location_summary
+        WHERE 1 = 1
+        <if test="locationId != null and locationId != ''">
+            AND location_summary_id =#[locationId]
+        </if>
+        <if test="wechat != null and wechat != ''">
+            AND wechat_id = #{wechat}
+        </if>
+    </delete>
 </mapper>

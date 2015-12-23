@@ -14,4 +14,6 @@ public interface LocationDao {
     ResultData insertLocation(Location location);
 
     ResultData queryLocationByPage(DataTableParam param);
+
+    ResultData deleteLocation(Location location);
 }

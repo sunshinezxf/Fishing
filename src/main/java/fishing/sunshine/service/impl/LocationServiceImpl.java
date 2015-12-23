@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by sunshine on 12/17/15.
@@ -45,6 +46,20 @@ public class LocationServiceImpl implements LocationService {
             result.setData(query.getData());
         } else {
             result.setDescription(query.getDescription());
+        }
+        return result;
+    }
+
+    @Transactional
+    @Override
+    public ResultData deleteLocation(Location location) {
+        ResultData result = new ResultData();
+        ResultData remove = locationDao.deleteLocation(location);
+        result.setResponseCode(remove.getResponseCode());
+        if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(remove.getData());
+        } else {
+            result.setData(remove.getDescription());
         }
         return result;
     }
