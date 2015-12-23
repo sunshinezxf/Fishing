@@ -33,6 +33,7 @@
             $("#fish-type-management").collapse('hide');
             $("#fish-zone-management").collapse('hide');
             $("#fish-man-management").collapse('hide');
+            $("#location-management").collapse('hide');
         });
     </script>
 </head>
@@ -94,6 +95,15 @@
                         </li>
                         <li><a class="sub-nav" href="${path.concat('/fishman/overview')}"><i class="fa fa-tasks"></i>
                             承包人概览</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a data-toggle="collapse" data-parent="#accordion" href="#location-management"><i
+                        class="fa fa-book"></i> 地址管理<i
+                        class="pull-right fa fa-caret-down"></i></a>
+                    <ul id="location-management" class="nav nav-collapse collapse">
+                        <li><a class="sub-nav" href="${path.concat('/location/overview')}"><i class="fa fa-tasks"></i>
+                            地址概览</a>
                         </li>
                     </ul>
                 </li>

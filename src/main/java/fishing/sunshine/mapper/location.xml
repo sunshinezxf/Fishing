@@ -15,4 +15,18 @@
         INSERT INTO location_summary(location_summary_id, wechat_id, longitude, latitude, create_time, del_flag)
         VALUES (#{locationId}, #{wechat}, #{longitude}, #{latitude}, #{createAt}, #{delFlag})
     </insert>
+
+    <!-- 查询上传的地址信息 -->
+    <select id="queryLocation" parameterType="fishing.sunshine.model.Location" resultMap="locationVo">
+        SELECT location_summary_id, wechat_id, longitude, latitude, create_time
+        FROM location_summary
+        WHERE 1 = 1
+        <if test="locationId != null and locationId != ''">
+            AND location_summary_id = #{location_summary_id}
+        </if>
+        <if test="wechat != null and wechat != ''">
+            AND wechat_id = #{wechat}
+        </if>
+        ORDER BY create_time DESC
+    </select>
 </mapper>

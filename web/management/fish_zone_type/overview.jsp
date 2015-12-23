@@ -39,6 +39,7 @@
             $("#fish-type-management").collapse('hide');
             $("#fish-zone-management").collapse('show');
             $("#fish-man-management").collapse('hide');
+            $("#location-management").collapse('hide');
         });
 
         $(document).ready(function () {
@@ -123,8 +124,7 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar" id="accordion" aria-multiselectable="true">
-                <li><a href="${path.concat('/dashboard')}"><i class="fa fa-desktop"></i> 首页<span
-                        class="sr-only">(current)</span></a></li>
+                <li><a href="${path.concat('/dashboard')}"><i class="fa fa-desktop"></i> 首页</a></li>
                 <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-type-management"><i
                         class="fa fa-book"></i> 鱼种管理<i
                         class="pull-right fa fa-caret-down"></i></a>
@@ -138,7 +138,7 @@
                     </ul>
                 </li>
                 <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-zone-management"><i
-                        class="fa fa-book"></i> 钓场管理<i
+                        class="fa fa-book"></i> 钓场管理<span class="sr-only">(current)</span><i
                         class="pull-right fa fa-caret-down"></i></a>
                     <ul id="fish-zone-management" class="nav nav-collapse collapse">
                         <li><a class="sub-nav" href="${path.concat('/fishzone/create')}"><i class="fa fa-edit"></i>
@@ -155,7 +155,7 @@
                     </ul>
                 </li>
                 <li><a data-toggle="collapse" data-parent="#accordion" href="#fish-man-management"><i
-                        class="fa fa-book"></i> 承包人管理<i
+                        class="fa fa-book"></i> 承包管理<i
                         class="pull-right fa fa-caret-down"></i></a>
                     <ul id="fish-man-management" class="nav nav-collapse collapse">
                         <li><a class="sub-nav" href="${path.concat('/fishman/create')}"><i class="fa fa-edit"></i>
@@ -163,6 +163,15 @@
                         </li>
                         <li><a class="sub-nav" href="${path.concat('/fishman/overview')}"><i class="fa fa-tasks"></i>
                             承包人概览</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a data-toggle="collapse" data-parent="#accordion" href="#location-management"><i
+                        class="fa fa-book"></i> 地址管理<i
+                        class="pull-right fa fa-caret-down"></i></a>
+                    <ul id="location-management" class="nav nav-collapse collapse">
+                        <li><a class="sub-nav" href="${path.concat('/location/overview')}"><i class="fa fa-tasks"></i>
+                            地址概览</a>
                         </li>
                     </ul>
                 </li>
