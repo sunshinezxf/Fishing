@@ -30,6 +30,8 @@
     <title>添加鱼种</title>
     <script>
         $(function () {
+            $("#fish-type-ok").hide();
+            $("#fish-type-error").hide();
             $("#fish-type-management").collapse('show');
             $("#fish-zone-management").collapse('hide');
             $("#fish-man-management").collapse('hide');
@@ -140,9 +142,15 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="fish-type-insert">鱼种名称</label>
 
-                        <div class="col-sm-8">
+                        <div class="col-sm-8 has-success has-error has-feedback">
                             <input type="text" class="form-control" id="fish-type-insert" name="fishName"
                                    placeholder="鱼种" autocomplete="off"/>
+                            <span id="fish-type-ok" class="glyphicon glyphicon-ok form-control-feedback"><span
+                                    class="sr-only">ok</span>
+                            </span>
+                            <span id="fish-type-error" class="glyphicon glyphicon-remove form-control-feedback"><span
+                                    class="sr-only">error</span>
+                            </span>
                         </div>
                         <button type="button" class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
                     </div>
