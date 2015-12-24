@@ -177,7 +177,7 @@
 
                         <div class="col-sm-3">
                             <select class="form-control" id="fish-pond-manager" name="contractorId">
-                                <option>-- 请选择钓场承包人 --</option>
+                                <option value="">-- 请选择钓场承包人 --</option>
                                 <c:if test="${not empty contractorList}">
                                     <c:forEach var="item" items="${contractorList}" varStatus="no">
                                         <option value="${item.contractorId}">${item.name}&nbsp;(&nbsp;${item.phone}&nbsp;)</option>

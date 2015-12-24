@@ -40,7 +40,7 @@
         $(document).ready(function () {
             $("#confirm-fish").click(function () {
                 //1st step: verify input
-
+                
                 //2nd step: construct the form
                 var url = "${path.concat("/fishtype/create")}";
                 $("#insert-fish-form").attr("action", url);

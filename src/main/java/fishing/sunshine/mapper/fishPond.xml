@@ -39,10 +39,48 @@
     <!-- 插入一条渔场记录, 包括插入渔场信息, 渔场和鱼类关联信息,渔场和浴场类型关联信息 -->
 
     <!-- 插入钓场记录 -->
+
     <insert id="insertFishPond" parameterType="fishing.sunshine.model.FishPond" useGeneratedKeys="true"
             keyProperty="id">
-        INSERT INTO fish_zone(fish_zone_id, fish_zone_name, fish_zone_thumbnail, fish_zone_intro, fish_zone_charge, fish_zone_night_enable, fish_zone_longitude, fish_zone_latitude, fish_zone_address_description, fish_man_id, create_time, del_flag)
-        VALUES (#{fishPondId}, #{fishPondName}, #{thumbnail}, #{introduction}, #{fishPondFee}, #{nightable}, #{longitude}, #{latitude}, #{fishPondAddress}, #{contractor.contractorId}, #{createAt}, #{delFlag})
+        INSERT INTO fish_zone
+        <set>
+            <if test="fishPondId != null and fishPondId != ''">
+                fish_zone_id = #{fishPondId},
+            </if>
+            <if test="fishPondName != null and fishPondName != ''">
+                fish_zone_name = #{fishPondName},
+            </if>
+            <if test="thumbnail != null and thumbnail != ''">
+                fish_zone_thumbnail = #{thumbnail},
+            </if>
+            <if test="introduction != null and introduction != ''">
+                fish_zone_intro = #{introduction},
+            </if>
+            <if test="fishPondFee != null and fishPondFee != ''">
+                fish_zone_charge = #{fishPondFee},
+            </if>
+            <if test="nightable != null and nightable != ''">
+                fish_zone_night_enable = #{nightable},
+            </if>
+            <if test="longitude != null and longitude != ''">
+                fish_zone_longitude = #{longitude},
+            </if>
+            <if test="latitude != null and latitude != ''">
+                fish_zone_latitude = #{latitude},
+            </if>
+            <if test="fishPondAddress != null and fishPondAddress != ''">
+                fish_zone_address_description = #{fishPondAddress},
+            </if>
+            <if test="contractor != null and contractor != '' and contractor.contractorId != null and contractor.contractorId != ''">
+                fish_man_id = #{contractor.contractorId},
+            </if>
+            <if test="createAt != null and createAt != ''">
+                create_time = #{createAt},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = delFlag
+            </if>
+        </set>
     </insert>
 
     <!-- 更新钓场记录 -->

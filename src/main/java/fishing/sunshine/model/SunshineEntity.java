@@ -13,7 +13,7 @@ public class SunshineEntity {
 
     public SunshineEntity() {
         this.createAt = new Timestamp(System.currentTimeMillis());
-        delFlag = false;
+        this.delFlag = false;
     }
 
     public Timestamp getCreateAt() {
