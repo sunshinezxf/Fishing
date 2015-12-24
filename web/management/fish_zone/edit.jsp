@@ -192,7 +192,8 @@
                         <div class="col-sm-3">
                             <select class="form-control" id="fish-pond-manager" name="contractorId">
                                 <option
-                                        <c:if test="${empty fishPond.contractor or empty fishPond.contractor.contractorId}">selected="selected"</c:if>>
+                                        <c:if test="${empty fishPond.contractor or empty fishPond.contractor.contractorId}">selected="selected"</c:if>
+                                        value="">
                                     -- 请选择钓场承包人 --
                                 </option>
                                 <c:if test="${not empty contractorList}">

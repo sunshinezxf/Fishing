@@ -111,7 +111,7 @@
             <if test="fishPondAddress != null and fishPondAddress != ''">
                 fish_zone_address_description = #{fishPondAddress},
             </if>
-            <if test="contractor != null and contractor != '' and contractor.contractorId != null and contractor.contractorId != ''">
+            <if test="contractor != null and contractor != '' and contractor.contractorId != null">
                 fish_man_id = #{contractor.contractorId},
             </if>
             <if test="createAt != null and createAt != ''">
