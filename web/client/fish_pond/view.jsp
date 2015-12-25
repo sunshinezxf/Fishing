@@ -21,6 +21,7 @@
             src="${path.concat('/material/plugins/jquery/jquery-1.11.3.min.js')}"></script>
     <script type="text/javascript"
             src="${path.concat('/material/plugins/bootstrap-3.3.5-dist/js/bootstrap.min.js')}"></script>
+    <script type="text/javascript" src="${path.concat('/material/js/date.js')}"></script>
     <title>${fishPond.fishPondName}</title>
 </head>
 <body ontouchstart>
@@ -69,6 +70,9 @@
 
         <div class="alert alert-info introduction">${fishPond.introduction}</div>
     </div>
+    <footer class="footer blog-footer">
+        <div>内容更新时间: ${fishPond.createAt}</div>
+    </footer>
 </div>
 </body>
 </html>
