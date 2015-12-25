@@ -102,10 +102,10 @@
             <if test="nightable != null and nightable != ''">
                 fish_zone_night_enable = #{nightable},
             </if>
-            <if test="longitude != null and longitude != ''">
+            <if test="longitude != null">
                 fish_zone_longitude = #{longitude},
             </if>
-            <if test="latitude != null and latitude != ''">
+            <if test="latitude != null">
                 fish_zone_latitude = #{latitude},
             </if>
             <if test="fishPondAddress != null and fishPondAddress != ''">

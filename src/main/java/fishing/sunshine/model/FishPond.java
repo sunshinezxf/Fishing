@@ -2,6 +2,7 @@ package fishing.sunshine.model;
 
 import com.alibaba.fastjson.JSONObject;
 import fishing.sunshine.form.FishPondForm;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,8 @@ public class FishPond extends SunshineEntity {
 
     public FishPond(FishPondForm form) {
         this.fishPondName = form.getPondName();
-        this.longitude = Double.parseDouble(form.getLongitude());
-        this.latitude = Double.parseDouble(form.getLatitude());
+        this.longitude = Double.parseDouble(StringUtils.isEmpty(form.getLongitude()) ? "0" : form.getLongitude());
+        this.latitude = Double.parseDouble(StringUtils.isEmpty(form.getLatitude()) ? "0" : form.getLatitude());
         this.fishPondAddress = form.getPondAddress();
         this.fishPondFee = form.getPondFee();
         this.nightable = form.isNightable();
