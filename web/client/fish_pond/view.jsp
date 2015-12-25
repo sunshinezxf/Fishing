@@ -71,7 +71,7 @@
         <div class="alert alert-info introduction">${fishPond.introduction}</div>
     </div>
     <footer class="footer blog-footer">
-        <div>内容更新时间: ${fishPond.createAt}</div>
+        <div>内容更新时间: <fmt:formatDate value="${fishPond.createAt}" type="date" dateStyle="full"/></div>
     </footer>
 </div>
 </body>
