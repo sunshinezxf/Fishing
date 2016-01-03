@@ -73,6 +73,9 @@
     <footer class="footer blog-footer">
         <div>内容更新时间: <fmt:formatDate value="${fishPond.createAt}" type="date" dateStyle="full"/></div>
     </footer>
+    <div class="pond-review">
+        <label class="h6">评论区&nbsp;</label>
+    </div>
 </div>
 </body>
 </html>

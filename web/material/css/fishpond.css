@@ -12,7 +12,7 @@ h4 {
     width: 5%;
 }
 
-.pond-fee, .pond-type, .pond-feature {
+.pond-fee, .pond-type, .pond-feature, .pond-review {
     margin: 0.3em 0;
 }
 
@@ -28,5 +28,5 @@ h4 {
     padding: 0.5em 0;
     color: #999;
     text-align: center;
-    border-top: 0.1em solid #e5e5e5;
+    border-bottom: 0.1em dotted #e5e5e5;
 }
