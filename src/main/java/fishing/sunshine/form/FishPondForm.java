@@ -1,5 +1,6 @@
 package fishing.sunshine.form;
 
+import fishing.sunshine.model.Contractor;
 import fishing.sunshine.model.SunshineEntity;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -10,7 +11,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class FishPondForm extends SunshineEntity {
     private String pondName;
 
-    private String contractorId;
+    private String contractorName;
+
+    private String contractorPhone;
 
     private String longitude;
 
@@ -32,7 +35,8 @@ public class FishPondForm extends SunshineEntity {
 
     public FishPondForm(MultipartHttpServletRequest request) {
         this.pondName = request.getParameter("pondName");
-        this.contractorId = request.getParameter("contractorId");
+        this.contractorName = request.getParameter("contractorName");
+        this.contractorPhone = request.getParameter("contractorPhone");
         this.longitude = request.getParameter("longitude");
         this.latitude = request.getParameter("latitude");
         this.pondAddress = request.getParameter("pondAddress");
@@ -50,14 +54,6 @@ public class FishPondForm extends SunshineEntity {
 
     public void setPondName(String pondName) {
         this.pondName = pondName;
-    }
-
-    public String getContractorId() {
-        return contractorId;
-    }
-
-    public void setContractorId(String contractorId) {
-        this.contractorId = contractorId;
     }
 
     public String getLongitude() {
@@ -130,5 +126,21 @@ public class FishPondForm extends SunshineEntity {
 
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
+    }
+
+    public String getContractorName() {
+        return contractorName;
+    }
+
+    public void setContractorName(String contractorName) {
+        this.contractorName = contractorName;
+    }
+
+    public String getContractorPhone() {
+        return contractorPhone;
+    }
+
+    public void setContractorPhone(String contractorPhone) {
+        this.contractorPhone = contractorPhone;
     }
 }

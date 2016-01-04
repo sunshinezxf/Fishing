@@ -173,19 +173,18 @@
                         <button type="button" class="btn btn-success btn-group-sm col-sm-1 control-box">检测</button>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">承包人</label>
+                        <label class="col-sm-2 control-label" for="zone-contractor-name">承包人姓名</label>
 
                         <div class="col-sm-3">
-                            <select class="form-control" id="fish-pond-manager" name="contractorId">
-                                <option value="">-- 请选择钓场承包人 --</option>
-                                <c:if test="${not empty contractorList}">
-                                    <c:forEach var="item" items="${contractorList}" varStatus="no">
-                                        <option value="${item.contractorId}">${item.name}&nbsp;(&nbsp;${item.phone}&nbsp;)</option>
-                                    </c:forEach>
-                                </c:if>
-                            </select>
+                            <input type="text" class="form-control" id="zone-contractor-name" name="contractorName"
+                                   placeholder="承包人姓名" autocomplete="off"/>
                         </div>
-                        <div class="col-sm-8"></div>
+                        <label class="col-sm-2 control-label" for="zone-contractor-phone">承包人电话</label>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="zone-contractor-phone" name="contractorPhone"
+                                   placeholder="承包人电话" autocomplete="off">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="zone-longitude">经度</label>
