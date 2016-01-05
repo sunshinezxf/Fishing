@@ -230,6 +230,14 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-2 control-label">垂钓限制</label>
+
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="fish-zone-limit" name="limit" placeholder="垂钓限制"
+                                   autocomplete="off"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-2 control-label">钓场类型</label>
 
                         <div class="col-sm-8">

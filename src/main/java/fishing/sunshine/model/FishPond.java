@@ -36,6 +36,7 @@ public class FishPond extends SunshineEntity {
         this.fishPondAddress = form.getPondAddress();
         this.fishPondFee = form.getPondFee();
         this.nightable = form.isNightable();
+        this.limitation = form.getLimitation();
         pondTypes = new ArrayList<PondType>();
         for (String item : form.getPondTypes()) {
             PondType type = new PondType();

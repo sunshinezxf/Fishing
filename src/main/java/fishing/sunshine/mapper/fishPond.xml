@@ -72,7 +72,7 @@
             <if test="fishPondAddress != null and fishPondAddress != ''">
                 fish_zone_address_description = #{fishPondAddress},
             </if>
-            <if test="limitation != null and limitation != ''">
+            <if test="limitation != null">
                 fish_zone_limit = #{limitation},
             </if>
             <if test="contractor != null and contractor != '' and contractor.contractorId != null and contractor.contractorId != ''">
@@ -115,7 +115,7 @@
             <if test="fishPondAddress != null and fishPondAddress != ''">
                 fish_zone_address_description = #{fishPondAddress},
             </if>
-            <if test="limitation != null and limitation != ''">
+            <if test="limitation != null">
                 fish_zone_limit = #{limitation},
             </if>
             <if test="contractor != null and contractor != '' and contractor.contractorId != null">
@@ -178,7 +178,7 @@
     <select id="queryFishPond" parameterType="fishing.sunshine.model.FishPond" resultMap="fishPondVo">
         SELECT fish_zone_id, fish_zone_name, fish_zone_thumbnail, fish_zone_intro, fish_zone_charge,
         fish_zone_night_enable, fish_zone_longitude, fish_zone_latitude, fish_zone_address_description,
-        create_time
+        fish_zone_limit, create_time
         FROM fish_zone
         WHERE 1 = 1
         AND del_flag = 0

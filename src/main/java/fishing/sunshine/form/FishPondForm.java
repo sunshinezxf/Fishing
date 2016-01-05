@@ -23,6 +23,8 @@ public class FishPondForm extends SunshineEntity {
 
     private String pondFee;
 
+    private String limitation;
+
     private boolean nightable;
 
     private String[] pondTypes;
@@ -46,6 +48,7 @@ public class FishPondForm extends SunshineEntity {
         this.fishTypes = request.getParameterValues("fishType");
         this.thumbnail = request.getFile("pondThumbnail");
         this.introduction = request.getParameter("pondIntroduction");
+        this.limitation = request.getParameter("limit");
     }
 
     public String getPondName() {
@@ -142,5 +145,13 @@ public class FishPondForm extends SunshineEntity {
 
     public void setContractorPhone(String contractorPhone) {
         this.contractorPhone = contractorPhone;
+    }
+
+    public String getLimitation() {
+        return limitation;
+    }
+
+    public void setLimitation(String limitation) {
+        this.limitation = limitation;
     }
 }
