@@ -195,7 +195,7 @@ public class FishPondController {
         fishPond.setFishPondId(fishPondId);
         ResultData query = fishPondService.queryFishPond(fishPond);
         if (query.getResponseCode() != ResponseCode.RESPONSE_OK) {
-            view.setViewName("redirect:/fishzone/create");
+            view.setViewName("redirect:/fishzone/overview");
             return view;
         }
         FishPond previous = ((ArrayList<FishPond>) query.getData()).get(0);

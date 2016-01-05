@@ -92,6 +92,7 @@ public class FishPondDaoImpl extends BaseDao implements FishPondDao {
                 binding.setPond(fishPond);
                 sqlSession.insert("pond.insertTypePondBind", binding);
             }
+            sqlSession.update("contractor.updateContractor", fishPond.getContractor());
         } catch (Exception e) {
             logger.debug(e.getMessage());
             result.setResponseCode(ResponseCode.RESPONSE_ERROR);

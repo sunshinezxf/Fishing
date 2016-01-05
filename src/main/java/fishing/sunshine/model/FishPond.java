@@ -20,6 +20,7 @@ public class FishPond extends SunshineEntity {
     private double latitude;
     private String fishPondAddress;
     private String thumbnail;
+    private String limitation;
     private Contractor contractor;
     private List<PondType> pondTypes;
     private List<Fish> fishes;
@@ -148,6 +149,14 @@ public class FishPond extends SunshineEntity {
 
     public void setContractor(Contractor contractor) {
         this.contractor = contractor;
+    }
+
+    public String getLimitation() {
+        return limitation;
+    }
+
+    public void setLimitation(String limitation) {
+        this.limitation = limitation;
     }
 
     @Override

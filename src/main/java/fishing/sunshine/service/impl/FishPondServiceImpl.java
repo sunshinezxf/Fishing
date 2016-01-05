@@ -2,6 +2,7 @@ package fishing.sunshine.service.impl;
 
 import fishing.sunshine.dao.FishPondDao;
 import fishing.sunshine.dao.PondTypeDao;
+import fishing.sunshine.model.Contractor;
 import fishing.sunshine.model.FishPond;
 import fishing.sunshine.model.PondType;
 import fishing.sunshine.service.FishPondService;
@@ -121,6 +122,12 @@ public class FishPondServiceImpl implements FishPondService {
     public ResultData updateFishPond(FishPond previous, FishPond updated) {
         ResultData result = new ResultData();
         updated.setFishPondId(previous.getFishPondId());
+        Contractor contractor = previous.getContractor();
+        if (contractor != null) {
+            contractor.setName(updated.getContractor().getName());
+            contractor.setPhone(updated.getContractor().getPhone());
+            updated.setContractor(contractor);
+        }
         ResultData update = fishPondDao.updateFishPond(updated);
         result.setResponseCode(update.getResponseCode());
         if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {

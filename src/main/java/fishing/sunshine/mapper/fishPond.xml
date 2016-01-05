@@ -30,6 +30,7 @@
         <result property="longitude" column="fish_zone_longitude"></result>
         <result property="latitude" column="fish_zone_latitude"></result>
         <result property="fishPondAddress" column="fish_zone_address_description"></result>
+        <result property="limitation" column="fish_zone_limit"></result>
         <result property="createAt" column="create_time"></result>
         <association property="contractor" column="{fishPondId = fish_zone_id}" select="queryContractor"></association>
         <collection property="pondTypes" column="{fishPondId = fish_zone_id}" select="queryPondType"></collection>
@@ -71,6 +72,9 @@
             <if test="fishPondAddress != null and fishPondAddress != ''">
                 fish_zone_address_description = #{fishPondAddress},
             </if>
+            <if test="limitation != null and limitation != ''">
+                fish_zone_limit = #{limitation},
+            </if>
             <if test="contractor != null and contractor != '' and contractor.contractorId != null and contractor.contractorId != ''">
                 fish_man_id = #{contractor.contractorId},
             </if>
@@ -110,6 +114,9 @@
             </if>
             <if test="fishPondAddress != null and fishPondAddress != ''">
                 fish_zone_address_description = #{fishPondAddress},
+            </if>
+            <if test="limitation != null and limitation != ''">
+                fish_zone_limit = #{limitation},
             </if>
             <if test="contractor != null and contractor != '' and contractor.contractorId != null">
                 fish_man_id = #{contractor.contractorId},
