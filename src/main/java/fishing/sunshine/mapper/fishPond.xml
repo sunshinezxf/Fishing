@@ -51,7 +51,7 @@
             <if test="fishPondName != null and fishPondName != ''">
                 fish_zone_name = #{fishPondName},
             </if>
-            <if test="thumbnail != null and thumbnail != ''">
+            <if test="thumbnail != null">
                 fish_zone_thumbnail = #{thumbnail},
             </if>
             <if test="introduction != null and introduction != ''">
@@ -94,7 +94,7 @@
             <if test="fishPondName != null and fishPondName != ''">
                 fish_zone_name = #{fishPondName},
             </if>
-            <if test="thumbnail != null and thumbnail != ''">
+            <if test="thumbnail != null">
                 fish_zone_thumbnail = #{thumbnail},
             </if>
             <if test="introduction != null and introduction != ''">

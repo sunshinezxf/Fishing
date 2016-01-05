@@ -294,7 +294,12 @@
                         <div class="col-sm-8">
                             <div class="fileinput file-input-new fileinput-inline" data-provides="fileinput">
                                 <div class="fileinput-preview thumbnail">
-                                    <img src="${path.concat(fishPond.thumbnail)}" alt="">
+                                    <c:if test="${not empty fishPond.thumbnail}">
+                                        <img src="${path.concat(fishPond.thumbnail)}" alt="">
+                                    </c:if>
+                                    <c:if test="${empty fishPond.thumbnail}">
+                                        <img src="${path.concat('/material/image/blank.gif')}" alt="">
+                                    </c:if>
                                 </div>
                                 <div>
                                     <span class="btn btn-default btn-success btn-file">
