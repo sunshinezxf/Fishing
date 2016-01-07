@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,8 +22,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,7 +131,6 @@ public class FishPondController {
     @RequestMapping(method = RequestMethod.GET, value = "/{fishPondId}")
     public ModelAndView view(@PathVariable String fishPondId, HttpServletRequest request) {
         ModelAndView view = new ModelAndView();
-        String ip = IPTool.getIP(request);
         if (StringUtils.isEmpty(fishPondId)) {
             view.setViewName("/error");
             return view;
@@ -151,7 +147,7 @@ public class FishPondController {
             view.setViewName("/error");
             return view;
         }
-        view.addObject("ip", ip);
+        view.addObject("appId", CommonValue.WECHAT_APPID);
         view.addObject("fishPond", list.get(0));
         view.setViewName("/client/fish_pond/view");
         return view;

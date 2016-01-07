@@ -17,12 +17,21 @@
     <link rel="stylesheet" href="${path.concat('/material/plugins/bootstrap-3.3.5-dist/css/bootstrap.min.css')}"/>
     <link rel="stylesheet" href="${path.concat('/material/plugins/weui/weui.min.css')}"/>
     <link rel="stylesheet" href="${path.concat('/material/css/fishpond.css')}"/>
+    <link rel="stylesheet" href="${path.concat('/material/plugins/semantic-ui/semantic.min.css')}">
     <script type="text/javascript"
             src="${path.concat('/material/plugins/jquery/jquery-1.11.3.min.js')}"></script>
     <script type="text/javascript"
             src="${path.concat('/material/plugins/bootstrap-3.3.5-dist/js/bootstrap.min.js')}"></script>
+    <script type="text/javascript" src="${path.concat('/material/plugins/semantic-ui/semantic.min.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/date.js')}"></script>
+    <script type="text/javascript" src="${path.concat('/material/js/jweixin-1.0.0.js')}"></script>
     <title>${fishPond.fishPondName}</title>
+    <script type="text/javascript">
+        wx.config({
+            debug: true,
+            appId: '${appId}'
+        });
+    </script>
 </head>
 <body ontouchstart>
 <div class="container">
@@ -73,8 +82,75 @@
     <footer class="footer blog-footer">
         <div>内容更新时间: <fmt:formatDate value="${fishPond.createAt}" type="date" dateStyle="full"/></div>
     </footer>
-    <div class="pond-review">
-        <label class="h6">评论区&nbsp;</label>
+    <div class="pond-review cell">
+
+        <div class="ui comments">
+            <h4 class="ui header">评论区</h4>
+
+            <div class="ui blue labeled submit icon button"><i class="icon edit"></i>写评论</div>
+            <div class="comment">
+                <div class="content">
+                    <a class="author">Matt</a>
+
+                    <div class="metadata">
+                        <span class="date">今天下午 5:42</span>
+                    </div>
+                    <div class="text">太赞了！</div>
+                    <div class="actions">
+                        <a class="reply">回复</a>
+                    </div>
+                </div>
+            </div>
+            <div class="comment">
+                <div class="content">
+                    <a class="author">Elliot Fu</a>
+
+                    <div class="metadata">
+                        <span class="date">昨天上午12:30</span>
+                    </div>
+                    <div class="text">
+                        <p>This has been very useful for my research. Thanks as well!</p>
+                    </div>
+                    <div class="actions">
+                        <a class="reply">回复</a>
+                    </div>
+                </div>
+                <div class="comments">
+                    <div class="comment">
+                        <div class="content">
+                            <a class="author">Jenny Hess</a>
+
+                            <div class="metadata">
+                                <span class="date">刚刚</span>
+                            </div>
+                            <div class="text">Elliot you are always so right :)</div>
+                            <div class="actions">
+                                <a class="reply">回复</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="comment">
+                <div class="content">
+                    <a class="author">Joe Henderson</a>
+
+                    <div class="metadata">
+                        <span class="date">5 天以前</span>
+                    </div>
+                    <div class="text">老兄，这太棒了。非常感谢。</div>
+                    <div class="actions">
+                        <a class="reply">回复</a>
+                    </div>
+                </div>
+            </div>
+            <form class="ui reply form">
+                <div class="field">
+                    <textarea></textarea>
+                </div>
+                <div class="ui blue labeled submit icon button"><i class="icon edit"></i>回复</div>
+            </form>
+        </div>
     </div>
 </div>
 </body>
