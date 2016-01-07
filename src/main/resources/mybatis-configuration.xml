@@ -5,6 +5,7 @@
 <configuration>
     <mappers>
         <mapper resource="fishing/sunshine/mapper/manager.xml"/>
+        <mapper resource="fishing/sunshine/mapper/fishfan.xml"/>
         <mapper resource="fishing/sunshine/mapper/fish.xml"/>
         <mapper resource="fishing/sunshine/mapper/contractor.xml"/>
         <mapper resource="fishing/sunshine/mapper/pondType.xml"/>

@@ -8,5 +8,6 @@ import fishing.sunshine.util.ResultData;
  */
 public interface FishFanDao {
     ResultData insertFishFan(FishFan fishFan);
-    
+
+    ResultData queryFishFan(FishFan fishFan);
 }

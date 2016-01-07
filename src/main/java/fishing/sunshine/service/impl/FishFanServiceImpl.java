@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by sunshine on 12/20/15.
  */
@@ -29,6 +31,22 @@ public class FishFanServiceImpl implements FishFanService {
             result.setData(fishFan);
         } else {
             result.setDescription(insert.getDescription());
+        }
+        return result;
+    }
+
+    @Override
+    public ResultData queryFishFan(FishFan fishFan) {
+        ResultData result = new ResultData();
+        ResultData query = fishFanDao.queryFishFan(fishFan);
+        result.setResponseCode(query.getResponseCode());
+        if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(query.getData());
+            if (((List<FishFan>) query.getData()).size() == 0) {
+                result.setResponseCode(ResponseCode.RESPONSE_NULL);
+            }
+        } else {
+            result.setDescription(query.getDescription());
         }
         return result;
     }

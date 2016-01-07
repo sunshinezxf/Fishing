@@ -35,6 +35,7 @@ public class FishingApplication {
     public WxMpInMemoryConfigStorage wxMpInMemoryConfigStorage() {
         WxMpInMemoryConfigStorage config = new WxMpInMemoryConfigStorage();
         config.setAppId(CommonValue.WECHAT_APPID);
+        config.setSecret(CommonValue.WECHAT_SECRET);
         config.setToken(CommonValue.WECHAT_TOKEN);
         config.setAesKey(CommonValue.WECHAT_AESKEY);
         return config;

@@ -12,4 +12,34 @@
         INSERT INTO fish_fan(fish_fan_id, fish_fan_name, create_time, del_flag)
         VALUES (#{fishFanId}, #{username}, #{createAt}, #{delFlag})
     </insert>
+
+
+    <!-- 根据关注着的openId查询用户信息 -->
+    <select id="queryFishFan" resultMap="fishFanVo" parameterType="fishing.sunshine.model.FishFan">
+        SELECT fish_fan_id, fish_fan_name, create_time
+        FROM fish_fan
+        WHERE 1 = 1
+        AND del_flag = 0
+        <if test="fishFanId != null and fishFanId != ''">
+            AND fish_fan_id = #{fishFanId}
+        </if>
+        ORDER BY create_time DESC
+    </select>
+
+    <!-- 取消关注时 -->
+    <update id="deleteFishFan" parameterType="fishing.sunshine.model.FishFan">
+        UPDATE fish_fan
+        <set>
+            <if test="delFalg = true">
+                del_flag = 1
+            </if>
+            <if test="delFalg = false">
+                del_flag = 0
+            </if>
+        </set>
+        WHERE 1 = 1
+        <if test="fishFanId != null and fishFanId != ''">
+            AND fish_fan_id = #{fishFanId}
+        </if>
+    </update>
 </mapper>

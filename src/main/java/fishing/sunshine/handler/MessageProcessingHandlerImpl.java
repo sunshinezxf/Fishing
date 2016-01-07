@@ -4,6 +4,7 @@ import com.gson.bean.InMessage;
 import com.gson.bean.OutMessage;
 import com.gson.bean.TextOutMessage;
 import com.gson.inf.MessageProcessingHandler;
+import fishing.sunshine.controller.FishingApplication;
 import fishing.sunshine.model.FishFan;
 import fishing.sunshine.model.Location;
 import fishing.sunshine.service.FishFanService;
@@ -17,6 +18,8 @@ import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,14 +29,13 @@ import org.springframework.stereotype.Service;
 public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
     private Logger logger = LoggerFactory.getLogger(MessageProcessingHandlerImpl.class);
 
+    private static ApplicationContext applicationContext = new AnnotationConfigApplicationContext(FishingApplication.class);
+
     @Autowired
     private LocationService locationService;
 
     @Autowired
     private FishFanService fishFanService;
-
-    @Autowired
-    private WxMpService wxMpService;
 
     private OutMessage outMessage;
 
@@ -86,6 +88,7 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
     @Override
     public void eventTypeMsg(InMessage inMessage) {
         if (inMessage.getEvent().equals("subscribe")) {
+            logger.debug("subscribe: " + inMessage.getFromUserName());
             outMessage = new TextOutMessage();
             ResultData result = subscribe(inMessage);
             if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
@@ -120,10 +123,17 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
         ResultData result = new ResultData();
         FishFan fan = new FishFan();
         fan.setFishFanId(message.getFromUserName());
+        ResultData query = fishFanService.queryFishFan(fan);
+        if (query.getResponseCode() != ResponseCode.RESPONSE_NULL) {
+            return result;
+        }
         try {
+            WxMpService wxMpService = applicationContext.getBean(WxMpService.class);
             WxMpUser user = wxMpService.userInfo(fan.getFishFanId(), "zh_CN");
+            logger.debug("nickName: " + user.getNickname());
+            logger.debug("openId: " + user.getOpenId());
             fan.setUsername(user.getNickname());
-        }catch (WxErrorException e) {
+        } catch (WxErrorException e) {
             logger.debug(e.getMessage());
             result.setResponseCode(ResponseCode.RESPONSE_ERROR);
             result.setDescription(e.getMessage());

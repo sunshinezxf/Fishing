@@ -104,7 +104,8 @@ public class WechatController {
             logger.debug(e.getMessage());
         } catch (Exception e) {
             logger.debug(e.getMessage());
+        }finally {
+            return "";
         }
-        return "";
     }
 }
