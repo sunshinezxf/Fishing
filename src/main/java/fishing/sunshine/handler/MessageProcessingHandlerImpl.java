@@ -11,6 +11,9 @@ import fishing.sunshine.service.LocationService;
 import fishing.sunshine.util.CommonValue;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
+import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,9 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
 
     @Autowired
     private FishFanService fishFanService;
+
+    @Autowired
+    private WxMpService wxMpService;
 
     private OutMessage outMessage;
 
@@ -80,7 +86,13 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
     @Override
     public void eventTypeMsg(InMessage inMessage) {
         if (inMessage.getEvent().equals("subscribe")) {
-
+            outMessage = new TextOutMessage();
+            ResultData result = subscribe(inMessage);
+            if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+                ((TextOutMessage) outMessage).setContent(String.valueOf(result.getData()));
+            } else {
+                ((TextOutMessage) outMessage).setContent("获取关注信息失败.");
+            }
         }
         if (inMessage.getEvent().equals("LOCATION")) {
 
@@ -108,7 +120,19 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
         ResultData result = new ResultData();
         FishFan fan = new FishFan();
         fan.setFishFanId(message.getFromUserName());
-
+        try {
+            WxMpUser user = wxMpService.userInfo(fan.getFishFanId(), "zh_CN");
+            fan.setUsername(user.getNickname());
+        }catch (WxErrorException e) {
+            logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+            return result;
+        }
+        ResultData insert = fishFanService.addFishFan(fan);
+        if (insert.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData("欢迎您关注南京钓鱼");
+        }
         return result;
     }
 
