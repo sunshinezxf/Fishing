@@ -1,5 +1,6 @@
 package fishing.sunshine.handler;
 
+import com.alibaba.fastjson.JSONObject;
 import com.gson.bean.InMessage;
 import com.gson.bean.OutMessage;
 import com.gson.bean.TextOutMessage;
@@ -87,15 +88,11 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
 
     @Override
     public void eventTypeMsg(InMessage inMessage) {
+        logger.debug("=== " + JSONObject.toJSONString(inMessage));
         if (inMessage.getEvent().equals("subscribe")) {
             logger.debug("subscribe: " + inMessage.getFromUserName());
             outMessage = new TextOutMessage();
-            ResultData result = subscribe(inMessage);
-            if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
-                ((TextOutMessage) outMessage).setContent(String.valueOf(result.getData()));
-            } else {
-                ((TextOutMessage) outMessage).setContent("获取关注信息失败.");
-            }
+            ((TextOutMessage) outMessage).setContent(CommonValue.WECHAT_GREETING);
         }
         if (inMessage.getEvent().equals("LOCATION")) {
 
@@ -124,14 +121,16 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
         FishFan fan = new FishFan();
         fan.setFishFanId(message.getFromUserName());
         ResultData query = fishFanService.queryFishFan(fan);
-        if (query.getResponseCode() != ResponseCode.RESPONSE_NULL) {
+        if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData("欢迎回来");
+            return result;
+        } else if (query.getResponseCode() == ResponseCode.RESPONSE_ERROR) {
+            result.setData("系统正在打瞌睡,请稍后再试");
             return result;
         }
         try {
             WxMpService wxMpService = applicationContext.getBean(WxMpService.class);
             WxMpUser user = wxMpService.userInfo(fan.getFishFanId(), "zh_CN");
-            logger.debug("nickName: " + user.getNickname());
-            logger.debug("openId: " + user.getOpenId());
             fan.setUsername(user.getNickname());
         } catch (WxErrorException e) {
             logger.debug(e.getMessage());
@@ -141,7 +140,7 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
         }
         ResultData insert = fishFanService.addFishFan(fan);
         if (insert.getResponseCode() == ResponseCode.RESPONSE_OK) {
-            result.setData("欢迎您关注南京钓鱼");
+            result.setData(CommonValue.WECHAT_GREETING);
         }
         return result;
     }
@@ -154,13 +153,19 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
      */
     private ResultData location(InMessage message) {
         ResultData result = new ResultData();
+        FishFan fan = new FishFan();
+        fan.setFishFanId(message.getFromUserName());
+        ResultData query = fishFanService.queryFishFan(fan);
+        if (query.getResponseCode() == ResponseCode.RESPONSE_NULL) {
+            subscribe(message);
+        }
         Location location = new Location();
         location.setWechat(message.getFromUserName());
         location.setLatitude(Double.parseDouble(message.getLocation_X()));
         location.setLongitude(Double.parseDouble(message.getLocation_Y()));
         ResultData insert = locationService.addLocation(location);
         if (insert.getResponseCode() == ResponseCode.RESPONSE_OK) {
-            result.setData("LONG: " + location.getLongitude() + ", LAT: " + location.getLatitude());
+            result.setData("经度: " + location.getLongitude() + ", 纬度: " + location.getLatitude());
         }
         return result;
     }

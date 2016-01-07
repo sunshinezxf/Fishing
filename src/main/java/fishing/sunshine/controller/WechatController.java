@@ -10,6 +10,7 @@ import com.gson.util.Tools;
 import com.gson.util.XStreamFactory;
 import com.thoughtworks.xstream.XStream;
 import fishing.sunshine.util.CommonValue;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +52,8 @@ public class WechatController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/" + CommonValue.WECHAT_TOKEN)
+    @RequestMapping(method = RequestMethod.POST, value = "/" + CommonValue.WECHAT_TOKEN, produces = "text/xml;charset=utf-8")
     public String handle(HttpServletRequest request, HttpServletResponse response) {
-        response.setContentType("text/xml;charset=utf-8");
         OutMessage result;
         ServletInputStream stream;
         try {
@@ -73,7 +73,6 @@ public class WechatController {
             method.invoke(messageProcessingHandler, inMessage);
             Method getOutMessage = clazz.getMethod("getOutMessage");
             result = (OutMessage) getOutMessage.invoke(messageProcessingHandler);
-            logger.debug("CONTENT: " + JSONObject.toJSONString(result));
             if (result == null) {
                 result = new TextOutMessage();
                 ((TextOutMessage) result).setContent(CommonValue.WECHAT_WARNING);
@@ -94,18 +93,18 @@ public class WechatController {
             content = XStreamFactory.init(true);
             content.alias("xml", result.getClass());
             content.alias("item", Articles.class);
-            String xml = content.toXML(result);
+            String xml = result == null ? CommonValue.WECHAT_GREETING : content.toXML(result);
 
             Method afterProcess = clazz.getMethod("afterProcess", new Class[]{InMessage.class, OutMessage.class});
             afterProcess.invoke(messageProcessingHandler, new Object[]{inMessage, result});
 
+            logger.debug("response: " + xml);
             return xml;
         } catch (IOException e) {
             logger.debug(e.getMessage());
         } catch (Exception e) {
             logger.debug(e.getMessage());
-        }finally {
-            return "";
         }
+        return "";
     }
 }

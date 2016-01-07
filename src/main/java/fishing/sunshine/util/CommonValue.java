@@ -4,6 +4,7 @@ package fishing.sunshine.util;
  * Created by sunshine on 12/16/15.
  */
 public class CommonValue {
+    public static final String WECHAT_GREETING = "欢迎您关注南京钓鱼";
     public static final String WECHAT_WARNING = "Greetings!";
 
     public static final String WECHAT_APPID = "wx7ba6d2f313ff5d53";
