@@ -75,6 +75,11 @@
                 /index = anon
                 /login = anon
                 /register = anon
+                /fishzone/create = authc
+                /fishzone/overview = authc
+                /fishzone/edit/** = authc
+                /fishzone/** = anon
+                /** = authc
             </value>
         </property>
     </bean>

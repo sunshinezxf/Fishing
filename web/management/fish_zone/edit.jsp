@@ -41,6 +41,7 @@
     <script type="text/javascript"
             src="${path.concat('/material/plugins/bootstrap-fileupload/fileupload.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/dashboard.js')}"></script>
+    <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp&key=D3EBZ-F3QHJ-KJVFC-FDXKG-4U3J5-VCB5K"></script>
     <title>修改钓场</title>
     <script>
         $(function () {
@@ -67,6 +68,19 @@
                 var id = "#" + fish_array[i].fishId;
                 $(id).attr("checked", "checked");
             }
+
+            $("#resolve").click(function () {
+                var url = "http://apis.map.qq.com/ws/geocoder/v1";
+                var key = "D3EBZ-F3QHJ-KJVFC-FDXKG-4U3J5-VCB5K";
+                var address = $("#fish-zone-address").val();
+                var request = encodeURI(url + "?address=" + address + "&key=" + key + "&output=jsonp&callback=?");
+                $.getJSON(request, function (result) {
+                    if (result.status == 0) {
+                        $("#zone-longitude").val(result.result.location.lng);
+                        $("#zone-latitude").val(result.result.location.lat);
+                    }
+                });
+            });
 
             $("#confirm-zone").click(function (e) {
                 var introduction = $("#pond-introduction").code();
@@ -222,6 +236,9 @@
                                    placeholder="钓场地址简介" required="" value="${fishPond.fishPondAddress}"
                                    autocomplete="off"/>
                         </div>
+                        <button type="button" class="btn btn-success btn-group-sm col-sm-1 control-box" id="resolve">
+                            解析
+                        </button>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="fish-zone-fee">收费</label>
