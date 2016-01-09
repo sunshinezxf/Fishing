@@ -38,16 +38,20 @@ public class FishPond extends SunshineEntity {
         this.nightable = form.isNightable();
         this.limitation = form.getLimitation();
         pondTypes = new ArrayList<PondType>();
-        for (String item : form.getPondTypes()) {
-            PondType type = new PondType();
-            type.setPondTypeId(item);
-            pondTypes.add(type);
+        if (form.getPondTypes() != null) {
+            for (String item : form.getPondTypes()) {
+                PondType type = new PondType();
+                type.setPondTypeId(item);
+                pondTypes.add(type);
+            }
         }
         fishes = new ArrayList<Fish>();
-        for (String item : form.getFishTypes()) {
-            Fish fish = new Fish();
-            fish.setFishId(item);
-            fishes.add(fish);
+        if (form.getFishTypes() != null) {
+            for (String item : form.getFishTypes()) {
+                Fish fish = new Fish();
+                fish.setFishId(item);
+                fishes.add(fish);
+            }
         }
         this.introduction = form.getIntroduction();
         Contractor contractor = new Contractor();
