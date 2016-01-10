@@ -75,7 +75,7 @@
                 },
                 "aoColumns": [
                     {"sTitle": "名称", "sWidth": "10%", "mData": "fishPondName"},
-                    {"sTitle": "收费(元/斤)", "sWidth": "10%", "mData": "fishPondFee"},
+                    {"sTitle": "收费", "sWidth": "10%", "mData": "fishPondFee"},
                     {
                         "sTitle": "添加日期", "sWidth": "10%", "mRender": function (data, type, full) {
                         return ((new Date(full.createAt)).format("yyyy-MM-dd hh:mm:ss"));

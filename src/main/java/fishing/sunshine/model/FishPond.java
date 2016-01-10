@@ -2,7 +2,7 @@ package fishing.sunshine.model;
 
 import com.alibaba.fastjson.JSONObject;
 import fishing.sunshine.form.FishPondForm;
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,9 +54,12 @@ public class FishPond extends SunshineEntity {
             }
         }
         this.introduction = form.getIntroduction();
-        Contractor contractor = new Contractor();
-        contractor.setName(form.getContractorName());
-        contractor.setPhone(form.getContractorPhone());
+        Contractor contractor = null;
+        if (!StringUtils.isEmpty(form.getContractorName()) && !StringUtils.isEmpty(form.getContractorPhone())) {
+            contractor = new Contractor();
+            contractor.setName(form.getContractorName());
+            contractor.setPhone(form.getContractorPhone());
+        }
         this.contractor = contractor;
     }
 

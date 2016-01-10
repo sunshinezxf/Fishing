@@ -79,20 +79,22 @@ public class FishPondController {
         }
         FishPond fishPond = new FishPond(form);
         fishPond.setThumbnail(saveThumbnail.getResponseCode() == ResponseCode.RESPONSE_OK ? String.valueOf(saveThumbnail.getData()) : "");
-        ResultData contractorExist = contractorService.queryContractor(fishPond.getContractor());
-        if (contractorExist.getResponseCode() == ResponseCode.RESPONSE_ERROR) {
-            view.setViewName("redirect:/fishzone/create");
-            return view;
-        } else if (contractorExist.getResponseCode() == ResponseCode.RESPONSE_OK) {
-            Contractor contractor = ((ArrayList<Contractor>) contractorExist.getData()).get(0);
-            fishPond.setContractor(contractor);
-        } else {
-            ResultData contractorCreate = contractorService.addContractor(fishPond.getContractor());
-            if (contractorCreate.getResponseCode() != ResponseCode.RESPONSE_OK) {
+        if (fishPond.getContractor() != null) {
+            ResultData contractorExist = contractorService.queryContractor(fishPond.getContractor());
+            if (contractorExist.getResponseCode() == ResponseCode.RESPONSE_ERROR) {
                 view.setViewName("redirect:/fishzone/create");
                 return view;
+            } else if (contractorExist.getResponseCode() == ResponseCode.RESPONSE_OK) {
+                Contractor contractor = ((ArrayList<Contractor>) contractorExist.getData()).get(0);
+                fishPond.setContractor(contractor);
+            } else {
+                ResultData contractorCreate = contractorService.addContractor(fishPond.getContractor());
+                if (contractorCreate.getResponseCode() != ResponseCode.RESPONSE_OK) {
+                    view.setViewName("redirect:/fishzone/create");
+                    return view;
+                }
+                fishPond.setContractor((Contractor) contractorCreate.getData());
             }
-            fishPond.setContractor((Contractor) contractorCreate.getData());
         }
         ResultData exist = fishPondService.queryFishPond(fishPond);
         if (exist.getResponseCode() != ResponseCode.RESPONSE_NULL) {
