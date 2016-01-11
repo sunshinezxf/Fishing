@@ -1,14 +1,14 @@
 package fishing.sunshine.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.gson.bean.InMessage;
-import com.gson.bean.OutMessage;
-import com.gson.bean.TextOutMessage;
+import com.gson.bean.*;
 import com.gson.inf.MessageProcessingHandler;
 import fishing.sunshine.controller.FishingApplication;
 import fishing.sunshine.model.FishFan;
+import fishing.sunshine.model.FishPond;
 import fishing.sunshine.model.Location;
 import fishing.sunshine.service.FishFanService;
+import fishing.sunshine.service.FishPondService;
 import fishing.sunshine.service.LocationService;
 import fishing.sunshine.util.CommonValue;
 import fishing.sunshine.util.ResponseCode;
@@ -22,6 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
+
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sunshine on 12/17/15.
@@ -38,6 +42,9 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
     @Autowired
     private FishFanService fishFanService;
 
+    @Autowired
+    private FishPondService fishPondService;
+
     private OutMessage outMessage;
 
     @Override
@@ -47,7 +54,31 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
 
     @Override
     public void textTypeMsg(InMessage inMessage) {
-
+        logger.debug("text: " + JSONObject.toJSONString(inMessage));
+        ResultData result = fishpond(inMessage);
+        if (result.getResponseCode() == ResponseCode.RESPONSE_NULL) {
+            outMessage = new TextOutMessage();
+            ((TextOutMessage) outMessage).setContent(String.valueOf(result.getData()));
+        } else {
+            outMessage = new NewsOutMessage();
+            List<FishPond> list = (List<FishPond>) result.getData();
+            List<Articles> articles = new ArrayList<Articles>();
+            for (FishPond item : list) {
+                Articles article = new Articles();
+                article.setTitle(item.getFishPondName());
+                article.setDescription(item.getFishPondAddress());
+                article.setPicUrl(CommonValue.SERVER_URL + item.getThumbnail());
+                String url = CommonValue.SERVER_URL + "/fishzone/" + item.getFishPondId();
+                try {
+                    article.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CommonValue.WECHAT_APPID + "&redirect_uri=" + URLEncoder.encode(url, "utf-8") + "&response_type=code&scope=snsapi_base#wechat_redirect");
+                } catch (Exception e) {
+                    logger.debug(e.getMessage());
+                    continue;
+                }
+                articles.add(article);
+            }
+            ((NewsOutMessage) outMessage).setArticles(articles);
+        }
     }
 
     @Override
@@ -167,6 +198,20 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
         if (insert.getResponseCode() == ResponseCode.RESPONSE_OK) {
             result.setData("经度: " + location.getLongitude() + ", 纬度: " + location.getLatitude());
         }
+        return result;
+    }
+
+    private ResultData fishpond(InMessage message) {
+        ResultData result = new ResultData();
+        FishPond fishPond = new FishPond();
+        fishPond.setFishPondName(message.getContent());
+        ResultData query = fishPondService.queryFishPond(fishPond);
+        if (query.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            result.setResponseCode(ResponseCode.RESPONSE_NULL);
+            result.setData("未找到相关钓场");
+            return result;
+        }
+        result.setData(query.getData());
         return result;
     }
 
