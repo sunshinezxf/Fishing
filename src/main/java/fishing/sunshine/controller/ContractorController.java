@@ -32,36 +32,6 @@ public class ContractorController {
     @Autowired
     private ContractorService contractorService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/create")
-    public ModelAndView create() {
-        ModelAndView view = new ModelAndView();
-        view.setViewName("management/fish_manager/create");
-        return view;
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ModelAndView create(@Valid ContracterForm form, BindingResult result) {
-        ModelAndView view = new ModelAndView();
-        if (result.hasErrors()) {
-            view.addObject(form);
-            view.setViewName("redirect:/fishman/create");
-            return view;
-        }
-        Contractor contractor = new Contractor(form);
-        ResultData exist = contractorService.queryContractor(contractor);
-        if (exist.getResponseCode() != ResponseCode.RESPONSE_NULL) {
-            view.setViewName("redirect:/fishman/create");
-            return view;
-        }
-        ResultData create = contractorService.addContractor(contractor);
-        if (create.getResponseCode() == ResponseCode.RESPONSE_ERROR) {
-            view.setViewName("redirect:/fishman/create");
-            return view;
-        }
-        view.setViewName("redirect:/fishman/overview");
-        return view;
-    }
-
     @RequestMapping(method = RequestMethod.GET, value = "/overview")
     public ModelAndView overview() {
         ModelAndView view = new ModelAndView();
@@ -109,7 +79,7 @@ public class ContractorController {
         contractor.setContractorId(contractorId);
         ResultData query = contractorService.queryContractor(contractor);
         if (query.getResponseCode() != ResponseCode.RESPONSE_OK) {
-            view.setViewName("redirect:/fishman/create");
+            view.setViewName("redirect:/fishman/overview");
             return view;
         }
         Contractor previous = ((ArrayList<Contractor>) query.getData()).get(0);

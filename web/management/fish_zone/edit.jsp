@@ -156,9 +156,6 @@
                         class="fa fa-book"></i> 承包人管理<i
                         class="pull-right fa fa-caret-down"></i></a>
                     <ul id="fish-man-management" class="nav nav-collapse collapse">
-                        <li><a class="sub-nav" href="${path.concat('/fishman/create')}"><i class="fa fa-edit"></i>
-                            添加承包人</a>
-                        </li>
                         <li><a class="sub-nav" href="${path.concat('/fishman/overview')}"><i class="fa fa-tasks"></i>
                             承包人概览</a>
                         </li>

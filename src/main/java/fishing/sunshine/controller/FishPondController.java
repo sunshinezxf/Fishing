@@ -79,23 +79,6 @@ public class FishPondController {
         }
         FishPond fishPond = new FishPond(form);
         fishPond.setThumbnail(saveThumbnail.getResponseCode() == ResponseCode.RESPONSE_OK ? String.valueOf(saveThumbnail.getData()) : "");
-        if (fishPond.getContractor() != null) {
-            ResultData contractorExist = contractorService.queryContractor(fishPond.getContractor());
-            if (contractorExist.getResponseCode() == ResponseCode.RESPONSE_ERROR) {
-                view.setViewName("redirect:/fishzone/create");
-                return view;
-            } else if (contractorExist.getResponseCode() == ResponseCode.RESPONSE_OK) {
-                Contractor contractor = ((ArrayList<Contractor>) contractorExist.getData()).get(0);
-                fishPond.setContractor(contractor);
-            } else {
-                ResultData contractorCreate = contractorService.addContractor(fishPond.getContractor());
-                if (contractorCreate.getResponseCode() != ResponseCode.RESPONSE_OK) {
-                    view.setViewName("redirect:/fishzone/create");
-                    return view;
-                }
-                fishPond.setContractor((Contractor) contractorCreate.getData());
-            }
-        }
         ResultData exist = fishPondService.queryFishPond(fishPond);
         if (exist.getResponseCode() != ResponseCode.RESPONSE_NULL) {
             view.setViewName("redirect:/fishzone/create");
@@ -105,6 +88,22 @@ public class FishPondController {
         if (createResult.getResponseCode() != ResponseCode.RESPONSE_OK) {
             view.setViewName("redirect:/fishzone/create");
             return view;
+        }
+        if (fishPond.getContractor() != null) {
+            ResultData contractorExist = contractorService.queryContractor(fishPond.getContractor());
+            if (contractorExist.getResponseCode() != ResponseCode.RESPONSE_NULL) {
+                view.setViewName("redirect:/fishzone/create");
+                return view;
+            } else {
+                Contractor contractor = fishPond.getContractor();
+                contractor.setFishPond((FishPond) createResult.getData());
+                ResultData contractorCreate = contractorService.addContractor(contractor);
+                if (contractorCreate.getResponseCode() != ResponseCode.RESPONSE_OK) {
+                    view.setViewName("redirect:/fishzone/create");
+                    return view;
+                }
+                fishPond.setContractor((Contractor) contractorCreate.getData());
+            }
         }
         view.setViewName("redirect:/fishzone/overview");
         return view;

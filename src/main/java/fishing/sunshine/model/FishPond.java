@@ -59,6 +59,7 @@ public class FishPond extends SunshineEntity {
             contractor = new Contractor();
             contractor.setName(form.getContractorName());
             contractor.setPhone(form.getContractorPhone());
+            contractor.setFishPond(this);
         }
         this.contractor = contractor;
     }

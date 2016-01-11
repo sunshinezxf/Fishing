@@ -10,6 +10,7 @@ public class Contractor extends SunshineEntity {
     private String contractorId;
     private String name;
     private String phone;
+    private FishPond fishPond;
 
     public Contractor() {
         super();
@@ -19,6 +20,7 @@ public class Contractor extends SunshineEntity {
         this();
         this.name = form.getContracterName();
         this.phone = form.getContracterPhone();
+        this.fishPond = new FishPond();
     }
 
     public String getContractorId() {
@@ -43,6 +45,14 @@ public class Contractor extends SunshineEntity {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public FishPond getFishPond() {
+        return fishPond;
+    }
+
+    public void setFishPond(FishPond fishPond) {
+        this.fishPond = fishPond;
     }
 
     @Override

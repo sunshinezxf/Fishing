@@ -1,5 +1,6 @@
 package fishing.sunshine.service.impl;
 
+import fishing.sunshine.dao.ContractorDao;
 import fishing.sunshine.dao.FishPondDao;
 import fishing.sunshine.dao.PondTypeDao;
 import fishing.sunshine.model.Contractor;
@@ -29,6 +30,9 @@ public class FishPondServiceImpl implements FishPondService {
 
     @Autowired
     private FishPondDao fishPondDao;
+
+    @Autowired
+    private ContractorDao contractorDao;
 
     @Override
     public ResultData addFishPondType(PondType type) {
@@ -123,12 +127,21 @@ public class FishPondServiceImpl implements FishPondService {
         ResultData result = new ResultData();
         updated.setFishPondId(previous.getFishPondId());
         Contractor contractor = previous.getContractor();
+        ResultData update;
         if (contractor != null) {
             contractor.setName(updated.getContractor().getName());
             contractor.setPhone(updated.getContractor().getPhone());
             updated.setContractor(contractor);
+            contractorDao.updateContractor(contractor);
+        } else {
+            contractor = updated.getContractor();
+            if (contractor != null) {
+                contractor.setContractorId(IDGenerator.generate("CON"));
+                contractor.setFishPond(updated);
+                contractorDao.insertContractor(contractor);
+            }
         }
-        ResultData update = fishPondDao.updateFishPond(updated);
+        update = fishPondDao.updateFishPond(updated);
         result.setResponseCode(update.getResponseCode());
         if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
             result.setData(result.getData());

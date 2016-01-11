@@ -200,7 +200,7 @@
         <if test="fishPondId != null and fishPondId != ''">
             AND fz.fish_zone_id = #{fishPondId}
         </if>
-        AND fm.fish_man_id = fz.fish_man_id
+        AND fm.fish_zone_id = fz.fish_zone_id
         ORDER BY fm.create_time ASC
     </select>
 

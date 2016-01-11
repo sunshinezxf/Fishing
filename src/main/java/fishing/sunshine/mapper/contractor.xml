@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="contractor">
+    <resultMap id="fishPondVo" type="fishing.sunshine.model.FishPond">
+        <result property="fishPondId" column="fish_zone_id"></result>
+        <result property="fishPondName" column="fish_zone_name"></result>
+    </resultMap>
+
     <resultMap id="contractorVo" type="fishing.sunshine.model.Contractor">
         <result property="contractorId" column="fish_man_id"></result>
         <result property="name" column="fish_man_name"></result>
         <result property="phone" column="fish_man_tel"></result>
         <result property="createAt" column="create_time"></result>
+        <association property="fishPond" column="{contractorId = fish_man_id}"
+                     select="queryFishPond"></association>
     </resultMap>
 
     <!-- 插入一条承包人记录 -->
     <insert id="insertContractor" parameterType="fishing.sunshine.model.Contractor" useGeneratedKeys="true"
             keyProperty="id">
-        INSERT INTO fish_man(fish_man_id, fish_man_name, fish_man_tel, create_time, del_flag)
-        VALUES (#{contractorId}, #{name}, #{phone}, #{createAt}, #{delFlag})
+        INSERT INTO fish_man(fish_man_id, fish_zone_id, fish_man_name, fish_man_tel, create_time, del_flag)
+        VALUES (#{contractorId}, #{fishPond.fishPondId}, #{name}, #{phone}, #{createAt}, #{delFlag})
     </insert>
 
     <!-- 查询承包人记录 -->
     <select id="queryContractor" resultMap="contractorVo" parameterType="fishing.sunshine.model.Contractor">
-        SELECT fish_man_id, fish_man_name, fish_man_tel, create_time
+        SELECT fish_man_id, fish_man_name, fish_man_tel, fish_zone_id, create_time
         FROM fish_man
         WHERE 1 = 1
         AND del_flag = 0
         <if test="contractorId != null and contractorId != ''">
             AND fish_man_id = #{contractorId}
+        </if>
+        <if test="fishPond != null and fishPond.fishPondId != null and fishPond.fishPondId != ''">
+            AND fish_zone_id = #{fishPond.fishPondId}
         </if>
         <if test="name != null and name != ''">
             AND fish_man_name LIKE "%${name}%"
@@ -52,4 +62,16 @@
             AND fish_man_id = #{contractorId}
         </if>
     </update>
+
+    <!-- 查询承包人的钓场 -->
+    <select id="queryFishPond" parameterType="java.util.HashMap" resultMap="fishPondVo">
+        SELECT fz.fish_zone_id, fz.fish_zone_name
+        FROM fish_zone fz, fish_man fm
+        WHERE 1 = 1
+        AND fz.fish_zone_id = fm.fish_zone_id
+        <if test="contractorId != null and contractorId != ''">
+            AND fm.fish_man_id = #{contractorId}
+        </if>
+        ORDER BY fm.create_time ASC
+    </select>
 </mapper>
