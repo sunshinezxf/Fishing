@@ -1,10 +1,8 @@
 package fishing.sunshine.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import fishing.sunshine.form.FishPondForm;
-import fishing.sunshine.model.Contractor;
-import fishing.sunshine.model.Fish;
-import fishing.sunshine.model.FishPond;
-import fishing.sunshine.model.PondType;
+import fishing.sunshine.model.*;
 import fishing.sunshine.service.ContractorService;
 import fishing.sunshine.service.FileUploadService;
 import fishing.sunshine.service.FishPondService;
@@ -22,6 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,6 +134,21 @@ public class FishPondController {
         if (StringUtils.isEmpty(fishPondId)) {
             view.setViewName("/error");
             return view;
+        }
+        String code = request.getParameter("code");
+        if (!StringUtils.isEmpty(code)) {
+            String state = request.getParameter("state");
+            String url = CommonValue.SERVER_URL + "/fishzone/" + fishPondId;
+            String configLink = url + "?code=" + code + "&state=" + state;
+            try {
+                String link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CommonValue.WECHAT_APPID + "&redirect_uri=" + URLEncoder.encode(url, "utf-8") + "&response_type=code&scope=snsapi_base&state=view";
+                String shareLink = link + "#wechat_redirect";
+                Configuration configuration = WechatConfig.config(configLink);
+                configuration.setShareLink(shareLink);
+                view.addObject("configuration", configuration);
+            } catch (Exception e) {
+                logger.debug(e.getMessage());
+            }
         }
         FishPond fishPond = new FishPond();
         fishPond.setFishPondId(fishPondId);

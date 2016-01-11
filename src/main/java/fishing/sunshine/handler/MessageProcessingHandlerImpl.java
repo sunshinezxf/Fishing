@@ -54,7 +54,6 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
 
     @Override
     public void textTypeMsg(InMessage inMessage) {
-        logger.debug("text: " + JSONObject.toJSONString(inMessage));
         ResultData result = fishpond(inMessage);
         if (result.getResponseCode() == ResponseCode.RESPONSE_NULL) {
             outMessage = new TextOutMessage();
@@ -70,7 +69,7 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
                 article.setPicUrl(CommonValue.SERVER_URL + item.getThumbnail());
                 String url = CommonValue.SERVER_URL + "/fishzone/" + item.getFishPondId();
                 try {
-                    article.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CommonValue.WECHAT_APPID + "&redirect_uri=" + URLEncoder.encode(url, "utf-8") + "&response_type=code&scope=snsapi_base#wechat_redirect");
+                    article.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CommonValue.WECHAT_APPID + "&redirect_uri=" + URLEncoder.encode(url, "utf-8") + "&response_type=code&scope=snsapi_base&state=view#wechat_redirect");
                 } catch (Exception e) {
                     logger.debug(e.getMessage());
                     continue;
@@ -119,9 +118,7 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
 
     @Override
     public void eventTypeMsg(InMessage inMessage) {
-        logger.debug("=== " + JSONObject.toJSONString(inMessage));
         if (inMessage.getEvent().equals("subscribe")) {
-            logger.debug("subscribe: " + inMessage.getFromUserName());
             outMessage = new TextOutMessage();
             ((TextOutMessage) outMessage).setContent(CommonValue.WECHAT_GREETING);
         }
