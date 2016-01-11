@@ -76,6 +76,7 @@
                 /login = anon
                 /register = anon
                 /wechat = anon
+                /comment/** = anon
                 /fishzone/create = authc
                 /fishzone/overview = authc
                 /fishzone/edit/** = authc
