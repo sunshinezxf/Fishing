@@ -26,10 +26,77 @@
     <script type="text/javascript" src="${path.concat('/material/js/date.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/jweixin-1.0.0.js')}"></script>
     <title>${fishPond.fishPondName}</title>
+    <c:if test="${not empty configuration}">
+        <script type="text/javascript">
+            wx.config({
+                debug: true,
+                appId: '${appId}',
+                timestamp: '${configuration.timestamp}',
+                nonceStr: '${configuration.nonceStr}',
+                signature: '${configuration.signature}',
+                jsApiList: [
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage'
+                ]
+            });
+
+            // 2. 分享接口
+            // 2.1 监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
+            wx.ready(function () {
+                wx.onMenuShareAppMessage({
+                    title: '${fishPond.fishPondName}', // 分享标题
+                    desc: '${fishPond.fishPondAddress}', // 分享描述
+                    link: '${configuration.shareLink}', // 分享链接
+                    imgUrl: '', // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+
+                    },
+                    cancel: function () {
+
+                    }
+                });
+                // 2.2 监听“分享到朋友圈”按钮点击、自定义分享内容及分享结果接口
+                wx.onMenuShareTimeline({
+                    title: '${fishPond.fishPondName}',
+                    link: '${configuration.shareLink}',
+                    imgUrl: '',
+                    trigger: function (res) {
+                    },
+                    success: function (res) {
+
+                    },
+                    cancel: function (res) {
+
+                    },
+                    fail: function (res) {
+
+                    }
+                });
+            });
+        </script>
+    </c:if>
     <script type="text/javascript">
-        wx.config({
-            debug: true,
-            appId: '${appId}'
+
+        $(document).ready(function () {
+            $(".comment-fishpond").attr("data-toggle", "modal");
+            $(".comment-fishpond").attr("data-target", "#myModal");
+
+            $(".comment-fishpond").click(function () {
+
+            });
+
+            $("#comment-fishpond").click(function () {
+                $("#form-insert-parent").attr("value", "");
+                $("#comment-content").attr("placeholder", "说说你对此钓场的看法吧");
+                $("#comment-content").val("");
+            });
+
+            $("#submit-fishpond-comment").click(function () {
+                var url = "${path.concat('/comment/create')}";
+                
+            });
         });
     </script>
 </head>
@@ -44,7 +111,6 @@
         <small><span class="glyphicon glyphicon-user"></span>${fishPond.contractor.name}</small>
         )
     </h4>
-
 
     <p>
         <a id="show_map_sheet"
@@ -87,7 +153,10 @@
         <div class="ui comments">
             <h4 class="ui header">评论区</h4>
 
-            <div class="ui blue labeled submit icon button"><i class="icon edit"></i>写评论</div>
+            <div id="comment-fishpond" class="ui blue labeled submit icon button" data-toggle="modal"
+                 data-target="#myModal"><i class="icon edit"></i>
+                评论
+            </div>
             <div class="comment">
                 <div class="content">
                     <a class="author">Matt</a>
@@ -97,7 +166,7 @@
                     </div>
                     <div class="text">太赞了！</div>
                     <div class="actions">
-                        <a class="reply">回复</a>
+                        <a class="reply comment-fishpond">回复</a>
                     </div>
                 </div>
             </div>
@@ -112,7 +181,7 @@
                         <p>This has been very useful for my research. Thanks as well!</p>
                     </div>
                     <div class="actions">
-                        <a class="reply">回复</a>
+                        <a class="reply comment-fishpond">回复</a>
                     </div>
                 </div>
                 <div class="comments">
@@ -125,7 +194,7 @@
                             </div>
                             <div class="text">Elliot you are always so right :)</div>
                             <div class="actions">
-                                <a class="reply">回复</a>
+                                <a class="reply comment-fishpond">回复</a>
                             </div>
                         </div>
                     </div>
@@ -140,18 +209,52 @@
                     </div>
                     <div class="text">老兄，这太棒了。非常感谢。</div>
                     <div class="actions">
-                        <a class="reply">回复</a>
+                        <a class="reply comment-fishpond">回复</a>
                     </div>
                 </div>
             </div>
-            <form class="ui reply form">
-                <div class="field">
-                    <textarea></textarea>
-                </div>
-                <div class="ui blue labeled submit icon button"><i class="icon edit"></i>回复</div>
-            </form>
+            <br/>
         </div>
     </div>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    评论
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form id="insert-comment-form" class="ui reply form">
+                    <input type="hidden" id="insert-fish-man-id" name="openId" value="${openId}"/>
+                    <input type="hidden" id="insert-fish-pond-id" name="fishPondId" value="${fishPond.fishPondId}">
+                    <input type="hidden" id="insert-parent" name="parentId" value=""/>
+
+                    <div class="field">
+                        <textarea id="comment-content"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">取消
+                </button>
+                <button type="button" id="submit-fishpond-comment" class="btn btn-primary" data-dismiss="modal">
+                    评论
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
 </div>
 </body>
 </html>

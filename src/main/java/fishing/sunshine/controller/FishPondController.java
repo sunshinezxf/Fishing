@@ -3,10 +3,7 @@ package fishing.sunshine.controller;
 import com.alibaba.fastjson.JSONObject;
 import fishing.sunshine.form.FishPondForm;
 import fishing.sunshine.model.*;
-import fishing.sunshine.service.ContractorService;
-import fishing.sunshine.service.FileUploadService;
-import fishing.sunshine.service.FishPondService;
-import fishing.sunshine.service.FishService;
+import fishing.sunshine.service.*;
 import fishing.sunshine.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +40,9 @@ public class FishPondController {
 
     @Autowired
     private FileUploadService fileUploadService;
+
+    @Autowired
+    private WechatService wechatService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/create")
     public ModelAndView create() {
@@ -146,6 +146,13 @@ public class FishPondController {
                 Configuration configuration = WechatConfig.config(configLink);
                 configuration.setShareLink(shareLink);
                 view.addObject("configuration", configuration);
+                ResultData accessToken = wechatService.queryAccessToken(code);
+                if (accessToken.getResponseCode() == ResponseCode.RESPONSE_OK) {
+                    JSONObject json = JSONObject.parseObject((String) accessToken.getData());
+                    String openId = json.getString("openid");
+                    logger.debug("openId: " + openId);
+                    view.addObject("openId", openId);
+                }
             } catch (Exception e) {
                 logger.debug(e.getMessage());
             }

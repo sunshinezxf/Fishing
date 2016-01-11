@@ -17,6 +17,8 @@
 
     <bean id="fishFanService" class="fishing.sunshine.service.impl.FishFanServiceImpl"></bean>
 
+    <bean id="wechatService" class="fishing.sunshine.service.impl.WechatServiceImpl"></bean>
+
     <bean id="messageProcessingHandler" class="fishing.sunshine.handler.MessageProcessingHandlerImpl"></bean>
 
     <bean id="wxMpMessageHandler" class="fishing.sunshine.handler.WxMpMessageHandlerImpl"></bean>
