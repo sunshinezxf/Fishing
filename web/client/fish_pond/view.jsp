@@ -24,12 +24,13 @@
             src="${path.concat('/material/plugins/bootstrap-3.3.5-dist/js/bootstrap.min.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/plugins/semantic-ui/semantic.min.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/date.js')}"></script>
+    <script type="text/javascript" src="${path.concat('/material/plugins/timeago/jquery.timeago.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/jweixin-1.0.0.js')}"></script>
     <title>${fishPond.fishPondName}</title>
     <c:if test="${not empty configuration}">
         <script type="text/javascript">
             wx.config({
-                debug: true,
+                debug: false,
                 appId: '${appId}',
                 timestamp: '${configuration.timestamp}',
                 nonceStr: '${configuration.nonceStr}',
@@ -87,22 +88,51 @@
 
             });
 
-            var fishPondId = "FPDerffrf42";
+            var fishPondId = "${fishPond.fishPondId}";
+            var openId = "${openId}";
 
-            var comment_list_url = "${path.concat('/comment/')}" + fishPondId;
-            $.get(comment_list_url, function (result) {
-                alert(result);
-            })
+            function load_comment() {
+                var comment_list_url = "${path.concat('/comment/')}" + fishPondId;
+                $.get(comment_list_url, function (result) {
+                    $("#comment-list").empty();
+                    var content_html = "";
+                    for (var i = 0; i < result.length; i++) {
+                        content_html += "<div class=\"comment\">";
+                        content_html += "<div class=\"content\">";
+                        content_html += "<a class=\"author\">";
+                        if (result[i].wechat == openId) {
+                            content_html += "我";
+                        } else {
+                            content_html += "钓友";
+                        }
+                        content_html += "</a>";
+                        content_html += "<div class=\"metadata\">";
+                        content_html += "<span class=\"date\">";
+                        content_html += (new Date(result[i].createAt)).format("yyyy-MM-dd hh:mm:ss");
+                        content_html += "</div>";
+                        content_html += "<div class=\"text\">";
+                        content_html += result[i].comment;
+                        content_html += "</div>";
+                        content_html += "<div class=\"actions\">";
+                        content_html += "</div>";
+                        content_html += "</div>";
+                        content_html += "</div>";
+                    }
+                    $("#comment-list").append(content_html);
+                });
+            }
+
+            load_comment();
 
             $("#comment-fishpond").click(function () {
                 $("#form-insert-parent").attr("value", "");
                 $("#comment-content").attr("placeholder", "说说你对此钓场的看法吧");
                 $("#comment-content").val("");
+
             });
 
             $("#submit-fishpond-comment").click(function () {
                 var url = "${path.concat('/comment/create')}";
-                var openId = "oQHdeuBfBLuO4xHqJFAuiaaCz71o";
                 var comment = $("#comment-content").val();
                 var parent = $("#insert-parent").val();
                 $.post(url, {
@@ -111,7 +141,7 @@
                     comment: comment,
                     parentId: parent
                 }, function (result) {
-                    alert(result);
+                    load_comment();
                 });
             });
         });
@@ -174,63 +204,9 @@
                  data-target="#myModal"><i class="icon edit"></i>
                 评论
             </div>
-            <div class="comment">
-                <div class="content">
-                    <a class="author">Matt</a>
 
-                    <div class="metadata">
-                        <span class="date">今天下午 5:42</span>
-                    </div>
-                    <div class="text">太赞了！</div>
-                    <div class="actions">
-                        <a class="reply comment-fishpond">回复</a>
-                    </div>
-                </div>
-            </div>
-            <div class="comment">
-                <div class="content">
-                    <a class="author">Elliot Fu</a>
+            <div id="comment-list" style="margin-top: 0.5em; margin-bottom: 0.5em;"></div>
 
-                    <div class="metadata">
-                        <span class="date">昨天上午12:30</span>
-                    </div>
-                    <div class="text">
-                        <p>This has been very useful for my research. Thanks as well!</p>
-                    </div>
-                    <div class="actions">
-                        <a class="reply comment-fishpond">回复</a>
-                    </div>
-                </div>
-                <div class="comments">
-                    <div class="comment">
-                        <div class="content">
-                            <a class="author">Jenny Hess</a>
-
-                            <div class="metadata">
-                                <span class="date">刚刚</span>
-                            </div>
-                            <div class="text">Elliot you are always so right :)</div>
-                            <div class="actions">
-                                <a class="reply comment-fishpond">回复</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="comment">
-                <div class="content">
-                    <a class="author">Joe Henderson</a>
-
-                    <div class="metadata">
-                        <span class="date">5 天以前</span>
-                    </div>
-                    <div class="text">老兄，这太棒了。非常感谢。</div>
-                    <div class="actions">
-                        <a class="reply comment-fishpond">回复</a>
-                    </div>
-                </div>
-            </div>
-            <br/>
         </div>
     </div>
 </div>

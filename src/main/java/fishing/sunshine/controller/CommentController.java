@@ -54,7 +54,9 @@ public class CommentController {
         fishPond.setFishPondId(fishPondId);
         comment.setFishPond(fishPond);
         ResultData content = commentService.queryComment(comment);
-        logger.debug(JSONObject.toJSONString(content.getData()));
+        if (content.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            list = (List<Comment>) content.getData();
+        }
         return list;
     }
 }
