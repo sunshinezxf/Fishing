@@ -30,4 +30,8 @@
     <bean id="fishFanDao" class="fishing.sunshine.dao.impl.FishFanDaoImpl">
         <property name="sqlSession" ref="sqlSession"/>
     </bean>
+
+    <bean id="commentDao" class="fishing.sunshine.dao.impl.CommentDaoImpl">
+        <property name="sqlSession" ref="sqlSession"/>
+    </bean>
 </beans>

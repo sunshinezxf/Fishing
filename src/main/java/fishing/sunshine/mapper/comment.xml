@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="comment">
     <resultMap id="commentVo" type="fishing.sunshine.model.Comment">
+        <result property="commentId" column="fish_zone_comment_id"></result>
+        <result property="wechat" column="fish_man_id"></result>
+        <result property="comment" column="fish_zone_comment_content"></result>
+        <result property="createAt" column="create_time"></result>
 
     </resultMap>
+
+    <insert id="insertComment" parameterType="fishing.sunshine.model.Comment" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO fish_zone_comment(fish_zone_comment_id, fish_man_id, fish_zone_comment_content, fish_zone_id, create_time, del_flag)
+        VALUES (#{commentId}, #{wechat}, #{comment}, #{fishPond.fishPondId}, #{createAt}, 0);
+    </insert>
 </mapper>

@@ -29,7 +29,7 @@
     <c:if test="${not empty configuration}">
         <script type="text/javascript">
             wx.config({
-                debug: true,
+                debug: false,
                 appId: '${appId}',
                 timestamp: '${configuration.timestamp}',
                 nonceStr: '${configuration.nonceStr}',
@@ -95,7 +95,18 @@
 
             $("#submit-fishpond-comment").click(function () {
                 var url = "${path.concat('/comment/create')}";
-                
+                var openId = "${openId}";
+                var fishPondId = "${fishPond.fishPondId}";
+                var comment = $("#comment-content").val();
+                var parent = $("#insert-parent").val();
+                $.post(url, {
+                    openId: openId,
+                    fishPondId: fishPondId,
+                    comment: comment,
+                    parentId: parent
+                }, function (result) {
+                    alert(result);
+                });
             });
         });
     </script>
@@ -234,8 +245,6 @@
             </div>
             <div class="modal-body">
                 <form id="insert-comment-form" class="ui reply form">
-                    <input type="hidden" id="insert-fish-man-id" name="openId" value="${openId}"/>
-                    <input type="hidden" id="insert-fish-pond-id" name="fishPondId" value="${fishPond.fishPondId}">
                     <input type="hidden" id="insert-parent" name="parentId" value=""/>
 
                     <div class="field">

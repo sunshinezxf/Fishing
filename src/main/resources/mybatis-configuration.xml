@@ -11,5 +11,6 @@
         <mapper resource="fishing/sunshine/mapper/pondType.xml"/>
         <mapper resource="fishing/sunshine/mapper/fishPond.xml"/>
         <mapper resource="fishing/sunshine/mapper/location.xml"/>
+        <mapper resource="fishing/sunshine/mapper/comment.xml"/>
     </mappers>
 </configuration>
