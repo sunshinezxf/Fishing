@@ -8,4 +8,6 @@ import fishing.sunshine.util.ResultData;
  */
 public interface CommentService {
     ResultData addComment(Comment comment);
+
+    ResultData queryComment(Comment comment);
 }

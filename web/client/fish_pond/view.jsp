@@ -29,7 +29,7 @@
     <c:if test="${not empty configuration}">
         <script type="text/javascript">
             wx.config({
-                debug: false,
+                debug: true,
                 appId: '${appId}',
                 timestamp: '${configuration.timestamp}',
                 nonceStr: '${configuration.nonceStr}',
@@ -87,6 +87,13 @@
 
             });
 
+            var fishPondId = "FPDerffrf42";
+
+            var comment_list_url = "${path.concat('/comment/')}" + fishPondId;
+            $.get(comment_list_url, function (result) {
+                alert(result);
+            })
+
             $("#comment-fishpond").click(function () {
                 $("#form-insert-parent").attr("value", "");
                 $("#comment-content").attr("placeholder", "说说你对此钓场的看法吧");
@@ -95,8 +102,7 @@
 
             $("#submit-fishpond-comment").click(function () {
                 var url = "${path.concat('/comment/create')}";
-                var openId = "${openId}";
-                var fishPondId = "${fishPond.fishPondId}";
+                var openId = "oQHdeuBfBLuO4xHqJFAuiaaCz71o";
                 var comment = $("#comment-content").val();
                 var parent = $("#insert-parent").val();
                 $.post(url, {

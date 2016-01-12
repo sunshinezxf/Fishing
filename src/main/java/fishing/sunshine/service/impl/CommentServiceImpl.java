@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by sunshine on 1/12/16.
  */
@@ -32,6 +34,22 @@ public class CommentServiceImpl implements CommentService {
             result.setData(comment);
         } else {
             result.setDescription(insert.getDescription());
+        }
+        return result;
+    }
+
+    @Override
+    public ResultData queryComment(Comment comment) {
+        ResultData result = new ResultData();
+        ResultData query = commentDao.queryComment(comment);
+        result.setResponseCode(query.getResponseCode());
+        if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(query.getData());
+            if (((List<Comment>) query.getData()).size() == 0) {
+                result.setResponseCode(ResponseCode.RESPONSE_NULL);
+            }
+        } else {
+            result.setDescription(query.getDescription());
         }
         return result;
     }

@@ -1,8 +1,10 @@
 package fishing.sunshine.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import fishing.sunshine.form.CommentForm;
 import fishing.sunshine.model.Comment;
+import fishing.sunshine.model.FishPond;
 import fishing.sunshine.service.CommentService;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
@@ -10,11 +12,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sunshine on 1/11/16.
@@ -38,5 +44,17 @@ public class CommentController {
             return "failure";
         }
         return "success";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{fishPondId}")
+    public List<Comment> overview(@PathVariable("fishPondId") String fishPondId) {
+        List<Comment> list = new ArrayList<Comment>();
+        Comment comment = new Comment();
+        FishPond fishPond = new FishPond();
+        fishPond.setFishPondId(fishPondId);
+        comment.setFishPond(fishPond);
+        ResultData content = commentService.queryComment(comment);
+        logger.debug(JSONObject.toJSONString(content.getData()));
+        return list;
     }
 }

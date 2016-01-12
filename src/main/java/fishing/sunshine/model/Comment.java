@@ -14,7 +14,7 @@ public class Comment extends SunshineEntity {
     private String wechat;
     private FishPond fishPond;
     private String comment;
-    private Comment parent;
+    private String parentId;
     private List<Comment> commentList;
 
     public Comment() {
@@ -27,10 +27,7 @@ public class Comment extends SunshineEntity {
         this.wechat = form.getOpenId();
         this.fishPond.setFishPondId(form.getFishPondId());
         this.comment = form.getComment();
-        if (!StringUtils.isEmpty(form.getParentId())) {
-            this.parent = new Comment();
-            parent.setCommentId(form.getParentId());
-        }
+        this.parentId = form.getParentId();
     }
 
     public String getCommentId() {
@@ -71,5 +68,13 @@ public class Comment extends SunshineEntity {
 
     public void setCommentList(List<Comment> commentList) {
         this.commentList = commentList;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 }

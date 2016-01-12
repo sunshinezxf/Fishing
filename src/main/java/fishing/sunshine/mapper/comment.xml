@@ -1,16 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="comment">
+
+    <resultMap id="fishPondVo" type="fishing.sunshine.model.FishPond">
+        <result property="fishPondId" column="fish_zone_id"></result>
+        <result property="fishPondName" column="fish_zone_name"></result>
+    </resultMap>
+
     <resultMap id="commentVo" type="fishing.sunshine.model.Comment">
         <result property="commentId" column="fish_zone_comment_id"></result>
         <result property="wechat" column="fish_man_id"></result>
         <result property="comment" column="fish_zone_comment_content"></result>
         <result property="createAt" column="create_time"></result>
-
+        <result property="parentId" column="fish_zone_comment_parent"></result>
+        <association property="fishPond" column="{commentId = fish_zone_comment_id}"
+                     select="queryFishPond"></association>
     </resultMap>
 
     <insert id="insertComment" parameterType="fishing.sunshine.model.Comment" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO fish_zone_comment(fish_zone_comment_id, fish_man_id, fish_zone_comment_content, fish_zone_id, create_time, del_flag)
-        VALUES (#{commentId}, #{wechat}, #{comment}, #{fishPond.fishPondId}, #{createAt}, 0);
+        INSERT INTO fish_zone_comment(fish_zone_comment_id, fish_man_id, fish_zone_comment_content, fish_zone_id, fish_zone_comment_parent, create_time, del_flag)
+        VALUES (#{commentId}, #{wechat}, #{comment}, #{fishPond.fishPondId}, #{parentId}, #{createAt}, 0);
     </insert>
+
+    <select id="queryComment" parameterType="fishing.sunshine.model.Comment" resultMap="commentVo">
+        SELECT fish_zone_comment_id, fish_man_id, fish_zone_comment_content, fish_zone_comment_parent, create_time
+        FROM fish_zone_comment
+        WHERE 1 = 1
+        AND del_flag = 0
+        <if test="commentId != null and commentId != ''">
+            AND fish_zone_comment_id = #{commentId}
+        </if>
+        <if test="wechat != null and wechat != ''">
+            AND fish_man_id = #{wechat}
+        </if>
+        <if test="fishPond != null and fishPond.fishPondId != null and fishPond.fishPondId != ''">
+            AND fish_zone_id = #{fishPond.fishPondId}
+        </if>
+        <if test="parentId != null and parentId != ''">
+            AND fish_zone_comment_parent = #{parentId}
+        </if>
+    </select>
+
+    <select id="queryFishPond" parameterType="java.util.HashMap" resultMap="fishPondVo">
+        SELECT fz.fish_zone_id, fz.fish_zone_name
+        FROM fish_zone fz, fish_zone_comment fzc
+        WHERE 1 = 1
+        AND fz.del_flag = 0
+        AND fzc.del_flag = 0
+        AND fz.fish_zone_id = fzc.fish_zone_id
+        <if test="commentId != null and commentId !=''">
+            AND fzc.fish_zone_comment_id = #{commentId}
+        </if>
+    </select>
 </mapper>
