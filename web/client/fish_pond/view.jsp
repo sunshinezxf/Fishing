@@ -13,19 +13,17 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;">
-    <link rel="stylesheet" href="${path.concat('/material/plugins/bootstrap-3.3.5-dist/css/bootstrap.min.css')}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="${path.concat('/material/plugins/weui/weui.min.css')}"/>
     <link rel="stylesheet" href="${path.concat('/material/css/fishpond.css')}"/>
     <link rel="stylesheet" href="${path.concat('/material/plugins/semantic-ui/semantic.min.css')}">
+    <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript"
-            src="${path.concat('/material/plugins/jquery/jquery-1.11.3.min.js')}"></script>
-    <script type="text/javascript"
-            src="${path.concat('/material/plugins/bootstrap-3.3.5-dist/js/bootstrap.min.js')}"></script>
+            src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${path.concat('/material/plugins/semantic-ui/semantic.min.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/date.js')}"></script>
-    <script type="text/javascript" src="${path.concat('/material/plugins/timeago/jquery.timeago.js')}"></script>
-    <script type="text/javascript" src="${path.concat('/material/js/jweixin-1.0.0.js')}"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <title>${fishPond.fishPondName}</title>
     <c:if test="${not empty configuration}">
         <script type="text/javascript">
@@ -81,13 +79,6 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $(".comment-fishpond").attr("data-toggle", "modal");
-            $(".comment-fishpond").attr("data-target", "#myModal");
-
-            $(".comment-fishpond").click(function () {
-
-            });
-
             var fishPondId = "${fishPond.fishPondId}";
             var openId = "${openId}";
 
@@ -97,39 +88,70 @@
                     $("#comment-list").empty();
                     var content_html = "";
                     for (var i = 0; i < result.length; i++) {
-                        content_html += "<div class=\"comment\">";
-                        content_html += "<div class=\"content\">";
+                        content_html += "<div class=\"comment\">"; //comment div start
+                        content_html += "<div class=\"content\">"; //content div start
                         content_html += "<a class=\"author\">";
-                        if (result[i].wechat == openId) {
+                        if (result[i].wechat == '' || result[i].wechat == null) {
+                            content_html += "游客";
+                        } else if (result[i].wechat == openId) {
                             content_html += "我";
                         } else {
                             content_html += "钓友";
                         }
                         content_html += "</a>";
-                        content_html += "<div class=\"metadata\">";
+                        content_html += "<div class=\"metadata\">"; //metadata div start
                         content_html += "<span class=\"date\">";
                         content_html += (new Date(result[i].createAt)).format("yyyy-MM-dd hh:mm:ss");
-                        content_html += "</div>";
-                        content_html += "<div class=\"text\">";
+                        content_html += "</span>";
+                        content_html += "</div>"; //metadata div end
+                        content_html += "<div class=\"text\">"; //text div start
                         content_html += result[i].comment;
-                        content_html += "</div>";
-                        content_html += "<div class=\"actions\">";
-                        content_html += "</div>";
-                        content_html += "</div>";
-                        content_html += "</div>";
+                        content_html += "</div>"; //text div end
+                        if (result[i].wechat != openId) {
+                            content_html += "<div class=\"actions\">"; //action div start
+                            content_html += "<a class=\"reply comment-list-item\" data-toggle=\"modal\" data-target=\"#myModal\" onclick='modal(\"" + result[i].commentId + "\")'>回复";
+                            content_html += "</a>";
+                            content_html += "</div>"; //action div end
+                        }
+                        content_html += "</div>"; //content div end
+                        if (result[i].commentList.length > 0) {
+                            content_html += "<div class=\"comments\">"; //comments div start
+                            for (var j = 0; j < result[i].commentList.length; j++) {
+                                content_html += "<div class=\"comment\">"; //comment div start
+                                content_html += "<a class=\"author\">";
+                                if (result[i].commentList[j].wechat == '' || result[i].commentList[j].wechat == null) {
+                                    content_html += "游客";
+                                } else if (result[i].commentList[j].wechat == openId) {
+                                    content_html += "我";
+                                } else {
+                                    content_html += "钓友";
+                                }
+                                content_html += "</a>";
+                                content_html += "<div class=\"metadata\">"; //metadata div start
+                                content_html += "<span class=\"date\">";
+                                content_html += (new Date(result[i].commentList[j].createAt)).format("yyyy-MM-dd hh:mm:ss");
+                                content_html += "</span>";
+                                content_html += "</div>"; //metadata div end
+                                content_html += "<div class=\"text\">"; //text div start
+                                content_html += result[i].commentList[j].comment;
+                                content_html += "</div>"; //text div end
+                                if (result[i].commentList[j].wechat != openId) {
+                                    content_html += "<div class=\"actions\">"; //action div start
+                                    content_html += "<a class=\"reply comment-list-item\" data-toggle=\"modal\" data-target=\"#myModal\" onclick='modal(\"" + result[i].commentId + "\")'>回复";
+                                    content_html += "</a>";
+                                    content_html += "</div>"; //action div end
+                                }
+                                content_html += "</div>" //comment div end
+                            }
+                            content_html += "</div>"; //comments div end
+                        }
+                        content_html += "</div>"; //comment div end
                     }
                     $("#comment-list").append(content_html);
                 });
             }
 
             load_comment();
-
-            $("#comment-fishpond").click(function () {
-                $("#form-insert-parent").attr("value", "");
-                $("#comment-content").attr("placeholder", "说说你对此钓场的看法吧");
-                $("#comment-content").val("");
-
-            });
 
             $("#submit-fishpond-comment").click(function () {
                 var url = "${path.concat('/comment/create')}";
@@ -140,58 +162,69 @@
                     fishPondId: fishPondId,
                     comment: comment,
                     parentId: parent
-                }, function (result) {
+                }, function () {
                     load_comment();
                 });
             });
         });
+
+        function modal(parent_id) {
+            $("#insert-parent").attr("value", parent_id);
+        }
     </script>
 </head>
 <body ontouchstart>
 <div class="container">
-    <div class="row">
-        <img src="${path}${fishPond.thumbnail}" class="img-responsive" width="100%" height="auto"/>
-    </div>
+    <c:if test="${not empty fishPond.thumbnail}">
+        <div class="row">
+            <img src="${path}${fishPond.thumbnail}" class="img-responsive" width="100%" height="auto"/>
+        </div>
+    </c:if>
     <h4>
         ${fishPond.fishPondName}
-        (
-        <small><span class="glyphicon glyphicon-user"></span>${fishPond.contractor.name}</small>
-        )
+        <c:if test="${not empty fishPond.contractor.name}">
+            (
+            <small><span class="glyphicon glyphicon-user"></span>${fishPond.contractor.name}</small>
+            )
+        </c:if>
     </h4>
-
     <p>
         <a id="show_map_sheet"
            href="http://apis.map.qq.com/uri/v1/routeplan?type=drive&to=${fishPond.fishPondName}&tocoord=${fishPond.latitude},${fishPond.longitude}&policy=1&referer=fishing"><span
                 class="glyphicon glyphicon-map-marker"></span>&nbsp;${fishPond.fishPondAddress}</a></p>
+    <c:if test="${not empty fishPond.fishPondFee}">
+        <div class="pond-fee">
+            <span class="h6">收费&nbsp;</span>
+            <span class="h6">${fishPond.fishPondFee}</span>
+        </div>
+    </c:if>
+    <c:if test="${not empty fishPond.pondTypes}">
+        <div class="pond-type">
+            <span class="h6">类型&nbsp;</span>
+            <c:if test="${not empty fishPond.pondTypes}">
+                <c:forEach var="item" items="${fishPond.pondTypes}" varStatus="no">
+                    <span class="label label-warning">${item.pondTypeName}</span>
+                </c:forEach>
+            </c:if>
+        </div>
+    </c:if>
+    <c:if test="${not empty fishPond.fishes}">
+        <div class="pond-feature">
+            <span class="h6">特色&nbsp;</span>
+            <c:if test="${not empty fishPond.fishes}">
+                <c:forEach var="item" items="${fishPond.fishes}" varStatus="no">
+                    <span class="label label-info">${item.fishName}</span>
+                </c:forEach>
+            </c:if>
+        </div>
+    </c:if>
+    <c:if test="${not empty fishPond.introduction}">
+        <div class="pond-introduction">
+            <label class="h6">简介&nbsp;</label>
 
-    <div class="pond-fee">
-        <span class="h6">收费&nbsp;</span>
-        <span class="h6">${fishPond.fishPondFee}</span>
-    </div>
-
-    <div class="pond-type">
-        <span class="h6">类型&nbsp;</span>
-        <c:if test="${not empty fishPond.pondTypes}">
-            <c:forEach var="item" items="${fishPond.pondTypes}" varStatus="no">
-                <span class="label label-warning">${item.pondTypeName}</span>
-            </c:forEach>
-        </c:if>
-    </div>
-
-    <div class="pond-feature">
-        <span class="h6">特色&nbsp;</span>
-        <c:if test="${not empty fishPond.fishes}">
-            <c:forEach var="item" items="${fishPond.fishes}" varStatus="no">
-                <span class="label label-info">${item.fishName}</span>
-            </c:forEach>
-        </c:if>
-    </div>
-
-    <div class="pond-introduction">
-        <label class="h6">简介&nbsp;</label>
-
-        <div class="alert alert-info introduction">${fishPond.introduction}</div>
-    </div>
+            <div class="alert alert-info introduction">${fishPond.introduction}</div>
+        </div>
+    </c:if>
     <footer class="footer blog-footer">
         <div>内容更新时间: <fmt:formatDate value="${fishPond.createAt}" type="date" dateStyle="full"/></div>
     </footer>
@@ -230,7 +263,7 @@
                     <input type="hidden" id="insert-parent" name="parentId" value=""/>
 
                     <div class="field">
-                        <textarea id="comment-content"></textarea>
+                        <textarea id="comment-content" placeholder="说说你对此钓场的看法吧"></textarea>
                     </div>
                 </form>
             </div>

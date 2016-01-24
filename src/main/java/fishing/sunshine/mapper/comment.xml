@@ -15,6 +15,8 @@
         <result property="parentId" column="fish_zone_comment_parent"></result>
         <association property="fishPond" column="{commentId = fish_zone_comment_id}"
                      select="queryFishPond"></association>
+        <association property="commentList" column="{parentId = fish_zone_comment_id}"
+                     select="querySubComment"></association>
     </resultMap>
 
     <insert id="insertComment" parameterType="fishing.sunshine.model.Comment" useGeneratedKeys="true" keyProperty="id">
@@ -39,6 +41,9 @@
         <if test="parentId != null and parentId != ''">
             AND fish_zone_comment_parent = #{parentId}
         </if>
+        <if test="parentId == null or parentId == ''">
+            AND (fish_zone_comment_parent IS null or fish_zone_comment_parent = '')
+        </if>
         ORDER BY create_time DESC
     </select>
 
@@ -52,5 +57,25 @@
         <if test="commentId != null and commentId !=''">
             AND fzc.fish_zone_comment_id = #{commentId}
         </if>
+    </select>
+
+    <select id="querySubComment" parameterType="java.util.HashMap" resultMap="commentVo">
+        SELECT fish_zone_comment_id, fish_man_id, fish_zone_comment_content, fish_zone_comment_parent, create_time
+        FROM fish_zone_comment
+        WHERE 1 = 1
+        AND del_flag = 0
+        <if test="commentId != null and commentId != ''">
+            AND fish_zone_comment_id = #{commentId}
+        </if>
+        <if test="wechat != null and wechat != ''">
+            AND fish_man_id = #{wechat}
+        </if>
+        <if test="fishPondId != null and fishPondId != ''">
+            AND fish_zone_id = #{fishPondId}
+        </if>
+        <if test="parentId != null and parentId != ''">
+            AND fish_zone_comment_parent = #{parentId}
+        </if>
+        ORDER BY create_time ASC
     </select>
 </mapper>

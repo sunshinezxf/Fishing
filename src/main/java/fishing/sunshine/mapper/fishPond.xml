@@ -118,9 +118,6 @@
             <if test="limitation != null">
                 fish_zone_limit = #{limitation},
             </if>
-            <if test="contractor != null and contractor != '' and contractor.contractorId != null">
-                fish_man_id = #{contractor.contractorId},
-            </if>
             <if test="createAt != null and createAt != ''">
                 create_time = #{createAt}
             </if>

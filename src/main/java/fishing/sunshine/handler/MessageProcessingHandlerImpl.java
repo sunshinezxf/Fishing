@@ -82,6 +82,7 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
 
     @Override
     public void locationTypeMsg(InMessage inMessage) {
+        logger.debug("location message: " + JSONObject.toJSONString(inMessage));
         outMessage = new TextOutMessage();
         ResultData result = location(inMessage);
         if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {

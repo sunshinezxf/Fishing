@@ -38,6 +38,7 @@ public class CommentDaoImpl extends BaseDao implements CommentDao {
     @Override
     public ResultData queryComment(Comment comment) {
         ResultData result = new ResultData();
+        logger.debug(JSONObject.toJSONString(comment));
         try {
             List<Comment> list = sqlSession.selectList("comment.queryComment", comment);
             result.setData(list);

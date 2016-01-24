@@ -141,10 +141,10 @@ public class FishPondController {
             String url = CommonValue.SERVER_URL + "/fishzone/" + fishPondId;
             String configLink = url + "?code=" + code + "&state=" + state;
             try {
-                String link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CommonValue.WECHAT_APPID + "&redirect_uri=" + URLEncoder.encode(url, "utf-8") + "&response_type=code&scope=snsapi_base&state=view";
-                String shareLink = link + "#wechat_redirect";
+                String shareLink = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CommonValue.WECHAT_APPID + "&redirect_uri=" + URLEncoder.encode(url, "utf-8") + "&response_type=code&scope=snsapi_base&state=view#wechat_redirect";
                 Configuration configuration = WechatConfig.config(configLink);
                 configuration.setShareLink(shareLink);
+                logger.debug(JSONObject.toJSONString(configuration));
                 view.addObject("configuration", configuration);
                 ResultData accessToken = wechatService.queryAccessToken(code);
                 if (accessToken.getResponseCode() == ResponseCode.RESPONSE_OK) {
