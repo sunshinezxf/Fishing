@@ -58,7 +58,11 @@
             function upload_division(province, city, district) {
                 var url = "${path.concat('/division/create')}";
                 $.post(url, {province: province, city: city, district: district}, function (result) {
-                    console.debug(JSON.stringify(result));
+                    if (result.responseCode == "RESPONSE_OK") {
+                        $("#form-district-id").val(result.data.districtId);
+                    } else {
+                        $("#form-district-id").val("");
+                    }
                 })
             }
 
@@ -185,6 +189,8 @@
             <div class="col-md-12 col-lg-12">
                 <hr/>
                 <form id="insert-fishzone-form" class="form-horizontal">
+                    <input type="hidden" id="form-district-id" name="districtId" autocomplete="off"/>
+
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="fish-zone-name">鱼塘名称</label>
 
