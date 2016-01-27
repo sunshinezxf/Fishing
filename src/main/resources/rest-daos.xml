@@ -34,4 +34,8 @@
     <bean id="commentDao" class="fishing.sunshine.dao.impl.CommentDaoImpl">
         <property name="sqlSession" ref="sqlSession"/>
     </bean>
+
+    <bean id="divisionDao" class="fishing.sunshine.dao.impl.DivisionDaoImpl">
+        <property name="sqlSession" ref="sqlSession"/>
+    </bean>
 </beans>

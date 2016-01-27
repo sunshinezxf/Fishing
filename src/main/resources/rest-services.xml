@@ -19,6 +19,8 @@
 
     <bean id="commentService" class="fishing.sunshine.service.impl.CommentServiceImpl"></bean>
 
+    <bean id="divisionService" class="fishing.sunshine.service.impl.DivisionServiceImpl"></bean>
+
     <bean id="wechatService" class="fishing.sunshine.service.impl.WechatServiceImpl"></bean>
 
     <bean id="messageProcessingHandler" class="fishing.sunshine.handler.MessageProcessingHandlerImpl"></bean>

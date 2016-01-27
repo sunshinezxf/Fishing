@@ -4,19 +4,21 @@
     <resultMap id="fishFanVo" type="fishing.sunshine.model.FishFan">
         <result property="fishFanId" column="fish_fan_id"></result>
         <result property="username" column="fish_fan_name"></result>
+        <result property="longitude" column="fish_fan_longitude"></result>
+        <result property="latitude" column="fish_fan_latitude"></result>
         <result property="createAt" column="create_time"></result>
     </resultMap>
 
     <!-- 插入一条关注者的信息 -->
     <insert id="insertFishFan" parameterType="fishing.sunshine.model.FishFan" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO fish_fan(fish_fan_id, fish_fan_name, create_time, del_flag)
-        VALUES (#{fishFanId}, #{username}, #{createAt}, #{delFlag})
+        INSERT INTO fish_fan(fish_fan_id, fish_fan_name, fish_fan_longitude, fish_fan_latitude, create_time, del_flag)
+        VALUES (#{fishFanId}, #{username}, #{longitude}, #{latitude}, #{createAt}, #{delFlag})
     </insert>
 
 
     <!-- 根据关注着的openId查询用户信息 -->
     <select id="queryFishFan" resultMap="fishFanVo" parameterType="fishing.sunshine.model.FishFan">
-        SELECT fish_fan_id, fish_fan_name, create_time
+        SELECT fish_fan_id, fish_fan_name, fish_fan_longitude, fish_fan_latitude, create_time
         FROM fish_fan
         WHERE 1 = 1
         AND del_flag = 0
@@ -25,6 +27,26 @@
         </if>
         ORDER BY create_time DESC
     </select>
+
+    <!-- 更新关注者的信息 -->
+    <update id="updateFishFan" parameterType="fishing.sunshine.model.FishFan">
+        UPDATE fish_fan
+        <set>
+            <if test="longitude != null and longitude != ''">
+                fish_fan_longitude = #{longitude},
+            </if>
+            <if test="latitude != null and latitude != ''">
+                AND fish_fan_latitude = #{latitude},
+            </if>
+            <if test="createAt != null and createAt != ''">
+                AND create_time = #{createAt}
+            </if>
+        </set>
+        WHERE 1 = 1
+        <if test="fishFanId != null and fishFanId != ''">
+            AND fish_fan_id = #{fishFanId}
+        </if>
+    </update>
 
     <!-- 取消关注时 -->
     <update id="deleteFishFan" parameterType="fishing.sunshine.model.FishFan">

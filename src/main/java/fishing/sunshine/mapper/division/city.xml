@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="city">
+    <resultMap id="provinceVo" type="fishing.sunshine.model.division.Province">
+        <result property="provinceId" column="province_id"></result>
+        <result property="provinceName" column="province_name"></result>
+        <result property="createAt" column="create_time"></result>
+    </resultMap>
+
+    <resultMap id="cityVo" type="fishing.sunshine.model.division.City">
+        <result property="cityId" column="city_id"></result>
+        <result property="cityName" column="city_name"></result>
+        <result property="createAt" column="create_time"></result>
+        <association property="province" column="{cityId = city_id}" select="queryProvince"></association>
+    </resultMap>
+
+    <!-- 查询city -->
+    <select id="queryCity" parameterType="fishing.sunshine.model.division.City" resultMap="cityVo">
+        SELECT
+        FROM city
+        WHERE 1 = 1
+        AND del_flag = 0
+        <if test="cityId != null and cityId != ''">
+            AND city_id = #{cityid}
+        </if>
+        <if test="cityName != null and cityName != ''">
+            AND city_name = #{cityName}
+        </if>
+        <if test="city.province != null and city.province.provinceId != null and city.province.provinceId != ''">
+            AND province_id = #{city.province.provinceId}
+        </if>
+    </select>
+
+    <!-- 添加城市 -->
+    <insert id="insertCity" parameterType="fishing.sunshine.model.division.City" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO city(city_id, city_name, province_id, create_time, del_flag)
+        VALUES(#{cityId}, #{cityName}, #{province.provinceId}, #{createAt}, 0);
+    </insert>
+
+    <!-- 删除城市 -->
+    <delete id="deleteCity">
+        DELETE FROM city
+        WHERE 1 = 1
+        AND city_id NOT IN(
+            SELECT city_id
+            FROM district
+            WHERE 1 = 1
+        )
+    </delete>
+
+    <!-- 根据city_id查询对应的province -->
+    <select id="queryProvince" parameterType="java.util.HashMap" resultMap="provinceVo">
+        SELECT p.province_id, p.province_name, p.create_time
+        FROM province p, city c
+        WHERE 1 = 1
+        <if test="cityId != null and cityId != ''">
+            AND c.city_id = #{cityId}
+        </if>
+        AND p.province_id = c.province_id
+    </select>
+
+</mapper>

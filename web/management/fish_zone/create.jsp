@@ -64,6 +64,11 @@
                     if (result.status == 0) {
                         $("#zone-longitude").val(result.result.location.lng);
                         $("#zone-latitude").val(result.result.location.lat);
+
+                        var province = result.result.address_components.province;
+                        var city = result.result.address_components.city;
+                        var district = result.result.address_components.district;
+                        
                     }
                 });
             });

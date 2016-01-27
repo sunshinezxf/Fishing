@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="district">
+    <resultMap id="provinceVo" type="fishing.sunshine.model.division.Province">
+        <result property="provinceId" column="province_id"></result>
+        <result property="provinceName" column="province_name"></result>
+        <result property="createAt" column="create_time"></result>
+    </resultMap>
+
+    <resultMap id="cityVo" type="fishing.sunshine.model.division.City">
+        <result property="cityId" column="city_id"></result>
+        <result property="cityName" column="city_name"></result>
+        <result property="createAt" column="create_time"></result>
+        <association property="province" column="{cityId = city_id}" select="queryProvince"></association>
+    </resultMap>
+
+    <resultMap id="districtVo" type="fishing.sunshine.model.division.District">
+        <result property="districtId" column="district_id"></result>
+        <result property="districtName" column="district_name"></result>
+        <result property="createAt" column="create_time"></result>
+        <association property="city" column="{districtId = district_id}" select="queryCity"></association>
+    </resultMap>
+
+    <!-- 根据city_id查询对应的province -->
+    <select id="queryProvince" parameterType="java.util.HashMap" resultMap="provinceVo">
+        SELECT p.province_id, p.province_name, p.create_time
+        FROM province p, city c
+        WHERE 1 = 1
+        <if test="cityId != null and cityId != ''">
+            AND c.city_id = #{cityId}
+        </if>
+        AND p.province_id = c.province_id
+    </select>
+
+    <!-- 根据district_id查询对应的city -->
+    <select id="queryCity" parameterType="java.util.HashMap" resultMap="cityVo">
+        SELECT c.city_id, c.city_name, c.createAt
+        FROM city c, district d
+        WHERE 1 = 1
+        <if test="districtId != null and districtId != ''">
+            AND d.district_id = #{districtId}
+        </if>
+        AND c.city_id = d.district_id
+    </select>
+
+    <!-- 查询district -->
+    <select id="queryDistrict" parameterType="fishing.sunshine.model.division.District">
+        SELECT d.district_id, d.district_name, d.create_time
+        FROM district d, city c, province p
+        WHERE 1 = 1
+        <if test="districtId != null and districtId != ''">
+            d.district_id = #{districtId}
+        </if>
+        <if test="districtName != null and districtName != ''">
+            d.district_name = #{districtName}
+        </if>
+        <if test="city != null and city.cityId != null and city.cityId != ''">
+            c.city_id = #{city.cityId}
+        </if>
+        <if test="city != null and city.cityName != null and city.cityName != ''">
+            c.city_name = #{city.cityName}
+        </if>
+        <if test="city != null and city.province != null and city.province.provinceId != null and city.province.provinceId != ''">
+            p.province_id = #{city.province.provinceId}
+        </if>
+        <if test="city != null and city.province != null and city.province.provinceName != null and city.province.provinceName != ''">
+            p.province_name = #{city.province.provinceName}
+        </if>
+        AND d.city_id = c.city_id
+        AND c.province_id = p.province_id
+    </select>
+
+    <insert id="insertDistrict" parameterType="fishing.sunshine.model.division.District" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO district(district_id, district_name, city_id, create_time, del_flag)
+        VALUES (#{districtId}, #{districtName}, #{city.cityId}, #{createAt}, 0)
+    </insert>
+
+    <delete id="deleteDistrict">
+        DELETE FROM district
+        WHERE 1 = 1
+        AND district_id NOT IN(
+            SELECT district_id
+            FROM fish_zone
+            WHERE 1 = 1
+        )
+    </delete>
+</mapper>
