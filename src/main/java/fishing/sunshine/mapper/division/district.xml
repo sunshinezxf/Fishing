@@ -34,37 +34,37 @@
 
     <!-- 根据district_id查询对应的city -->
     <select id="queryCity" parameterType="java.util.HashMap" resultMap="cityVo">
-        SELECT c.city_id, c.city_name, c.createAt
+        SELECT c.city_id, c.city_name, c.create_time
         FROM city c, district d
         WHERE 1 = 1
         <if test="districtId != null and districtId != ''">
             AND d.district_id = #{districtId}
         </if>
-        AND c.city_id = d.district_id
+        AND c.city_id = d.city_id
     </select>
 
     <!-- 查询district -->
-    <select id="queryDistrict" parameterType="fishing.sunshine.model.division.District">
+    <select id="queryDistrict" parameterType="fishing.sunshine.model.division.District" resultMap="districtVo">
         SELECT d.district_id, d.district_name, d.create_time
         FROM district d, city c, province p
         WHERE 1 = 1
         <if test="districtId != null and districtId != ''">
-            d.district_id = #{districtId}
+            AND d.district_id = #{districtId}
         </if>
         <if test="districtName != null and districtName != ''">
-            d.district_name = #{districtName}
+            AND d.district_name = #{districtName}
         </if>
         <if test="city != null and city.cityId != null and city.cityId != ''">
-            c.city_id = #{city.cityId}
+            AND c.city_id = #{city.cityId}
         </if>
         <if test="city != null and city.cityName != null and city.cityName != ''">
-            c.city_name = #{city.cityName}
+            AND c.city_name = #{city.cityName}
         </if>
         <if test="city != null and city.province != null and city.province.provinceId != null and city.province.provinceId != ''">
-            p.province_id = #{city.province.provinceId}
+            AND p.province_id = #{city.province.provinceId}
         </if>
         <if test="city != null and city.province != null and city.province.provinceName != null and city.province.provinceName != ''">
-            p.province_name = #{city.province.provinceName}
+            AND p.province_name = #{city.province.provinceName}
         </if>
         AND d.city_id = c.city_id
         AND c.province_id = p.province_id

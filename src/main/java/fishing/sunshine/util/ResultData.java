@@ -1,5 +1,7 @@
 package fishing.sunshine.util;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * Created by sunshine on 11/27/15.
  */
@@ -34,5 +36,10 @@ public class ResultData {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 }

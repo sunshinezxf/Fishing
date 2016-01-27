@@ -9,8 +9,8 @@ public class CommonValue {
     public static final String WECHAT_GREETING = "欢迎您关注南京钓鱼";
     public static final String WECHAT_WARNING = "您好!";
 
-    public static final String WECHAT_APPID = "wx7ba6d2f313ff5d53";
-    public static final String WECHAT_SECRET = "2d41411d6ebe6f7badf8d969564c9840";
+    public static final String WECHAT_APPID = "wxf2c47b5e41605c26";
+    public static final String WECHAT_SECRET = "e86c372bf16f4cbd7983878dc90ab75d";
     public static final String WECHAT_AESKEY = "";
     public static final String WECHAT_TOKEN = "wechat";
 }

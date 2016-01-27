@@ -55,6 +55,13 @@
                 height: 280
             });
 
+            function upload_division(province, city, district) {
+                var url = "${path.concat('/division/create')}";
+                $.post(url, {province: province, city: city, district: district}, function (result) {
+                    console.debug(JSON.stringify(result));
+                })
+            }
+
             $("#resolve").click(function () {
                 var url = "http://apis.map.qq.com/ws/geocoder/v1";
                 var key = "D3EBZ-F3QHJ-KJVFC-FDXKG-4U3J5-VCB5K";
@@ -64,11 +71,10 @@
                     if (result.status == 0) {
                         $("#zone-longitude").val(result.result.location.lng);
                         $("#zone-latitude").val(result.result.location.lat);
-
                         var province = result.result.address_components.province;
                         var city = result.result.address_components.city;
                         var district = result.result.address_components.district;
-                        
+                        upload_division(province, city, district);
                     }
                 });
             });

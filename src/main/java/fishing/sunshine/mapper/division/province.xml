@@ -9,7 +9,7 @@
 
     <!-- 查询省份 -->
     <select id="queryProvince" parameterType="fishing.sunshine.model.division.Province" resultMap="provinceVo">
-        SELECT
+        SELECT province_id, province_name, create_time
         FROM province
         WHERE 1 = 1
         AND del_flag = 0
