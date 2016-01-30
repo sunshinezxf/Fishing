@@ -41,6 +41,9 @@ public class FishPondController {
     @Autowired
     private WechatService wechatService;
 
+    @Autowired
+    private FishFanService fishFanService;
+
     @RequestMapping(method = RequestMethod.GET, value = "/create")
     public ModelAndView create() {
         ModelAndView view = new ModelAndView();
@@ -240,17 +243,37 @@ public class FishPondController {
         ModelAndView view = new ModelAndView();
         String code = request.getParameter("code");
         if (!StringUtils.isEmpty(code)) {
-
+            String state = request.getParameter("state");
+            String url = CommonValue.SERVER_URL + "/fishzone/index";
+            String configLink = url + "?code=" + code + "&state=" + state;
+            try {
+                String shareLink = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CommonValue.WECHAT_APPID + "&redirect_uri=" + URLEncoder.encode(url, "utf-8") + "&response_type=code&scope=snsapi_base&state=view#wechat_redirect";
+                Configuration configuration = WechatConfig.config(configLink);
+                configuration.setShareLink(shareLink);
+                view.addObject("configuration", configuration);
+                ResultData accessToken = wechatService.queryAccessToken(code);
+                if (accessToken.getResponseCode() == ResponseCode.RESPONSE_OK) {
+                    JSONObject json = JSONObject.parseObject((String) accessToken.getData());
+                    String openId = json.getString("openid");
+                    FishFan fan = new FishFan();
+                    fan.setFishFanId(openId);
+                    ResultData query = fishFanService.queryFishFan(fan);
+                    if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
+                        view.addObject("fishFan", ((List<FishFan>) query.getData()).get(0));
+                    }
+                }
+            } catch (Exception e) {
+                logger.debug(e.getMessage());
+            }
         }
-
         view.setViewName("/client/fish_pond/index");
         return view;
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/index")
-    public Object index() {
-        Object result = new Object();
+    public List<FishPond> index() {
+        List<FishPond> result = new ArrayList<FishPond>();
 
         return result;
     }
