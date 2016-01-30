@@ -14,9 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class FishingApplication {
     @Bean
     public WxMpXmlOutTextMessage defaultMessage() {
-        WxMpXmlOutTextMessage message = new WxMpXmlOutTextMessage();
-        message.setContent(CommonValue.WECHAT_WARNING);
-        return message;
+        return null;
     }
 
     @Bean

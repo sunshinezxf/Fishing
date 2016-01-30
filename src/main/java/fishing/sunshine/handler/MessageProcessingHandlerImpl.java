@@ -134,9 +134,7 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
 
     @Override
     public void afterProcess(InMessage inMessage, OutMessage outMessage) {
-        TextOutMessage message = new TextOutMessage();
-        message.setContent(CommonValue.WECHAT_WARNING);
-        this.outMessage = message;
+        this.outMessage = null;
     }
 
     @Override
