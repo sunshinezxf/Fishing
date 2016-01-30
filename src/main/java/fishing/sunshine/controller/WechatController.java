@@ -73,10 +73,6 @@ public class WechatController {
             method.invoke(messageProcessingHandler, inMessage);
             Method getOutMessage = clazz.getMethod("getOutMessage");
             result = (OutMessage) getOutMessage.invoke(messageProcessingHandler);
-            if (result == null) {
-                result = new TextOutMessage();
-                ((TextOutMessage) result).setContent(CommonValue.WECHAT_WARNING);
-            }
 
             Class<?> resultClass = result.getClass().getSuperclass();
             Field createTime = resultClass.getDeclaredField("CreateTime");

@@ -43,6 +43,21 @@ public class FishFanDaoImpl extends BaseDao implements FishFanDao {
             logger.debug(e.getMessage());
             result.setResponseCode(ResponseCode.RESPONSE_ERROR);
             result.setDescription(e.getMessage());
+        } finally {
+            return result;
+        }
+    }
+
+    @Override
+    public ResultData updateFishFan(FishFan fishFan) {
+        ResultData result = new ResultData();
+        try {
+            sqlSession.update("fan.updateFishFan", fishFan);
+            result.setData(fishFan);
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
         }finally {
             return result;
         }

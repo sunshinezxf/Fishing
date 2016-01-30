@@ -9,10 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -236,5 +233,25 @@ public class FishPondController {
         }
         view.setViewName("redirect:/fishzone/overview");
         return view;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/index")
+    public ModelAndView index(HttpServletRequest request) {
+        ModelAndView view = new ModelAndView();
+        String code = request.getParameter("code");
+        if (!StringUtils.isEmpty(code)) {
+
+        }
+
+        view.setViewName("/client/fish_pond/index");
+        return view;
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/index")
+    public Object index() {
+        Object result = new Object();
+
+        return result;
     }
 }

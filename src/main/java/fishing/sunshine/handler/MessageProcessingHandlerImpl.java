@@ -1,6 +1,7 @@
 package fishing.sunshine.handler;
 
 import com.alibaba.fastjson.JSONObject;
+import com.gson.WeChat;
 import com.gson.bean.*;
 import com.gson.inf.MessageProcessingHandler;
 import fishing.sunshine.controller.FishingApplication;
@@ -10,6 +11,7 @@ import fishing.sunshine.model.Location;
 import fishing.sunshine.service.FishFanService;
 import fishing.sunshine.service.FishPondService;
 import fishing.sunshine.service.LocationService;
+import fishing.sunshine.service.WechatService;
 import fishing.sunshine.util.CommonValue;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
@@ -88,7 +90,7 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
         if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
             ((TextOutMessage) outMessage).setContent(String.valueOf(result.getData()));
         } else {
-            ((TextOutMessage) outMessage).setContent("Upload fail.");
+            ((TextOutMessage) outMessage).setContent("地址上传失败");
         }
     }
 
@@ -119,12 +121,14 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
 
     @Override
     public void eventTypeMsg(InMessage inMessage) {
+        logger.debug(JSONObject.toJSONString("Message content: " + inMessage));
+        logger.debug(JSONObject.toJSONString("Message type: " + inMessage.getEvent()));
         if (inMessage.getEvent().equals("subscribe")) {
             outMessage = new TextOutMessage();
             ((TextOutMessage) outMessage).setContent(CommonValue.WECHAT_GREETING);
         }
         if (inMessage.getEvent().equals("LOCATION")) {
-
+            ResultData result = fishfanLocation(inMessage);
         }
     }
 
@@ -145,6 +149,12 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
         return outMessage;
     }
 
+    /**
+     * 关注时获取用户的信息
+     *
+     * @param message
+     * @return
+     */
     private ResultData subscribe(InMessage message) {
         ResultData result = new ResultData();
         FishFan fan = new FishFan();
@@ -199,6 +209,12 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
         return result;
     }
 
+    /**
+     * 通过钓场名字查询钓场
+     *
+     * @param message
+     * @return
+     */
     private ResultData fishpond(InMessage message) {
         ResultData result = new ResultData();
         FishPond fishPond = new FishPond();
@@ -210,6 +226,31 @@ public class MessageProcessingHandlerImpl implements MessageProcessingHandler {
             return result;
         }
         result.setData(query.getData());
+        return result;
+    }
+
+    /**
+     * 更新关注者的地址信息
+     *
+     * @param message
+     * @return
+     */
+    private ResultData fishfanLocation(InMessage message) {
+        ResultData result = new ResultData();
+        FishFan fishFan = new FishFan();
+        fishFan.setFishFanId(message.getFromUserName());
+        ResultData query = fishFanService.queryFishFan(fishFan);
+        if (query.getResponseCode() == ResponseCode.RESPONSE_NULL) {
+            subscribe(message);
+            query = fishFanService.queryFishFan(fishFan);
+        }
+        if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            fishFan.setLongitude(Double.parseDouble(message.getLongitude()));
+            fishFan.setLatitude(Double.parseDouble(message.getLatitude()));
+            fishFanService.updateFishFan(fishFan);
+        } else {
+            subscribe(message);
+        }
         return result;
     }
 

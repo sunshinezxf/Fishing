@@ -10,4 +10,6 @@ public interface FishFanDao {
     ResultData insertFishFan(FishFan fishFan);
 
     ResultData queryFishFan(FishFan fishFan);
+
+    ResultData updateFishFan(FishFan fishFan);
 }

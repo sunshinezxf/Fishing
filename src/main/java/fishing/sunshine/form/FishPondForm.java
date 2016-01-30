@@ -35,6 +35,8 @@ public class FishPondForm extends SunshineEntity {
 
     private String introduction;
 
+    private String districtId;
+
     public FishPondForm(MultipartHttpServletRequest request) {
         this.pondName = request.getParameter("pondName");
         this.contractorName = request.getParameter("contractorName");
@@ -49,6 +51,7 @@ public class FishPondForm extends SunshineEntity {
         this.thumbnail = request.getFile("pondThumbnail");
         this.introduction = request.getParameter("pondIntroduction");
         this.limitation = request.getParameter("limit");
+        this.districtId = request.getParameter("districtId");
     }
 
     public String getPondName() {
@@ -153,5 +156,13 @@ public class FishPondForm extends SunshineEntity {
 
     public void setLimitation(String limitation) {
         this.limitation = limitation;
+    }
+
+    public String getDistrictId() {
+        return districtId;
+    }
+
+    public void setDistrictId(String districtId) {
+        this.districtId = districtId;
     }
 }

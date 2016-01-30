@@ -50,4 +50,17 @@ public class FishFanServiceImpl implements FishFanService {
         }
         return result;
     }
+
+    @Override
+    public ResultData updateFishFan(FishFan fishFan) {
+        ResultData result = new ResultData();
+        ResultData update = fishFanDao.updateFishFan(fishFan);
+        result.setResponseCode(update.getResponseCode());
+        if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(update.getData());
+        } else {
+            result.setDescription(update.getDescription());
+        }
+        return result;
+    }
 }

@@ -36,10 +36,10 @@
                 fish_fan_longitude = #{longitude},
             </if>
             <if test="latitude != null and latitude != ''">
-                AND fish_fan_latitude = #{latitude},
+                fish_fan_latitude = #{latitude},
             </if>
             <if test="createAt != null and createAt != ''">
-                AND create_time = #{createAt}
+                create_time = #{createAt}
             </if>
         </set>
         WHERE 1 = 1

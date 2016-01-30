@@ -1,5 +1,6 @@
 package fishing.sunshine.service.impl;
 
+import com.gson.bean.UserInfo;
 import fishing.sunshine.service.WechatService;
 import fishing.sunshine.util.CommonValue;
 import fishing.sunshine.util.ResponseCode;
@@ -7,6 +8,7 @@ import fishing.sunshine.util.ResultData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.sword.wechat4j.token.TokenProxy;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -42,7 +44,6 @@ public class WechatServiceImpl implements WechatService {
             byte[] bytes = new byte[size];
             is.read(bytes);
             String message = new String(bytes, "UTF-8");
-            logger.debug(message);
             result.setData(message);
         } catch (Exception e) {
             logger.debug(e.getMessage());

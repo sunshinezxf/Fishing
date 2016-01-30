@@ -10,4 +10,6 @@ public interface FishFanService {
     ResultData addFishFan(FishFan fishFan);
 
     ResultData queryFishFan(FishFan fishFan);
+
+    ResultData updateFishFan(FishFan fishFan);
 }

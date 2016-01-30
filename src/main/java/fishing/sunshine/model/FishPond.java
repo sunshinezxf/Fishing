@@ -2,6 +2,7 @@ package fishing.sunshine.model;
 
 import com.alibaba.fastjson.JSONObject;
 import fishing.sunshine.form.FishPondForm;
+import fishing.sunshine.model.division.District;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class FishPond extends SunshineEntity {
     private String thumbnail;
     private String limitation;
     private Contractor contractor;
+    private District district;
     private List<PondType> pondTypes;
     private List<Fish> fishes;
 
@@ -166,6 +168,14 @@ public class FishPond extends SunshineEntity {
 
     public void setLimitation(String limitation) {
         this.limitation = limitation;
+    }
+
+    public District getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(District district) {
+        this.district = district;
     }
 
     @Override

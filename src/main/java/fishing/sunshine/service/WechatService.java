@@ -7,4 +7,5 @@ import fishing.sunshine.util.ResultData;
  */
 public interface WechatService {
     ResultData queryAccessToken(String code);
+    
 }
