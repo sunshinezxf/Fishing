@@ -3,8 +3,15 @@ package fishing.sunshine.controller;
 import com.alibaba.fastjson.JSONObject;
 import fishing.sunshine.form.FishPondForm;
 import fishing.sunshine.model.*;
+import fishing.sunshine.pagination.DataTablePage;
+import fishing.sunshine.pagination.DataTableParam;
+import fishing.sunshine.pagination.MobilePage;
+import fishing.sunshine.pagination.MobilePageParam;
 import fishing.sunshine.service.*;
-import fishing.sunshine.util.*;
+import fishing.sunshine.util.CommonValue;
+import fishing.sunshine.util.ResponseCode;
+import fishing.sunshine.util.ResultData;
+import fishing.sunshine.util.WechatConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -272,9 +279,15 @@ public class FishPondController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/index")
-    public List<FishPond> index() {
-        List<FishPond> result = new ArrayList<FishPond>();
-
+    public MobilePage<FishPond> index(MobilePageParam param) {
+        MobilePage<FishPond> result = new MobilePage<FishPond>();
+        if (StringUtils.isEmpty(param)) {
+            return result;
+        }
+        ResultData content = fishPondService.queryFishPondByPage(param);
+        if (content.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result = (MobilePage<FishPond>) content.getData();
+        }
         return result;
     }
 }

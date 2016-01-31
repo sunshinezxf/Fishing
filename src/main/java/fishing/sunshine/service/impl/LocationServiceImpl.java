@@ -3,7 +3,7 @@ package fishing.sunshine.service.impl;
 import fishing.sunshine.dao.LocationDao;
 import fishing.sunshine.model.Location;
 import fishing.sunshine.service.LocationService;
-import fishing.sunshine.util.DataTableParam;
+import fishing.sunshine.pagination.DataTableParam;
 import fishing.sunshine.util.IDGenerator;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;

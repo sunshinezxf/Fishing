@@ -2,7 +2,8 @@ package fishing.sunshine.service;
 
 import fishing.sunshine.model.FishPond;
 import fishing.sunshine.model.PondType;
-import fishing.sunshine.util.DataTableParam;
+import fishing.sunshine.pagination.DataTableParam;
+import fishing.sunshine.pagination.MobilePageParam;
 import fishing.sunshine.util.ResultData;
 
 /**
@@ -24,4 +25,6 @@ public interface FishPondService {
     ResultData updateFishPond(FishPond previous, FishPond updated);
 
     ResultData queryFishPondByPage(DataTableParam param);
+
+    ResultData queryFishPondByPage(MobilePageParam param);
 }

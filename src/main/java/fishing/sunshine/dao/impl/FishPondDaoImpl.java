@@ -3,7 +3,13 @@ package fishing.sunshine.dao.impl;
 import fishing.sunshine.dao.BaseDao;
 import fishing.sunshine.dao.FishPondDao;
 import fishing.sunshine.model.*;
-import fishing.sunshine.util.*;
+import fishing.sunshine.pagination.DataTablePage;
+import fishing.sunshine.pagination.DataTableParam;
+import fishing.sunshine.pagination.MobilePage;
+import fishing.sunshine.pagination.MobilePageParam;
+import fishing.sunshine.util.IDGenerator;
+import fishing.sunshine.util.ResponseCode;
+import fishing.sunshine.util.ResultData;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,6 +132,35 @@ public class FishPondDaoImpl extends BaseDao implements FishPondDao {
         page.setiTotalDisplayRecords(((ArrayList<PondType>) total.getData()).size());
         try {
             List<FishPond> list = sqlSession.selectList("pond.queryFishPond", pond, new RowBounds(param.getiDisplayStart(), param.getiDisplayLength()));
+            page.setData(list);
+            result.setData(page);
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        } finally {
+            return result;
+        }
+    }
+
+    @Override
+    public ResultData queryFishPondByPage(MobilePageParam param) {
+        ResultData result = new ResultData();
+        MobilePage<FishPond> page = new MobilePage<FishPond>();
+        FishPond pond = new FishPond();
+        Map args = param.getParams();
+        if (!StringUtils.isEmpty(args)) {
+
+        }
+        ResultData total = queryFishPond(pond);
+        if (total.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(total.getDescription());
+            return result;
+        }
+        page.setTotal(((List<FishPond>) total.getData()).size());
+        try {
+            List<FishPond> list = sqlSession.selectList("", pond, new RowBounds(param.getStart(), param.getLength()));
             page.setData(list);
             result.setData(page);
         } catch (Exception e) {

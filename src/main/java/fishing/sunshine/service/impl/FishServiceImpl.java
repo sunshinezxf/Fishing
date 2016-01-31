@@ -3,7 +3,7 @@ package fishing.sunshine.service.impl;
 import fishing.sunshine.dao.FishDao;
 import fishing.sunshine.model.Fish;
 import fishing.sunshine.service.FishService;
-import fishing.sunshine.util.DataTableParam;
+import fishing.sunshine.pagination.DataTableParam;
 import fishing.sunshine.util.IDGenerator;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;

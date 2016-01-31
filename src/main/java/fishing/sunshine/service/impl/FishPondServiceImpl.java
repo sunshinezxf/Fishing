@@ -6,8 +6,9 @@ import fishing.sunshine.dao.PondTypeDao;
 import fishing.sunshine.model.Contractor;
 import fishing.sunshine.model.FishPond;
 import fishing.sunshine.model.PondType;
+import fishing.sunshine.pagination.DataTableParam;
+import fishing.sunshine.pagination.MobilePageParam;
 import fishing.sunshine.service.FishPondService;
-import fishing.sunshine.util.DataTableParam;
 import fishing.sunshine.util.IDGenerator;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
@@ -159,6 +160,19 @@ public class FishPondServiceImpl implements FishPondService {
         if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
             result.setData(query.getData());
         } else {
+            result.setDescription(query.getDescription());
+        }
+        return result;
+    }
+
+    @Override
+    public ResultData queryFishPondByPage(MobilePageParam param) {
+        ResultData result = new ResultData();
+        ResultData query = fishPondDao.queryFishPondByPage(param);
+        result.setResponseCode(query.getResponseCode());
+        if (result.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(query.getData());
+        }else {
             result.setDescription(query.getDescription());
         }
         return result;

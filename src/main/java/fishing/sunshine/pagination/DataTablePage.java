@@ -1,4 +1,4 @@
-package fishing.sunshine.util;
+package fishing.sunshine.pagination;
 
 import java.util.List;
 

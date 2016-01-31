@@ -1,7 +1,7 @@
 package fishing.sunshine.dao;
 
 import fishing.sunshine.model.Fish;
-import fishing.sunshine.util.DataTableParam;
+import fishing.sunshine.pagination.DataTableParam;
 import fishing.sunshine.util.ResultData;
 
 /**

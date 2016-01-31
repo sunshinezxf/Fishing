@@ -2,8 +2,8 @@ package fishing.sunshine.controller;
 
 import fishing.sunshine.model.Location;
 import fishing.sunshine.service.LocationService;
-import fishing.sunshine.util.DataTablePage;
-import fishing.sunshine.util.DataTableParam;
+import fishing.sunshine.pagination.DataTablePage;
+import fishing.sunshine.pagination.DataTableParam;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
 import org.slf4j.Logger;

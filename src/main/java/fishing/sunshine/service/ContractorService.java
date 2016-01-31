@@ -1,7 +1,7 @@
 package fishing.sunshine.service;
 
 import fishing.sunshine.model.Contractor;
-import fishing.sunshine.util.DataTableParam;
+import fishing.sunshine.pagination.DataTableParam;
 import fishing.sunshine.util.ResultData;
 
 /**
