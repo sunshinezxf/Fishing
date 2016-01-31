@@ -22,53 +22,110 @@
     <script src="http://cdn.bootcss.com/semantic-ui/2.1.8/semantic.min.js"></script>
     <script type="text/javascript" src="${path.concat('/material/js/date.js')}"></script>
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <title>搜索页面</title>
+    <title>搜索钓场</title>
+    <c:if test="${not empty configuration}">
+        <script type="text/javascript">
+            wx.config({
+                debug: false,
+                appId: '${appId}',
+                timestamp: '${configuration.timestamp}',
+                nonceStr: '${configuration.nonceStr}',
+                signature: '${configuration.signature}',
+                jsApiList: [
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage'
+                ]
+            });
+
+            // 2. 分享接口
+            // 2.1 监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
+            wx.ready(function () {
+                wx.onMenuShareAppMessage({
+                    title: '${fishPond.fishPondName}', // 分享标题
+                    desc: '${fishPond.fishPondAddress}', // 分享描述
+                    link: '${configuration.shareLink}', // 分享链接
+                    imgUrl: '', // 分享图标
+                    type: '', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+
+                    },
+                    cancel: function () {
+
+                    }
+                });
+                // 2.2 监听“分享到朋友圈”按钮点击、自定义分享内容及分享结果接口
+                wx.onMenuShareTimeline({
+                    title: '搜索页面',
+                    link: '${configuration.shareLink}',
+                    imgUrl: '',
+                    trigger: function (res) {
+                    },
+                    success: function (res) {
+
+                    },
+                    cancel: function (res) {
+
+                    },
+                    fail: function (res) {
+
+                    }
+                });
+            });
+        </script>
+    </c:if>
 </head>
 <body>
 <div class="container-fluid">
-    <div class="ui relaxed divided list">
-        <div class="item">
-            <img class="ui image img-rounded" height="50px" width="50px"
-                 src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg"/>
-
-            <div class="content">
+    <ul class="ui relaxed divided list media-list">
+        <li class="item media">
+            <div class="media-left">
+                <img class="media-object img-rounded" height="55px" width="55px"
+                     src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg"/>
+            </div>
+            <div class="media-body">
                 <a class="header">
                     禄口晨虹钓场
                 </a>
 
                 <div class="description">
-                    <div style="margin-bottom: 0.2em">
+                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
                         <span class="label label-info">鲫鱼</span>
                         <span class="label label-info">鲫鱼</span>
                         <span class="label label-info">鲫鱼</span>
-                        <span style="margin-left: 2.3em">1.2km</span>
                     </div>
-
-                    <p>南京市鼓楼区</p>
+                    <label>南京市鼓楼区</label>
                 </div>
             </div>
-        </div>
-        <div class="item">
-            <img class="ui image img-rounded" height="50px" width="50px"
-                 src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg"/>
-
-            <div class="content">
+            <div class="media-right">
+                <span>1.2km</span>
+            </div>
+        </li>
+        <li class="item media">
+            <div class="media-left">
+                <img class="media-object img-rounded" height="55px" width="55px"
+                     src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg"/>
+            </div>
+            <div class="media-body">
                 <a class="header">
                     禄口晨虹钓场
                 </a>
 
                 <div class="description">
-                    <div style="margin-bottom: 0.2em">
+                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
                         <span class="label label-info">鲫鱼</span>
                         <span class="label label-info">鲫鱼</span>
                         <span class="label label-info">鲫鱼</span>
-                        <span style="margin-left: 2.3em">1.2km</span>
                     </div>
-                    <p>南京市鼓楼区</p>
+                    <label>南京市鼓楼区</label>
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="media-right">
+                <span>1.2km</span>
+            </div>
+        </li>
+    </ul>
+    <p>钓粉: ${fishFan.fishFanId},经度:${fishFan.longitude}, 纬度:${fishFan.latitude}</p>
 </div>
 </body>
 </html>

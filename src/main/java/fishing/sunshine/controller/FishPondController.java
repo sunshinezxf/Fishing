@@ -151,13 +151,11 @@ public class FishPondController {
                 String shareLink = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CommonValue.WECHAT_APPID + "&redirect_uri=" + URLEncoder.encode(url, "utf-8") + "&response_type=code&scope=snsapi_base&state=view#wechat_redirect";
                 Configuration configuration = WechatConfig.config(configLink);
                 configuration.setShareLink(shareLink);
-                logger.debug(JSONObject.toJSONString(configuration));
                 view.addObject("configuration", configuration);
                 ResultData accessToken = wechatService.queryAccessToken(code);
                 if (accessToken.getResponseCode() == ResponseCode.RESPONSE_OK) {
                     JSONObject json = JSONObject.parseObject((String) accessToken.getData());
                     String openId = json.getString("openid");
-                    logger.debug("openId: " + openId);
                     view.addObject("openId", openId);
                 }
             } catch (Exception e) {
@@ -273,6 +271,7 @@ public class FishPondController {
                 logger.debug(e.getMessage());
             }
         }
+        view.addObject("appId", CommonValue.WECHAT_APPID);
         view.setViewName("/client/fish_pond/index");
         return view;
     }

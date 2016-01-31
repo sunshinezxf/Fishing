@@ -28,7 +28,7 @@
     <c:if test="${not empty configuration}">
         <script type="text/javascript">
             wx.config({
-                debug: false,
+                debug: true,
                 appId: '${appId}',
                 timestamp: '${configuration.timestamp}',
                 nonceStr: '${configuration.nonceStr}',
@@ -43,8 +43,8 @@
             // 2.1 监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
             wx.ready(function () {
                 wx.onMenuShareAppMessage({
-                    title: '${fishPond.fishPondName}', // 分享标题
-                    desc: '${fishPond.fishPondAddress}', // 分享描述
+                    title: '搜索钓场', // 分享标题
+                    desc: '钓场搜索页面', // 分享描述
                     link: '${configuration.shareLink}', // 分享链接
                     imgUrl: '', // 分享图标
                     type: '', // 分享类型,music、video或link，不填默认为link
@@ -58,7 +58,7 @@
                 });
                 // 2.2 监听“分享到朋友圈”按钮点击、自定义分享内容及分享结果接口
                 wx.onMenuShareTimeline({
-                    title: '${fishPond.fishPondName}',
+                    title: '搜索钓场',
                     link: '${configuration.shareLink}',
                     imgUrl: '',
                     trigger: function (res) {
