@@ -22,6 +22,8 @@
     <script src="http://cdn.bootcss.com/semantic-ui/2.1.8/semantic.min.js"></script>
     <script type="text/javascript" src="${path.concat('/material/js/date.js')}"></script>
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script charset="utf-8"
+            src="http://map.qq.com/api/js?v=2.exp&libraries=geometry&key=6GEBZ-AL5CV-Y4WPU-U7TKP-HAEB3-4ABX3"></script>
     <title>搜索钓场</title>
     <c:if test="${not empty configuration}">
         <script type="text/javascript">
@@ -74,6 +76,14 @@
             });
         </script>
     </c:if>
+    <script type="text/javascript">
+        function distance(longitude, latitude) {
+            var from = new qq.maps.LatLng(30.93, 116.35421264);
+            var to = new qq.maps.LatLng(latitude, longitude);
+            var distance = (qq.maps.geometry.spherical.computeDistanceBetween(from, to) / 1000).toFixed(1);
+            return distance;
+        }
+    </script>
 </head>
 <body>
 <div class="container-fluid">
@@ -121,7 +131,7 @@
                 </div>
             </div>
             <div class="media-right">
-                <span>1.2km</span>
+                <span id="distance"><script type="text/javascript">distance(116.353454, 39.996059)</script></span>
             </div>
         </li>
     </ul>
