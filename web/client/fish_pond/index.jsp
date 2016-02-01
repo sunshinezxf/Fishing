@@ -15,11 +15,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="http://cdn.bootcss.com/semantic-ui/2.1.8/semantic.min.css"/>
+    <link rel="stylesheet" href="${path.concat('/material/plugins/dropload/dropload.css')}"/>
+    <link rel="stylesheet" href="${path.concat('/material/css/mobilepage.css')}"/>
     <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript"
             src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="http://cdn.bootcss.com/semantic-ui/2.1.8/semantic.min.js"></script>
+    <script type="text/javascript" src="${path.concat('/material/plugins/dropload/dropload.min.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/date.js')}"></script>
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script charset="utf-8"
@@ -94,19 +95,16 @@
     </script>
 </head>
 <body>
-<div class="container-fluid">
-    <ul id="fish-pond-list" class="ui relaxed divided list media-list" style="margin-left: 0;">
-        <li class="item media" style="margin-top: 0em">
-            <div class="media-left">
-                <img class="media-object img-rounded" height="55px" width="55px"
-                     src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg"/>
-            </div>
-            <div class="media-body" style="width: auto">
-                <a class="header">
-                    禄口晨虹钓场
-                </a>
+<div class="content">
+    <div class="lists">
+        <a class="item" href="">
+            <div class="media">
+                <div class="media-left">
+                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
+                </div>
+                <div class="media-body">
+                    <h3>禄口晨虹钓场</h3>
 
-                <div class="description">
                     <div style="margin-top: 0.2em; margin-bottom: 0.3em">
                         <span class="label label-info">鲫鱼</span>
                         <span class="label label-info">鲫鱼</span>
@@ -114,23 +112,19 @@
                     </div>
                     <label>南京市鼓楼区</label>
                 </div>
+                <div class="media-right">
+                    <span class="date">距离约200km</span>
+                </div>
             </div>
-            <div class="media-right">
-                <span>约1.2km</span>
-            </div>
-        </li>
+        </a>
+        <a class="item" href="">
+            <div class="media">
+                <div class="media-left">
+                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
+                </div>
+                <div class="media-body">
+                    <h3>禄口晨虹钓场</h3>
 
-        <li class="item media" style="margin-top: 0em">
-            <div class="media-left">
-                <img class="media-object img-rounded" height="55px" width="55px"
-                     src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg"/>
-            </div>
-            <div class="media-body" style="width: auto">
-                <a class="header">
-                    禄口晨虹钓场
-                </a>
-
-                <div class="description">
                     <div style="margin-top: 0.2em; margin-bottom: 0.3em">
                         <span class="label label-info">鲫鱼</span>
                         <span class="label label-info">鲫鱼</span>
@@ -138,69 +132,201 @@
                     </div>
                     <label>南京市鼓楼区</label>
                 </div>
+                <div class="media-right">
+                    <span class="date">距离约200km</span>
+                </div>
             </div>
-            <div class="media-right">
-                <span>约1.2km</span>
+        </a>
+        <a class="item" href="">
+            <div class="media">
+                <div class="media-left">
+                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
+                </div>
+                <div class="media-body">
+                    <h3>禄口晨虹钓场</h3>
+
+                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
+                        <span class="label label-info">鲫鱼</span>
+                        <span class="label label-info">鲫鱼</span>
+                        <span class="label label-info">鲫鱼</span>
+                    </div>
+                    <label>南京市鼓楼区</label>
+                </div>
+                <div class="media-right">
+                    <span class="date">距离约200km</span>
+                </div>
             </div>
-        </li>
-    </ul>
-    <p>钓粉: ${fishFan.fishFanId},经度:${fishFan.longitude}, 纬度:${fishFan.latitude}</p>
+        </a>
+        <a class="item" href="">
+            <div class="media">
+                <div class="media-left">
+                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
+                </div>
+                <div class="media-body">
+                    <h3>禄口晨虹钓场</h3>
+
+                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
+                        <span class="label label-info">鲫鱼</span>
+                        <span class="label label-info">鲫鱼</span>
+                        <span class="label label-info">鲫鱼</span>
+                    </div>
+                    <label>南京市鼓楼区</label>
+                </div>
+                <div class="media-right">
+                    <span class="date">距离约200km</span>
+                </div>
+            </div>
+        </a>
+        <a class="item" href="">
+            <div class="media">
+                <div class="media-left">
+                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
+                </div>
+                <div class="media-body">
+                    <h3>禄口晨虹钓场</h3>
+
+                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
+                        <span class="label label-info">鲫鱼</span>
+                        <span class="label label-info">鲫鱼</span>
+                        <span class="label label-info">鲫鱼</span>
+                    </div>
+                    <label>南京市鼓楼区</label>
+                </div>
+                <div class="media-right">
+                    <span class="date">距离约200km</span>
+                </div>
+            </div>
+        </a>
+        <a class="item" href="">
+            <div class="media">
+                <div class="media-left">
+                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
+                </div>
+                <div class="media-body">
+                    <h3>禄口晨虹钓场</h3>
+
+                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
+                        <span class="label label-info">鲫鱼</span>
+                        <span class="label label-info">鲫鱼</span>
+                        <span class="label label-info">鲫鱼</span>
+                    </div>
+                    <label>南京市鼓楼区</label>
+                </div>
+                <div class="media-right">
+                    <span class="date">距离约200km</span>
+                </div>
+            </div>
+        </a>
+        <a class="item" href="">
+            <div class="media">
+                <div class="media-left">
+                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
+                </div>
+                <div class="media-body">
+                    <h3>禄口晨虹钓场</h3>
+
+                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
+                        <span class="label label-info">鲫鱼</span>
+                        <span class="label label-info">鲫鱼</span>
+                        <span class="label label-info">鲫鱼</span>
+                    </div>
+                    <label>南京市鼓楼区</label>
+                </div>
+                <div class="media-right">
+                    <span class="date">距离约200km</span>
+                </div>
+            </div>
+        </a>
+        <a class="item" href="">
+            <div class="media">
+                <div class="media-left">
+                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
+                </div>
+                <div class="media-body">
+                    <h3>禄口晨虹钓场</h3>
+
+                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
+                        <span class="label label-info">鲫鱼</span>
+                        <span class="label label-info">鲫鱼</span>
+                        <span class="label label-info">鲫鱼</span>
+                    </div>
+                    <label>南京市鼓楼区</label>
+                </div>
+                <div class="media-right">
+                    <span class="date">距离约200km</span>
+                </div>
+            </div>
+        </a>
+        <a class="item" href="">
+            <div class="media">
+                <div class="media-left">
+                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
+                </div>
+                <div class="media-body">
+                    <h3>禄口晨虹钓场</h3>
+
+                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
+                        <span class="label label-info">鲫鱼</span>
+                        <span class="label label-info">鲫鱼</span>
+                        <span class="label label-info">鲫鱼</span>
+                    </div>
+                    <label>南京市鼓楼区</label>
+                </div>
+                <div class="media-right">
+                    <span class="date">距离约200km</span>
+                </div>
+            </div>
+        </a>
+    </div>
 </div>
 </body>
 <script>
-    var page = 0;
-    var PAGESIZE =20;
-    var hasMoreData = false;
-    var address="${address}";
-    var wechat= "${openId}"
-    $('.inner').dropload({
-        domDown: {
-            domClass: 'dropload-down',
-            domRefresh: '<div class="dropload-refresh">↑上拉加载更多</div>',
-            domUpdate: '<div class="dropload-update">↓释放加载</div>',
-            domLoad: '<div class="dropload-load"><span class="loading"></span>加载中...</div>'
-        },
-        loadDownFn: function (me) {
-            page++;
-            $.ajax({
-                type: 'GET',
-                url: '${u.url('/place/place_listJson.do')}?page=' + page+'&address='+address,
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data)
-                    var result = '';
-                    var li;
-                    if (data.length < PAGESIZE) {
-                        hasMoreData = false;
-                        $(".dropload-load").hide();
-                    } else {
-                        hasMoreData = true;
-                        $(".dropload-load").show();
-                    }
-                    for (var i = 0; i < data.length; i++) {
-                        li = document.createElement('li');
-                        li.setAttribute('class', 'media item opacity');
-                        li.setAttribute('onclick', 'location.href=\'${u.url('/place/detail.do?id=')}&wechat=' + wechat + data[i].id + '\'');
-                        var list = $('.lists').innerHTML;
-                        list = '<div class="media-left list_img"><img class="media-object" src="${u.url('/')}' + data[i].image + '"/></div>';
-                        list = list + '<ul class="media-body"><li class="intro_head"><label class="media-heading list_title">' + data[i].title + '</label>';
-                        list = list + '<label class="list_price">￥' + data[i].price + '/<span class="list_m">m²</span></label></li>'
-                        list = list + '<li><label class="list_intro">' + data[i].remark + '</label></li>';
-                        list = list + '<li class="intro_bottom"><label class="list_home">住宅&nbsp;' + data[i].acreage + '</label></li>';
-                        list = list + '<li class="intro_bottom"><label class="list_add">' + data[i].address + '</label></li>';;
-                        list = list + '</ul>'
-                        li.innerHTML = list;
-                        $('.lists').append(li);
+    $(function () {
+        var counter = 0;
+        var num = 8;
+        var pageStart = 0, pageEnd = 0;
+        // dropload
+        $('.content').dropload({
+            scrollArea: window,
+            loadDownFn: function (me) {
+                $.ajax({
+                    type: 'POST',
+                    url: "${path.concat('/fishzone/index')}",
+                    data: {start: pageStart, length: num},
+                    dataType: 'json',
+                    success: function (result) {
+                        var result = '';
+                        counter++;
+                        pageEnd = num * counter;
+                        pageStart = pageEnd - num;
+                        for (var i = pageStart; i < pageEnd; i++) {
+                            result += '<a class="item opacity" href="' + result.data[i] + '">'
+                                    + '<img src="' + result.data[i].pic + '" alt="">'
+                                    + '<h3>' + result.data[i] + '</h3>'
+                                    + '<span class="date">' + result.data[i] + '</span>'
+                                    + '</a>';
+                            if ((i + 1) >= result.data.length) {
+                                // 锁定
+                                me.lock();
+                                // 无数据
+                                me.noData();
+                                break;
+                            }
+                        }
+                        // 为了测试，延迟1秒加载
+                        setTimeout(function () {
+                            $('.lists').append(result);
+                            // 每次数据加载完，必须重置
+                            me.resetload();
+                        }, 1000);
+                    },
+                    error: function (xhr, type) {
+                        // 即使加载出错，也得重置
                         me.resetload();
-                        toSize();
                     }
-                },
-                error: function (xhr, type) {
-                    me.resetload();
-                }
-            });
-        }
+                });
+            }
+        });
     });
 </script>
-
 </html>
