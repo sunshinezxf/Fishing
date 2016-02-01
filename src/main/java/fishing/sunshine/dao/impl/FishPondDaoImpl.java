@@ -160,7 +160,7 @@ public class FishPondDaoImpl extends BaseDao implements FishPondDao {
         }
         page.setTotal(((List<FishPond>) total.getData()).size());
         try {
-            List<FishPond> list = sqlSession.selectList("", pond, new RowBounds(param.getStart(), param.getLength()));
+            List<FishPond> list = sqlSession.selectList("pond.queryFishPond", pond, new RowBounds(param.getStart(), param.getLength()));
             page.setData(list);
             result.setData(page);
         } catch (Exception e) {

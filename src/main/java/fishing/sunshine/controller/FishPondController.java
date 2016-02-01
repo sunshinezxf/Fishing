@@ -280,13 +280,13 @@ public class FishPondController {
     @RequestMapping(method = RequestMethod.POST, value = "/index")
     public MobilePage<FishPond> index(MobilePageParam param) {
         MobilePage<FishPond> result = new MobilePage<FishPond>();
-        logger.debug(JSONObject.toJSONString(param));
         if (StringUtils.isEmpty(param)) {
             return result;
         }
         ResultData content = fishPondService.queryFishPondByPage(param);
         if (content.getResponseCode() == ResponseCode.RESPONSE_OK) {
             result = (MobilePage<FishPond>) content.getData();
+
         }
         return result;
     }

@@ -80,11 +80,12 @@
     <script type="text/javascript">
         function distance(longitude, latitude) {
             var from, to;
+            console.debug("longitude: " + longitude + ", latitude: " + latitude);
             to = new qq.maps.LatLng(latitude, longitude);
             if (${fishFan != null && fishFan.longitude != null && fishFan.latitude != null}) {
                 from = new qq.maps.LatLng("${fishFan.latitude}", "${fishFan.longitude}");
                 var distance = (qq.maps.geometry.spherical.computeDistanceBetween(from, to) / 1000).toFixed(1);
-                return distance;
+                return "距离约" + distance + "km";
             } else {
                 return "";
             }
@@ -97,186 +98,6 @@
 <body>
 <div class="content">
     <div class="lists">
-        <a class="item" href="">
-            <div class="media">
-                <div class="media-left">
-                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
-                </div>
-                <div class="media-body">
-                    <h3>禄口晨虹钓场</h3>
-
-                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                    </div>
-                    <label>南京市鼓楼区</label>
-                </div>
-                <div class="media-right">
-                    <span class="date">距离约200km</span>
-                </div>
-            </div>
-        </a>
-        <a class="item" href="">
-            <div class="media">
-                <div class="media-left">
-                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
-                </div>
-                <div class="media-body">
-                    <h3>禄口晨虹钓场</h3>
-
-                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                    </div>
-                    <label>南京市鼓楼区</label>
-                </div>
-                <div class="media-right">
-                    <span class="date">距离约200km</span>
-                </div>
-            </div>
-        </a>
-        <a class="item" href="">
-            <div class="media">
-                <div class="media-left">
-                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
-                </div>
-                <div class="media-body">
-                    <h3>禄口晨虹钓场</h3>
-
-                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                    </div>
-                    <label>南京市鼓楼区</label>
-                </div>
-                <div class="media-right">
-                    <span class="date">距离约200km</span>
-                </div>
-            </div>
-        </a>
-        <a class="item" href="">
-            <div class="media">
-                <div class="media-left">
-                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
-                </div>
-                <div class="media-body">
-                    <h3>禄口晨虹钓场</h3>
-
-                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                    </div>
-                    <label>南京市鼓楼区</label>
-                </div>
-                <div class="media-right">
-                    <span class="date">距离约200km</span>
-                </div>
-            </div>
-        </a>
-        <a class="item" href="">
-            <div class="media">
-                <div class="media-left">
-                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
-                </div>
-                <div class="media-body">
-                    <h3>禄口晨虹钓场</h3>
-
-                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                    </div>
-                    <label>南京市鼓楼区</label>
-                </div>
-                <div class="media-right">
-                    <span class="date">距离约200km</span>
-                </div>
-            </div>
-        </a>
-        <a class="item" href="">
-            <div class="media">
-                <div class="media-left">
-                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
-                </div>
-                <div class="media-body">
-                    <h3>禄口晨虹钓场</h3>
-
-                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                    </div>
-                    <label>南京市鼓楼区</label>
-                </div>
-                <div class="media-right">
-                    <span class="date">距离约200km</span>
-                </div>
-            </div>
-        </a>
-        <a class="item" href="">
-            <div class="media">
-                <div class="media-left">
-                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
-                </div>
-                <div class="media-body">
-                    <h3>禄口晨虹钓场</h3>
-
-                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                    </div>
-                    <label>南京市鼓楼区</label>
-                </div>
-                <div class="media-right">
-                    <span class="date">距离约200km</span>
-                </div>
-            </div>
-        </a>
-        <a class="item" href="">
-            <div class="media">
-                <div class="media-left">
-                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
-                </div>
-                <div class="media-body">
-                    <h3>禄口晨虹钓场</h3>
-
-                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                    </div>
-                    <label>南京市鼓楼区</label>
-                </div>
-                <div class="media-right">
-                    <span class="date">距离约200km</span>
-                </div>
-            </div>
-        </a>
-        <a class="item" href="">
-            <div class="media">
-                <div class="media-left">
-                    <img class="img-rounded" src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg">
-                </div>
-                <div class="media-body">
-                    <h3>禄口晨虹钓场</h3>
-
-                    <div style="margin-top: 0.2em; margin-bottom: 0.3em">
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                        <span class="label label-info">鲫鱼</span>
-                    </div>
-                    <label>南京市鼓楼区</label>
-                </div>
-                <div class="media-right">
-                    <span class="date">距离约200km</span>
-                </div>
-            </div>
-        </a>
     </div>
 </div>
 </body>
@@ -295,17 +116,36 @@
                     data: {start: pageStart, length: num},
                     dataType: 'json',
                     success: function (result) {
-                        var result = '';
+                        var content = '';
+                        var length = result.data.length;
+                        var data = result.data;
                         counter++;
                         pageEnd = num * counter;
                         pageStart = pageEnd - num;
-                        for (var i = pageStart; i < pageEnd; i++) {
-                            result += '<a class="item opacity" href="' + result.data[i] + '">'
-                                    + '<img src="' + result.data[i].pic + '" alt="">'
-                                    + '<h3>' + result.data[i] + '</h3>'
-                                    + '<span class="date">' + result.data[i] + '</span>'
+                        for (var i = 0; i < length; i++) {
+                            var url = "http://www.njuat.com/fishzone/" + data[i].fishPondId;
+                            content += "<a class='item opacity' href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=" + encodeURIComponent(url) + "&response_type=code&scope=snsapi_base&state=view#wechat_redirect'>"
+                                    + "<div class='media'>"
+                                    + "<div class='media-left'>"
+                                    + "<img class='img-rounded' src='${path}" + data[i].thumbnail + "' />"
+                                    + "</div>"
+                                    + "<div class='media-body'>"
+                                    + "<h3>" + data[i].fishPondName + "</h3>"
+                                    + "<div style='margin-top: 0.2em; margin-bottom: 0.3em'>";
+                            var fishes = data[i].fishes;
+                            for (var f = 0; f < fishes.length; f++) {
+                                content += "<span class='label label-info'>" + fishes[f].fishName + "</span>"
+                            }
+                            content += "</div>"
+                                    + "<label>南京市鼓楼区</label>"
+                                    + "</div>"
+                                    + "<div class='media-right'>"
+                                    + "<span class='date'>" + distance(data[i].longitude, data[i].latitude) + "</span>"
+                                    + "</div>"
+                                    + '</div>'
                                     + '</a>';
-                            if ((i + 1) >= result.data.length) {
+                            var next = (i + 1);
+                            if (next >= length) {
                                 // 锁定
                                 me.lock();
                                 // 无数据
@@ -315,10 +155,10 @@
                         }
                         // 为了测试，延迟1秒加载
                         setTimeout(function () {
-                            $('.lists').append(result);
+                            $('.lists').append(content);
                             // 每次数据加载完，必须重置
                             me.resetload();
-                        }, 1000);
+                        }, 500);
                     },
                     error: function (xhr, type) {
                         // 即使加载出错，也得重置
