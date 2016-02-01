@@ -43,8 +43,8 @@
             // 2.1 监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
             wx.ready(function () {
                 wx.onMenuShareAppMessage({
-                    title: '${fishPond.fishPondName}', // 分享标题
-                    desc: '${fishPond.fishPondAddress}', // 分享描述
+                    title: '搜索页面', // 分享标题
+                    desc: '欢迎使用南京钓场搜索', // 分享描述
                     link: '${configuration.shareLink}', // 分享链接
                     imgUrl: '', // 分享图标
                     type: '', // 分享类型,music、video或link，不填默认为link
@@ -78,22 +78,30 @@
     </c:if>
     <script type="text/javascript">
         function distance(longitude, latitude) {
-            var from = new qq.maps.LatLng(30.93, 116.35421264);
-            var to = new qq.maps.LatLng(latitude, longitude);
-            var distance = (qq.maps.geometry.spherical.computeDistanceBetween(from, to) / 1000).toFixed(1);
-            return distance;
+            var from, to;
+            to = new qq.maps.LatLng(latitude, longitude);
+            if (${fishFan != null && fishFan.longitude != null && fishFan.latitude != null}) {
+                from = new qq.maps.LatLng("${fishFan.latitude}", "${fishFan.longitude}");
+                var distance = (qq.maps.geometry.spherical.computeDistanceBetween(from, to) / 1000).toFixed(1);
+                return distance;
+            } else {
+                return "";
+            }
         }
+        $(document).ready(function () {
+
+        });
     </script>
 </head>
 <body>
 <div class="container-fluid">
-    <ul class="ui relaxed divided list media-list">
-        <li class="item media">
+    <ul id="fish-pond-list" class="ui relaxed divided list media-list" style="margin-left: 0;">
+        <li class="item media" style="margin-top: 0em">
             <div class="media-left">
                 <img class="media-object img-rounded" height="55px" width="55px"
                      src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg"/>
             </div>
-            <div class="media-body">
+            <div class="media-body" style="width: auto">
                 <a class="header">
                     禄口晨虹钓场
                 </a>
@@ -108,15 +116,16 @@
                 </div>
             </div>
             <div class="media-right">
-                <span>1.2km</span>
+                <span>约1.2km</span>
             </div>
         </li>
-        <li class="item media">
+
+        <li class="item media" style="margin-top: 0em">
             <div class="media-left">
                 <img class="media-object img-rounded" height="55px" width="55px"
                      src="http://www.njuat.com/material/upload/20151210/THelfflr82.jpg"/>
             </div>
-            <div class="media-body">
+            <div class="media-body" style="width: auto">
                 <a class="header">
                     禄口晨虹钓场
                 </a>
@@ -131,11 +140,67 @@
                 </div>
             </div>
             <div class="media-right">
-                <span id="distance"><script type="text/javascript">distance(116.353454, 39.996059)</script></span>
+                <span>约1.2km</span>
             </div>
         </li>
     </ul>
     <p>钓粉: ${fishFan.fishFanId},经度:${fishFan.longitude}, 纬度:${fishFan.latitude}</p>
 </div>
 </body>
+<script>
+    var page = 0;
+    var PAGESIZE =20;
+    var hasMoreData = false;
+    var address="${address}";
+    var wechat= "${openId}"
+    $('.inner').dropload({
+        domDown: {
+            domClass: 'dropload-down',
+            domRefresh: '<div class="dropload-refresh">↑上拉加载更多</div>',
+            domUpdate: '<div class="dropload-update">↓释放加载</div>',
+            domLoad: '<div class="dropload-load"><span class="loading"></span>加载中...</div>'
+        },
+        loadDownFn: function (me) {
+            page++;
+            $.ajax({
+                type: 'GET',
+                url: '${u.url('/place/place_listJson.do')}?page=' + page+'&address='+address,
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+                    var result = '';
+                    var li;
+                    if (data.length < PAGESIZE) {
+                        hasMoreData = false;
+                        $(".dropload-load").hide();
+                    } else {
+                        hasMoreData = true;
+                        $(".dropload-load").show();
+                    }
+                    for (var i = 0; i < data.length; i++) {
+                        li = document.createElement('li');
+                        li.setAttribute('class', 'media item opacity');
+                        li.setAttribute('onclick', 'location.href=\'${u.url('/place/detail.do?id=')}&wechat=' + wechat + data[i].id + '\'');
+                        var list = $('.lists').innerHTML;
+                        list = '<div class="media-left list_img"><img class="media-object" src="${u.url('/')}' + data[i].image + '"/></div>';
+                        list = list + '<ul class="media-body"><li class="intro_head"><label class="media-heading list_title">' + data[i].title + '</label>';
+                        list = list + '<label class="list_price">￥' + data[i].price + '/<span class="list_m">m²</span></label></li>'
+                        list = list + '<li><label class="list_intro">' + data[i].remark + '</label></li>';
+                        list = list + '<li class="intro_bottom"><label class="list_home">住宅&nbsp;' + data[i].acreage + '</label></li>';
+                        list = list + '<li class="intro_bottom"><label class="list_add">' + data[i].address + '</label></li>';;
+                        list = list + '</ul>'
+                        li.innerHTML = list;
+                        $('.lists').append(li);
+                        me.resetload();
+                        toSize();
+                    }
+                },
+                error: function (xhr, type) {
+                    me.resetload();
+                }
+            });
+        }
+    });
+</script>
+
 </html>
