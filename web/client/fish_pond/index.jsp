@@ -80,12 +80,11 @@
     <script type="text/javascript">
         function distance(longitude, latitude) {
             var from, to;
-            console.debug("longitude: " + longitude + ", latitude: " + latitude);
             to = new qq.maps.LatLng(latitude, longitude);
             if (${fishFan != null && fishFan.longitude != null && fishFan.latitude != null}) {
                 from = new qq.maps.LatLng("${fishFan.latitude}", "${fishFan.longitude}");
                 var distance = (qq.maps.geometry.spherical.computeDistanceBetween(from, to) / 1000).toFixed(1);
-                return "距离约" + distance + "km";
+                return "距离约: " + distance + "km";
             } else {
                 return "";
             }
@@ -117,11 +116,12 @@
                     dataType: 'json',
                     success: function (result) {
                         var content = '';
+                        var total = result.total;
                         var length = result.data.length;
                         var data = result.data;
                         counter++;
                         pageEnd = num * counter;
-                        pageStart = pageEnd - num;
+                        pageStart = pageEnd;
                         for (var i = 0; i < length; i++) {
                             var url = "http://www.njuat.com/fishzone/" + data[i].fishPondId;
                             content += "<a class='item opacity' href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=" + encodeURIComponent(url) + "&response_type=code&scope=snsapi_base&state=view#wechat_redirect'>"
@@ -134,7 +134,7 @@
                                     + "<div style='margin-top: 0.2em; margin-bottom: 0.3em'>";
                             var fishes = data[i].fishes;
                             for (var f = 0; f < fishes.length; f++) {
-                                content += "<span class='label label-info'>" + fishes[f].fishName + "</span>"
+                                content += "<span class='label label-info'>" + fishes[f].fishName + "</span> "
                             }
                             content += "</div>"
                                     + "<label>南京市鼓楼区</label>"
@@ -144,8 +144,7 @@
                                     + "</div>"
                                     + '</div>'
                                     + '</a>';
-                            var next = (i + 1);
-                            if (next >= length) {
+                            if ((counter - 1) * num + i + 1 >= total) {
                                 // 锁定
                                 me.lock();
                                 // 无数据
