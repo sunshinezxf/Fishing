@@ -10,9 +10,7 @@ import fishing.sunshine.util.ResultData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,7 +26,7 @@ public class DivisionController {
     private DivisionService divisionService;
 
     @ResponseBody
-    @RequestMapping("/create")
+    @RequestMapping(method = RequestMethod.POST, value = "/create")
     public ResultData createDivision(DivisionForm divisionForm) {
         ResultData result = new ResultData();
         ResultData exist;
@@ -77,6 +75,60 @@ public class DivisionController {
             return result;
         }
         result.setData(district);
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, value = "/province")
+    public ResultData queryProvince() {
+        ResultData result = new ResultData();
+        Province province = new Province();
+        ResultData query = divisionService.queryProvince(province);
+        if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(query.getData());
+        } else if (query.getResponseCode() == ResponseCode.RESPONSE_NULL) {
+            result.setResponseCode(ResponseCode.RESPONSE_NULL);
+        } else {
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, value = "/{provinceId}/city")
+    public ResultData queryCity(@PathVariable("provinceId") String provinceId) {
+        ResultData result = new ResultData();
+        Province province = new Province();
+        province.setProvinceId(provinceId);
+        City city = new City();
+        city.setProvince(province);
+        ResultData query = divisionService.queryCity(city);
+        if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(query.getData());
+        } else if (query.getResponseCode() == ResponseCode.RESPONSE_NULL) {
+            result.setResponseCode(ResponseCode.RESPONSE_NULL);
+        } else {
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.GET, value = "/{cityId}/district")
+    public ResultData queryDistrict(@PathVariable("cityId") String cityId) {
+        ResultData result = new ResultData();
+        City city = new City();
+        city.setCityId(cityId);
+        District district = new District();
+        district.setCity(city);
+        ResultData query = divisionService.queryDistrict(district);
+        if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(query.getData());
+        } else if (query.getResponseCode() == ResponseCode.RESPONSE_NULL) {
+            result.setResponseCode(ResponseCode.RESPONSE_NULL);
+        } else {
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+        }
         return result;
     }
 }

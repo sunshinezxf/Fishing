@@ -14,11 +14,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="${path.concat('/material/css/navigate.css')}"/>
     <link rel="stylesheet" href="${path.concat('/material/plugins/dropload/dropload.css')}"/>
     <link rel="stylesheet" href="${path.concat('/material/css/mobilepage.css')}"/>
     <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript"
             src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${path.concat('/material/js/navigate.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/plugins/dropload/dropload.min.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/date.js')}"></script>
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -88,14 +90,163 @@
                 return "";
             }
         }
-        $(document).ready(function () {
 
+        function init_district_list(obj) {
+            hidedistrict();
+            var require_district_url = "${path.concat('/division/')}" + obj + "/district";
+            $.get(require_district_url, function (result) {
+                var district_container = $(".region-district");
+                district_container.empty();
+                if (result.responseCode == "RESPONSE_OK") {
+                    var data = result.data;
+                    var district = document.createElement("li");
+                    district.innerHTML = "全市";
+                    district_container.append(district);
+                    for (var i = 0; i < data.length; i++) {
+                        var district = document.createElement("li");
+                        district.innerHTML = data[i].districtName;
+                        district_container.append(district);
+                    }
+                }
+                showdistrict();
+            });
+
+        }
+
+        function init_city_list(obj) {
+            hidecity();
+            var require_city_url = "${path.concat('/division/')}" + obj + "/city";
+            $.get(require_city_url, function (result) {
+                var city_container = $(".region-city");
+                city_container.empty();
+                if (result.responseCode == "RESPONSE_OK") {
+                    var data = result.data;
+                    var city = document.createElement("li");
+                    city.innerHTML = "全省";
+                    city_container.append(city);
+                    for (var i = 0; i < data.length; i++) {
+                        var city = document.createElement("li");
+                        city.setAttribute("onclick", "init_district_list('" + data[i].cityId + "')");
+                        city.innerHTML = data[i].cityName;
+                        city_container.append(city);
+                    }
+                }
+                showcity();
+            });
+        }
+
+        $(document).ready(function () {
+            var province_container = $(".region-province");
+            province_container.empty();
+            var require_province_url = "${path.concat('/division/province')}";
+            $.get(require_province_url, function (result) {
+                if (result.responseCode == "RESPONSE_OK") {
+                    var data = result.data;
+                    var province = document.createElement("li");
+                    province.innerHTML = "所有地区";
+                    province_container.append(province);
+                    for (var i = 0; i < data.length; i++) {
+                        var province = document.createElement("li");
+                        province.setAttribute("onclick", "init_city_list('" + data[i].provinceId + "')");
+                        province.innerHTML = data[i].provinceName;
+                        province_container.append(province);
+                    }
+                }
+            });
+            var pond_container = $(".pond-type");
+            pond_container.empty();
+            var require_pond_url = "${path.concat('/zonetype/list')}";
+            $.get(require_pond_url, function (result) {
+                if (result.responseCode == "RESPONSE_OK") {
+                    var data = result.data;
+                    var pond = document.createElement("li");
+                    pond.innerHTML = "所有类型";
+                    pond_container.append(pond);
+                    for (var i = 0; i < data.length; i++) {
+                        var pond = document.createElement("li");
+                        pond.innerHTML = data[i].pondTypeName;
+                        pond_container.append(pond);
+                    }
+                }
+            });
+            var fish_container = $(".fish-type");
+            fish_container.empty();
+            var require_fish_url = "${path.concat('/fishtype/list')}";
+            $.get(require_fish_url, function (result) {
+                if (result.responseCode == "RESPONSE_OK") {
+                    var data = result.data;
+                    var fish = document.createElement("li");
+                    fish.innerHTML = "所有类型";
+                    fish_container.append(fish);
+                    for (var i = 0; i < data.length; i++) {
+                        var fish = document.createElement("li");
+                        fish.innerHTML = data[i].fishName;
+                        fish_container.append(fish);
+                    }
+                }
+            });
+            $(".region").click(function () {
+                hidepondeject();
+                hidefisheject();
+                if ($(".region-eject").hasClass('display')) {
+                    hideregioneject();
+                } else {
+                    $("#region-prompt").attr("class", "glyphicon glyphicon-chevron-up small");
+                    $('.region-eject').addClass('display');
+                }
+            });
+            $(".pond").click(function () {
+                hideregioneject();
+                hidefisheject();
+                if ($(".pond-eject").hasClass('display')) {
+                    hidepondeject();
+                } else {
+                    $("#pond-prompt").attr("class", "glyphicon glyphicon-chevron-up small");
+                    $('.pond-eject').addClass('display');
+                }
+            });
+            $(".fish").click(function () {
+                hideregioneject();
+                hidepondeject();
+                if ($(".fish-eject").hasClass('display')) {
+                    hidefisheject();
+                } else {
+                    $("#fish-prompt").attr("class", "glyphicon glyphicon-chevron-up small");
+                    $('.fish-eject').addClass('display');
+                }
+            });
         });
     </script>
 </head>
 <body>
 <div class="content">
-    <div class="lists">
+    <div class="screening">
+        <ul>
+            <li class="region">
+                <strong>地区</strong>
+                &nbsp;<span id="region-prompt" class="glyphicon glyphicon-chevron-down small" aria-hidden="true"></span>
+            </li>
+            <li class="pond"><strong>类型</strong>
+                &nbsp;<span id="pond-prompt" class="glyphicon glyphicon-chevron-down small" aria-hidden="true"></span>
+            </li>
+            <li class="fish"><strong>鱼种</strong>
+                &nbsp;<span id="fish-prompt" class="glyphicon glyphicon-chevron-down small" aria-hidden="true"></span>
+            </li>
+        </ul>
+    </div>
+    <div class="region-eject">
+        <ul id="region-province" class="region-province">
+        </ul>
+        <ul class="region-city"></ul>
+        <ul class="region-district"></ul>
+    </div>
+    <div class="pond-eject">
+        <ul class="pond-type"></ul>
+    </div>
+    <div class="fish-eject">
+        <ul class="fish-type"></ul>
+    </div>
+    <div class="lists" style="padding-top: 3.5em">
     </div>
 </div>
 </body>

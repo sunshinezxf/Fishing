@@ -2,15 +2,18 @@ package fishing.sunshine.controller;
 
 import fishing.sunshine.form.FishForm;
 import fishing.sunshine.model.Fish;
-import fishing.sunshine.service.FishService;
-import fishing.sunshine.pagination.DataTableParam;
 import fishing.sunshine.pagination.DataTablePage;
+import fishing.sunshine.pagination.DataTableParam;
+import fishing.sunshine.service.FishService;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -134,5 +137,20 @@ public class FishTypeController {
             return message;
         }
         return message;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/list")
+    public ResultData list() {
+        ResultData result = new ResultData();
+        Fish fish = new Fish();
+        ResultData query = fishService.queryFishType(fish);
+        if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(query.getData());
+        } else if (query.getResponseCode() == ResponseCode.RESPONSE_NULL) {
+            result.setResponseCode(ResponseCode.RESPONSE_NULL);
+        } else {
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+        }
+        return result;
     }
 }

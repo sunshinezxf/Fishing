@@ -2,9 +2,9 @@ package fishing.sunshine.controller;
 
 import fishing.sunshine.form.PondTypeForm;
 import fishing.sunshine.model.PondType;
-import fishing.sunshine.service.FishPondService;
 import fishing.sunshine.pagination.DataTablePage;
 import fishing.sunshine.pagination.DataTableParam;
+import fishing.sunshine.service.FishPondService;
 import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
 import org.slf4j.Logger;
@@ -123,5 +123,20 @@ public class PondTypeController {
         }
         view.setViewName("redirect:/zonetype/overview");
         return view;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/list")
+    public ResultData list() {
+        ResultData result = new ResultData();
+        PondType type = new PondType();
+        ResultData query = fishPondService.queryFishPondType(type);
+        if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(query.getData());
+        } else if (query.getResponseCode() == ResponseCode.RESPONSE_NULL) {
+            result.setResponseCode(ResponseCode.RESPONSE_NULL);
+        } else {
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+        }
+        return result;
     }
 }

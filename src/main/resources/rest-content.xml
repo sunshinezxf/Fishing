@@ -71,16 +71,22 @@
         <property name="unauthorizedUrl" value="/index"/>
         <property name="filterChainDefinitions">
             <value>
-                /material/** = anon
+                /comment/** = anon
+                /division/create = authc
+                /division/province = anon
+                /division/*/city = anon
+                /division/*/district = anon
+                /fishtype/list = anon
+                /fishzone/create = authc
+                /fishzone/edit/** = authc
+                /fishzone/overview = authc
+                /fishzone/** = anon
                 /index = anon
                 /login = anon
+                /material/** = anon
                 /register = anon
                 /wechat = anon
-                /comment/** = anon
-                /fishzone/create = authc
-                /fishzone/overview = authc
-                /fishzone/edit/** = authc
-                /fishzone/** = anon
+                /zonetype/list = anon
                 /** = authc
             </value>
         </property>
