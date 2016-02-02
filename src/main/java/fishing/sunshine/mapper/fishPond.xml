@@ -20,6 +20,26 @@
         <result property="createAt" column="create_time"></result>
     </resultMap>
 
+    <resultMap id="provinceVo" type="fishing.sunshine.model.division.Province">
+        <result property="provinceId" column="province_id"></result>
+        <result property="provinceName" column="province_name"></result>
+        <result property="createAt" column="create_time"></result>
+    </resultMap>
+
+    <resultMap id="cityVo" type="fishing.sunshine.model.division.City">
+        <result property="cityId" column="city_id"></result>
+        <result property="cityName" column="city_name"></result>
+        <result property="createAt" column="create_time"></result>
+        <association property="province" column="{cityId = city_id}" select="queryProvince"></association>
+    </resultMap>
+
+    <resultMap id="districtVo" type="fishing.sunshine.model.division.District">
+        <result property="districtId" column="district_id"></result>
+        <result property="districtName" column="district_name"></result>
+        <result property="createAt" column="create_time"></result>
+        <association property="city" column="{districtId = district_id}" select="queryCity"></association>
+    </resultMap>
+
     <resultMap id="fishPondVo" type="fishing.sunshine.model.FishPond">
         <result property="fishPondId" column="fish_zone_id"></result>
         <result property="fishPondName" column="fish_zone_name"></result>
@@ -33,6 +53,7 @@
         <result property="limitation" column="fish_zone_limit"></result>
         <result property="createAt" column="create_time"></result>
         <association property="contractor" column="{fishPondId = fish_zone_id}" select="queryContractor"></association>
+        <association property="district" column="{fishPondId = fish_zone_id}" select="queryDistrict"></association>
         <collection property="pondTypes" column="{fishPondId = fish_zone_id}" select="queryPondType"></collection>
         <collection property="fishes" column="{fishPondId = fish_zone_id}" select="queryFish"></collection>
     </resultMap>
@@ -77,6 +98,9 @@
             </if>
             <if test="contractor != null and contractor != '' and contractor.contractorId != null and contractor.contractorId != ''">
                 fish_man_id = #{contractor.contractorId},
+            </if>
+            <if test="district != null and district.districtId != null and district.districtId != ''">
+                district_id = #{district.districtId},
             </if>
             <if test="createAt != null and createAt != ''">
                 create_time = #{createAt},
@@ -173,19 +197,19 @@
     </delete>
 
     <select id="queryFishPond" parameterType="fishing.sunshine.model.FishPond" resultMap="fishPondVo">
-        SELECT fish_zone_id, fish_zone_name, fish_zone_thumbnail, fish_zone_intro, fish_zone_charge,
-        fish_zone_night_enable, fish_zone_longitude, fish_zone_latitude, fish_zone_address_description,
-        fish_zone_limit, create_time
-        FROM fish_zone
+        SELECT fz.fish_zone_id, fz.fish_zone_name, fz.fish_zone_thumbnail, fz.fish_zone_intro, fz.fish_zone_charge,
+        fz.fish_zone_night_enable, fz.fish_zone_longitude, fz.fish_zone_latitude, fz.fish_zone_address_description,
+        fz.fish_zone_limit, fz.create_time
+        FROM fish_zone fz
         WHERE 1 = 1
-        AND del_flag = 0
+        AND fz.del_flag = 0
         <if test="fishPondId != null and fishPondId != ''">
-            AND fish_zone_id = #{fishPondId}
+            AND fz.fish_zone_id = #{fishPondId}
         </if>
         <if test="fishPondName != null and fishPondName != ''">
-            AND fish_zone_name = #{fishPondName}
+            AND fz.fish_zone_name = #{fishPondName}
         </if>
-        ORDER BY create_time ASC
+        ORDER BY fz.create_time ASC
     </select>
 
     <select id="queryContractor" parameterType="java.util.HashMap" resultMap="contractorVo">
@@ -225,5 +249,37 @@
             AND fztm.fish_zone_id = #{fishPondId}
         </if>
         ORDER BY fzt.create_time ASC
+    </select>
+
+    <select id="queryProvince" parameterType="java.util.HashMap" resultMap="provinceVo">
+        SELECT p.province_id, p.province_name, p.create_time
+        FROM province p, city c
+        WHERE 1 = 1
+        <if test="cityId != null and cityId != ''">
+            AND c.city_id = #{cityId}
+        </if>
+        AND p.province_id = c.province_id
+    </select>
+
+    <!-- 根据district_id查询对应的city -->
+    <select id="queryCity" parameterType="java.util.HashMap" resultMap="cityVo">
+        SELECT c.city_id, c.city_name, c.create_time
+        FROM city c, district d
+        WHERE 1 = 1
+        <if test="districtId != null and districtId != ''">
+            AND d.district_id = #{districtId}
+        </if>
+        AND c.city_id = d.city_id
+    </select>
+
+    <!-- 查询district -->
+    <select id="queryDistrict" parameterType="java.util.HashMap" resultMap="districtVo">
+        SELECT d.district_id, d.district_name, d.create_time
+        FROM district d, fish_zone fz
+        WHERE 1 = 1
+        AND fz.district_id = d.district_id
+        <if test="fishPondId != null and fishPondId != ''">
+            AND fz.fish_zone_id = #{fishPondId}
+        </if>
     </select>
 </mapper>
