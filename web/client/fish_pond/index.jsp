@@ -186,9 +186,11 @@
                 }
             });
             $(".region").click(function () {
+                $(".lists").hide();
                 hidepondeject();
                 hidefisheject();
                 if ($(".region-eject").hasClass('display')) {
+                    $(".lists").show();
                     hideregioneject();
                 } else {
                     $("#region-prompt").attr("class", "glyphicon glyphicon-chevron-up small");
@@ -196,9 +198,11 @@
                 }
             });
             $(".pond").click(function () {
+                $(".lists").hide();
                 hideregioneject();
                 hidefisheject();
                 if ($(".pond-eject").hasClass('display')) {
+                    $(".lists").show();
                     hidepondeject();
                 } else {
                     $("#pond-prompt").attr("class", "glyphicon glyphicon-chevron-up small");
@@ -206,9 +210,11 @@
                 }
             });
             $(".fish").click(function () {
+                $(".lists").hide();
                 hideregioneject();
                 hidepondeject();
                 if ($(".fish-eject").hasClass('display')) {
+                    $(".lists").show();
                     hidefisheject();
                 } else {
                     $("#fish-prompt").attr("class", "glyphicon glyphicon-chevron-up small");
