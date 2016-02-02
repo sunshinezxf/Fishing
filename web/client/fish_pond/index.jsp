@@ -246,7 +246,7 @@
     <div class="fish-eject">
         <ul class="fish-type"></ul>
     </div>
-    <div class="lists" style="padding-top: 3.5em">
+    <div class="lists" style="padding-top: 4em">
     </div>
 </div>
 </body>

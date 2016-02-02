@@ -26,16 +26,16 @@ div.screening > ul > li {
     float: left;
     width: 33.3%;
     text-align: center;
-    line-height: 3.5rem;
+    line-height: 4rem;
     border-left: solid 1px #d3d3d3;
 }
 
 /* grade */
 .region-eject, .pond-eject, .fish-eject {
     position: fixed;
-    top: -50%;
+    top: -100%;
     width: 100%;
-    height: 50%;
+    height: 100%;
     z-index: 1;
     -webkit-transition-duration: 0.4s;
 }
@@ -50,9 +50,9 @@ div.screening > ul > li {
 }
 
 .region-eject > ul > li, .pond-eject > ul > li, .fish-eject > ul > li {
-    line-height: 3rem;
-    font-size: 1.2rem;
-    padding-left: 1.5rem;
+    line-height: 4rem;
+    font-size: 1.3rem;
+    padding-left: 2rem;
     border-bottom: solid 1px #eee;
 }
 
@@ -88,7 +88,7 @@ div.screening > ul > li {
 }
 
 .display {
-    top: 3.5rem;
+    top: 4rem;
 }
 
 .display::after {
