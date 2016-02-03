@@ -1,5 +1,6 @@
 package fishing.sunshine.dao.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import fishing.sunshine.dao.BaseDao;
 import fishing.sunshine.dao.FishPondDao;
 import fishing.sunshine.model.*;
@@ -60,6 +61,21 @@ public class FishPondDaoImpl extends BaseDao implements FishPondDao {
         ResultData result = new ResultData();
         try {
             List<FishPond> list = sqlSession.selectList("pond.queryFishPond", fishPond);
+            result.setData(list);
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        } finally {
+            return result;
+        }
+    }
+
+    @Override
+    public ResultData queryFishPond(String[] fishPondIds) {
+        ResultData result = new ResultData();
+        try {
+            List<FishPond> list = sqlSession.selectList("pond.queryFishPondByIds", fishPondIds);
             result.setData(list);
         } catch (Exception e) {
             logger.debug(e.getMessage());
@@ -143,6 +159,7 @@ public class FishPondDaoImpl extends BaseDao implements FishPondDao {
 
     @Override
     public ResultData queryFishPondByPage(MobilePageParam param) {
+        Set<String> ids = new HashSet<String>();
         ResultData result = new ResultData();
         MobilePage<FishPond> page = new MobilePage<FishPond>();
         FishPond pond = new FishPond();
@@ -161,11 +178,33 @@ public class FishPondDaoImpl extends BaseDao implements FishPondDao {
                 division.put("provinceId", (String) args.get("provinceId"));
                 divisionList = sqlSession.selectList("district.queryDistrictIds", division);
             }
-            List<String> fishPondIds;
             if (!StringUtils.isEmpty(divisionList)) {
-                fishPondIds = sqlSession.selectList("pond.queryFishPondIdsByDivision", divisionList);
+                List<String> fishPondIds = sqlSession.selectList("pond.queryFishPondIdsByDivision", divisionList);
+                if (!StringUtils.isEmpty(fishPondIds) && fishPondIds.size() > 0) {
+                    ids.addAll(fishPondIds);
+                }
             }
-            return result;
+            String[] idsArray = new String[ids.size()];
+            ids.toArray(idsArray);
+            total = queryFishPond(idsArray);
+            logger.debug(JSONObject.toJSONString(total));
+            page.setTotal(((List<FishPond>) total.getData()).size());
+            if (total.getResponseCode() != ResponseCode.RESPONSE_OK) {
+                result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+                result.setDescription(total.getDescription());
+                return result;
+            }
+            try {
+                List<FishPond> list = sqlSession.selectList("pond.queryFishPondByIds", idsArray, new RowBounds(param.getStart(), param.getLength()));
+                page.setData(list);
+                result.setData(page);
+            } catch (Exception e) {
+                logger.debug(e.getMessage());
+                result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+                result.setDescription(e.getMessage());
+            } finally {
+                return result;
+            }
         } else {
             total = queryFishPond(pond);
             page.setTotal(((List<FishPond>) total.getData()).size());

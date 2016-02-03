@@ -5,6 +5,8 @@ import fishing.sunshine.pagination.DataTableParam;
 import fishing.sunshine.pagination.MobilePageParam;
 import fishing.sunshine.util.ResultData;
 
+import java.util.List;
+
 /**
  * Created by sunshine on 12/9/15.
  */
@@ -12,6 +14,8 @@ public interface FishPondDao {
     ResultData insertFishPond(FishPond fishPond);
 
     ResultData queryFishPond(FishPond fishPond);
+
+    ResultData queryFishPond(String[] fishPondIds);
 
     ResultData updateFishPond(FishPond fishPond);
 

@@ -260,7 +260,7 @@
     var counter = 0;
     var num = 8;
     var pageStart = 0, pageEnd = 0;
-    var provinceId = '';
+    var provinceId = 'PROfvoefl31';
     var cityId = '';
     var districtId = '';
 
