@@ -1,19 +1,21 @@
 function hidedistrict() {
-    $(".region-district").css("left", "100%");
+    $(".region-district").hide();
 }
 
 function showdistrict() {
     showcity();
     $(".region-district").css("left", "66.66%");
+    $(".region-district").fadeIn();
 }
 
 function hidecity() {
     hidedistrict();
-    $(".region-city").css("left", "100%");
+    $(".region-city").hide();
 }
 
 function showcity() {
     $(".region-city").css("left", "33.33%");
+    $(".region-city").fadeIn();
 }
 
 function hideregioneject() {

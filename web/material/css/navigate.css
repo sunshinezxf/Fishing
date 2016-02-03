@@ -67,7 +67,8 @@ div.screening > ul > li {
     background: #eee;
     position: absolute;
     z-index: 2;
-    left: 100%;
+    display: none;
+    width: 66.67%;
 }
 
 .region-eject > ul.region-city > li {
@@ -78,7 +79,8 @@ div.screening > ul > li {
     background: #fff;
     position: absolute;
     z-index: 3;
-    left: 100%;
+    display: none;
+    width: 33.34%;
     list-style-type: none;
 }
 
