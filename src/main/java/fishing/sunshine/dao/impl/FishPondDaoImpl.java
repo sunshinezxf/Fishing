@@ -17,9 +17,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by sunshine on 12/9/15.
@@ -62,6 +60,25 @@ public class FishPondDaoImpl extends BaseDao implements FishPondDao {
         ResultData result = new ResultData();
         try {
             List<FishPond> list = sqlSession.selectList("pond.queryFishPond", fishPond);
+            result.setData(list);
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        } finally {
+            return result;
+        }
+    }
+
+    @Override
+    public ResultData queryFishPond(List<String>... fishPondIds) {
+        Set<String> ids = new HashSet<String>();
+        for (List<String> item : fishPondIds) {
+            ids.addAll(item);
+        }
+        ResultData result = new ResultData();
+        try {
+            List<FishPond> list = sqlSession.selectList("pond.queryFishPondByIds", ids.toArray());
             result.setData(list);
         } catch (Exception e) {
             logger.debug(e.getMessage());

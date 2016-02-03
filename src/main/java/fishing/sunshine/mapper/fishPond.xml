@@ -212,6 +212,20 @@
         ORDER BY fz.create_time ASC
     </select>
 
+    <select id="queryFishPondByIds" resultMap="fishPondVo">
+        SELECT fz.fish_zone_id, fz.fish_zone_name, fz.fish_zone_thumbnail, fz.fish_zone_intro, fz.fish_zone_charge,
+        fz.fish_zone_night_enable, fz.fish_zone_longitude, fz.fish_zone_latitude, fz.fish_zone_address_description,
+        fz.fish_zone_limit, fz.create_time
+        FROM fish_zone fz
+        WHERE 1 = 1
+        AND fz.del_flag = 0
+        AND fz.fish_zone_id IN
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ORDER BY fz.create_time ASC
+    </select>
+
     <select id="queryContractor" parameterType="java.util.HashMap" resultMap="contractorVo">
         SELECT fm.fish_man_id, fm.fish_man_name, fm.fish_man_tel, fm.create_time
         FROM fish_man fm, fish_zone fz

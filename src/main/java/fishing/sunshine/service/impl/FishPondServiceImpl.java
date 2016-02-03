@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sunshine on 12/3/15.
@@ -121,6 +122,11 @@ public class FishPondServiceImpl implements FishPondService {
             result.setDescription(query.getDescription());
         }
         return result;
+    }
+
+    @Override
+    public ResultData queryFishPond(List<String>... fishPondIds) {
+        return null;
     }
 
     @Override
