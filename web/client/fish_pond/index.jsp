@@ -176,7 +176,7 @@
                 if (result.responseCode == "RESPONSE_OK") {
                     var data = result.data;
                     var fish = document.createElement("li");
-                    fish.innerHTML = "所有类型";
+                    fish.innerHTML = "所有鱼种";
                     fish_container.append(fish);
                     for (var i = 0; i < data.length; i++) {
                         var fish = document.createElement("li");

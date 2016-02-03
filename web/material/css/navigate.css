@@ -86,8 +86,7 @@ div.screening > ul > li {
 
 .region-eject > ul.region-district > li {
     border-bottom: solid 1px #eee;
-    margin-left: 1rem;
-    padding: 0;
+    padding-left: 2rem;
 }
 
 .display {
