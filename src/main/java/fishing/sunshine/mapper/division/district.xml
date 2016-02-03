@@ -70,6 +70,20 @@
         AND c.province_id = p.province_id
     </select>
 
+    <select id="queryDistrictIds" parameterType="java.util.Map" resultType="java.lang.String">
+        SELECT d.district_id
+        FROM district d, city c, province p
+        WHERE 1 = 1
+        AND d.city_id = c.city_id
+        AND c.province_id = p.province_id
+        <if test="cityId != null and cityId != ''">
+            AND c.city_id = #{cityId}
+        </if>
+        <if test="provinceId != null and provinceId != ''">
+            AND p.province_id = #{provinceId}
+        </if>
+    </select>
+
     <insert id="insertDistrict" parameterType="fishing.sunshine.model.division.District" useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO district(district_id, district_name, city_id, create_time, del_flag)

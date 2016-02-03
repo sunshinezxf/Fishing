@@ -257,10 +257,80 @@
 </div>
 </body>
 <script>
+    var counter = 0;
+    var num = 8;
+    var pageStart = 0, pageEnd = 0;
+    var provinceId = '';
+    var cityId = '';
+    var districtId = '';
+
+    function reload() {
+        counter = 0;
+        pageStart = 0;
+        pageEnd = 0;
+        $('.lists').empty();
+        $.ajax({
+            type: 'POST',
+            url: "${path.concat('/fishzone/index')}",
+            data: {
+                start: pageStart,
+                length: num,
+                params: {provinceId: provinceId, cityId: cityId, districtId: districtId}
+            },
+            dataType: 'json',
+            success: function (result) {
+                var content = '';
+                var total = result.total;
+                var length = result.data.length;
+                var data = result.data;
+                counter++;
+                pageEnd = num * counter;
+                pageStart = pageEnd;
+                for (var i = 0; i < length; i++) {
+                    var url = "http://www.njuat.com/fishzone/" + data[i].fishPondId;
+                    content += "<a class='item opacity' href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=" + encodeURIComponent(url) + "&response_type=code&scope=snsapi_base&state=view#wechat_redirect'>"
+                            + "<div class='media'>"
+                            + "<div class='media-left'>"
+                            + "<img class='img-rounded' src='${path}" + data[i].thumbnail + "' />"
+                            + "</div>"
+                            + "<div class='media-body'>"
+                            + "<h3>" + data[i].fishPondName + "</h3>"
+                            + "<div style='margin-top: 0.2em; margin-bottom: 0.3em'>";
+                    var fishes = data[i].fishes;
+                    for (var f = 0; f < fishes.length; f++) {
+                        content += "<span class='label label-info'>" + fishes[f].fishName + "</span> "
+                    }
+                    content += "</div>"
+                            + "<label>南京市鼓楼区</label>"
+                            + "</div>"
+                            + "<div class='media-right'>"
+                            + "<span class='date'>" + distance(data[i].longitude, data[i].latitude) + "</span>"
+                            + "</div>"
+                            + '</div>'
+                            + '</a>';
+                    if ((counter - 1) * num + i + 1 >= total) {
+                        // 锁定
+                        me.lock();
+                        // 无数据
+                        me.noData();
+                        break;
+                    }
+                }
+                // 为了测试，延迟1秒加载
+                setTimeout(function () {
+                    $('.lists').append(content);
+                    // 每次数据加载完，必须重置
+                    me.resetload();
+                }, 500);
+            },
+            error: function (xhr, type) {
+                // 即使加载出错，也得重置
+                me.resetload();
+            }
+        });
+    }
+
     $(function () {
-        var counter = 0;
-        var num = 8;
-        var pageStart = 0, pageEnd = 0;
         // dropload
         $('.content').dropload({
             scrollArea: window,
@@ -268,7 +338,11 @@
                 $.ajax({
                     type: 'POST',
                     url: "${path.concat('/fishzone/index')}",
-                    data: {start: pageStart, length: num},
+                    data: {
+                        start: pageStart,
+                        length: num,
+                        params: {provinceId: provinceId, cityId: cityId, districtId: districtId}
+                    },
                     dataType: 'json',
                     success: function (result) {
                         var content = '';

@@ -70,25 +70,6 @@ public class FishPondDaoImpl extends BaseDao implements FishPondDao {
         }
     }
 
-    @Override
-    public ResultData queryFishPond(List<String>... fishPondIds) {
-        Set<String> ids = new HashSet<String>();
-        for (List<String> item : fishPondIds) {
-            ids.addAll(item);
-        }
-        ResultData result = new ResultData();
-        try {
-            List<FishPond> list = sqlSession.selectList("pond.queryFishPondByIds", ids.toArray());
-            result.setData(list);
-        } catch (Exception e) {
-            logger.debug(e.getMessage());
-            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
-            result.setDescription(e.getMessage());
-        } finally {
-            return result;
-        }
-    }
-
     @Transactional
     @Override
     public ResultData updateFishPond(FishPond fishPond) {
@@ -166,26 +147,44 @@ public class FishPondDaoImpl extends BaseDao implements FishPondDao {
         MobilePage<FishPond> page = new MobilePage<FishPond>();
         FishPond pond = new FishPond();
         Map args = param.getParams();
-        if (!StringUtils.isEmpty(args)) {
-
-        }
-        ResultData total = queryFishPond(pond);
-        if (total.getResponseCode() != ResponseCode.RESPONSE_OK) {
-            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
-            result.setDescription(total.getDescription());
+        ResultData total;
+        if (!StringUtils.isEmpty(args.get("provinceId")) || !StringUtils.isEmpty(args.get("cityId")) || !StringUtils.isEmpty(args.get("districtId"))) {
+            List<String> divisionList = new ArrayList<String>();
+            if (!StringUtils.isEmpty(args.get("districtId"))) {
+                divisionList.add((String) args.get("districtId"));
+            } else if (!StringUtils.isEmpty(args.get("cityId"))) {
+                Map<String, String> division = new HashMap<String, String>();
+                division.put("cityId", (String) args.get("cityId"));
+                divisionList = sqlSession.selectList("district.queryDistrictIds", division);
+            } else if (!StringUtils.isEmpty(args.get("provinceId"))) {
+                Map<String, String> division = new HashMap<String, String>();
+                division.put("provinceId", (String) args.get("provinceId"));
+                divisionList = sqlSession.selectList("district.queryDistrictIds", division);
+            }
+            List<String> fishPondIds;
+            if (!StringUtils.isEmpty(divisionList)) {
+                fishPondIds = sqlSession.selectList("pond.queryFishPondIdsByDivision", divisionList);
+            }
             return result;
-        }
-        page.setTotal(((List<FishPond>) total.getData()).size());
-        try {
-            List<FishPond> list = sqlSession.selectList("pond.queryFishPond", pond, new RowBounds(param.getStart(), param.getLength()));
-            page.setData(list);
-            result.setData(page);
-        } catch (Exception e) {
-            logger.debug(e.getMessage());
-            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
-            result.setDescription(e.getMessage());
-        } finally {
-            return result;
+        } else {
+            total = queryFishPond(pond);
+            page.setTotal(((List<FishPond>) total.getData()).size());
+            if (total.getResponseCode() != ResponseCode.RESPONSE_OK) {
+                result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+                result.setDescription(total.getDescription());
+                return result;
+            }
+            try {
+                List<FishPond> list = sqlSession.selectList("pond.queryFishPond", pond, new RowBounds(param.getStart(), param.getLength()));
+                page.setData(list);
+                result.setData(page);
+            } catch (Exception e) {
+                logger.debug(e.getMessage());
+                result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+                result.setDescription(e.getMessage());
+            } finally {
+                return result;
+            }
         }
     }
 }

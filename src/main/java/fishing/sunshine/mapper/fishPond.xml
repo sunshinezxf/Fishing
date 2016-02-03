@@ -296,4 +296,15 @@
             AND fz.fish_zone_id = #{fishPondId}
         </if>
     </select>
+
+    <select id="queryFishPondIdsByDivision" resultType="java.lang.String">
+        SELECT fz.fish_zone_id
+        FROM fish_zone fz
+        WHERE 1 = 1
+        AND fz.del_flag = 0
+        AND fz.district_id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>
