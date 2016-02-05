@@ -57,6 +57,17 @@
                 height: 280
             });
 
+            function upload_division(province, city, district) {
+                var url = "${path.concat('/division/create')}";
+                $.post(url, {province: province, city: city, district: district}, function (result) {
+                    if (result.responseCode == "RESPONSE_OK") {
+                        $("#form-district-id").val(result.data.districtId);
+                    } else {
+                        $("#form-district-id").val("");
+                    }
+                })
+            }
+
             var type_array = ${fishPond.pondTypes};
             for (var i = 0; i < type_array.length; i++) {
                 var id = "#" + type_array[i].pondTypeId;
@@ -78,6 +89,10 @@
                     if (result.status == 0) {
                         $("#zone-longitude").val(result.result.location.lng);
                         $("#zone-latitude").val(result.result.location.lat);
+                        var province = result.result.address_components.province;
+                        var city = result.result.address_components.city;
+                        var district = result.result.address_components.district;
+                        upload_division(province, city, district);
                     }
                 });
             });
