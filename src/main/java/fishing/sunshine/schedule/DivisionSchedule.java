@@ -1,6 +1,7 @@
 package fishing.sunshine.schedule;
 
 import fishing.sunshine.service.DivisionService;
+import fishing.sunshine.util.ResponseCode;
 import fishing.sunshine.util.ResultData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,11 @@ public class DivisionSchedule {
     private DivisionService divisionService;
 
     public void schedule() {
-        logger.debug("Division Schedule: ");
-        //todo implementation of division scale scheduling
+        ResultData scale = divisionService.scale();
+        if (scale.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            logger.debug("Scale success");
+        } else {
+            logger.debug("Scale fail");
+        }
     }
 }

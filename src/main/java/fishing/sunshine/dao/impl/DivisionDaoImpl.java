@@ -112,21 +112,42 @@ public class DivisionDaoImpl extends BaseDao implements DivisionDao {
     @Override
     public ResultData deleteProvince() {
         ResultData result = new ResultData();
-
-        return result;
+        try {
+            sqlSession.delete("province.deleteProvince");
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        } finally {
+            return result;
+        }
     }
 
     @Override
     public ResultData deleteCity() {
         ResultData result = new ResultData();
-
-        return result;
+        try {
+            sqlSession.delete("city.deleteCity");
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        } finally {
+            return result;
+        }
     }
 
     @Override
     public ResultData deleteDistrict() {
         ResultData result = new ResultData();
-
-        return result;
+        try {
+            sqlSession.delete("district.deleteDistrict");
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        } finally {
+            return result;
+        }
     }
 }

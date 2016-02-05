@@ -118,7 +118,12 @@ public class DivisionServiceImpl implements DivisionService {
     @Override
     public ResultData scale() {
         ResultData result = new ResultData();
-
+        ResultData districtDelete = divisionDao.deleteDistrict();
+        ResultData cityDelete = divisionDao.deleteCity();
+        ResultData provinceDelete = divisionDao.deleteProvince();
+        if (districtDelete.getResponseCode() != ResponseCode.RESPONSE_OK || cityDelete.getResponseCode() != ResponseCode.RESPONSE_OK || provinceDelete.getResponseCode() != ResponseCode.RESPONSE_OK) {
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+        }
         return result;
     }
 }

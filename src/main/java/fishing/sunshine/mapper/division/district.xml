@@ -97,6 +97,7 @@
             SELECT district_id
             FROM fish_zone
             WHERE 1 = 1
+            AND district_id IS NOT NULL
         )
     </delete>
 </mapper>
