@@ -20,4 +20,6 @@ public interface DivisionService {
     ResultData queryDistrict(District district);
 
     ResultData addDistrict(District district);
+
+    ResultData scale();
 }

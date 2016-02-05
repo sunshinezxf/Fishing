@@ -20,4 +20,10 @@ public interface DivisionDao {
     ResultData queryDistrict(District district);
 
     ResultData insertDistrict(District district);
+
+    ResultData deleteProvince();
+
+    ResultData deleteCity();
+
+    ResultData deleteDistrict();
 }

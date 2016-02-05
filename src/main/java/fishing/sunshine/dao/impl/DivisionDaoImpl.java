@@ -108,4 +108,25 @@ public class DivisionDaoImpl extends BaseDao implements DivisionDao {
             return result;
         }
     }
+
+    @Override
+    public ResultData deleteProvince() {
+        ResultData result = new ResultData();
+
+        return result;
+    }
+
+    @Override
+    public ResultData deleteCity() {
+        ResultData result = new ResultData();
+
+        return result;
+    }
+
+    @Override
+    public ResultData deleteDistrict() {
+        ResultData result = new ResultData();
+
+        return result;
+    }
 }

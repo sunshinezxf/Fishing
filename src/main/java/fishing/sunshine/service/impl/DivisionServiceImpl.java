@@ -114,4 +114,11 @@ public class DivisionServiceImpl implements DivisionService {
         }
         return result;
     }
+
+    @Override
+    public ResultData scale() {
+        ResultData result = new ResultData();
+
+        return result;
+    }
 }

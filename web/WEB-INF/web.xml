@@ -61,7 +61,7 @@
         <servlet-class>fishing.sunshine.dispatcher.Dispatcher</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:rest-servlet.xml</param-value>
+            <param-value>classpath:rest-servlet.xml, classpath:spring-quartz.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
