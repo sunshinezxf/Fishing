@@ -135,6 +135,17 @@
             });
         }
 
+
+        function nation_wide() {
+            $(".lists").hide();
+            hidepondeject();
+            hidefisheject();
+            if ($(".region-eject").hasClass('display')) {
+                $(".lists").show();
+                hideregioneject();
+            }
+        }
+
         $(document).ready(function () {
             var province_container = $(".region-province");
             province_container.empty();
@@ -144,7 +155,7 @@
                     var data = result.data;
                     var province = document.createElement("li");
                     province.innerHTML = "所有地区";
-                    province.setAttribute("id", "all-province")
+                    province.setAttribute("onclick", "nation_wide()");
                     province_container.append(province);
                     for (var i = 0; i < data.length; i++) {
                         var province = document.createElement("li");
@@ -198,16 +209,6 @@
                     $('.region-eject').addClass('display');
                 }
             });
-
-            function filter_all_province() {
-                $(".lists").hide();
-                hidepondeject();
-                hidefisheject();
-                if ($(".region-eject").hasClass('display')) {
-                    $(".lists").show();
-                    hideregioneject();
-                }
-            }
 
             $(".pond").click(function () {
                 $(".lists").hide();
