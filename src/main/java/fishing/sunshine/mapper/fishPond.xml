@@ -142,8 +142,8 @@
             <if test="limitation != null">
                 fish_zone_limit = #{limitation},
             </if>
-            <if test="districtId != null and districtId != ''">
-                district_id = #{districtId},
+            <if test="district != null and district.districtId != null and district.districtId != ''">
+                district_id = #{district.districtId},
             </if>
             <if test="createAt != null and createAt != ''">
                 create_time = #{createAt}
