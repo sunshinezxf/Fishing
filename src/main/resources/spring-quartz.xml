@@ -13,7 +13,7 @@
     <bean id="divisionTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="divisionDetail"></property>
         <property name="cronExpression">
-            <value>0 * * * * ?</value>
+            <value>0 0 * * * ?</value>
         </property>
     </bean>
 

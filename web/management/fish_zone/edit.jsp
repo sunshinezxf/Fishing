@@ -203,6 +203,8 @@
             <div class="col-md-12 col-lg-12">
                 <hr/>
                 <form id="edit-fishzone-form" class="form-horizontal">
+                    <input type="hidden" id="form-district-id" name="districtId" autocomplete="off"/>
+
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="fish-zone-name">鱼塘名称</label>
 
