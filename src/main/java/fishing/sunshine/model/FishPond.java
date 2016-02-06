@@ -64,6 +64,12 @@ public class FishPond extends SunshineEntity {
             contractor.setFishPond(this);
         }
         this.contractor = contractor;
+        District district = null;
+        if (!StringUtils.isEmpty(form.getDistrictId())) {
+            district = new District();
+            district.setDistrictId(form.getDistrictId());
+        }
+        this.setDistrict(district);
     }
 
     public String getFishPondId() {
