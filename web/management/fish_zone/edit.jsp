@@ -98,21 +98,6 @@
             });
 
             $("#confirm-zone").click(function () {
-                var url = "http://apis.map.qq.com/ws/geocoder/v1";
-                var key = "D3EBZ-F3QHJ-KJVFC-FDXKG-4U3J5-VCB5K";
-                var address = $("#fish-zone-address").val();
-                var request = encodeURI(url + "?address=" + address + "&key=" + key + "&output=jsonp&callback=?");
-                $.getJSON(request, function (result) {
-                    if (result.status == 0) {
-                        $("#zone-longitude").val(result.result.location.lng);
-                        $("#zone-latitude").val(result.result.location.lat);
-                        var province = result.result.address_components.province;
-                        var city = result.result.address_components.city;
-                        var district = result.result.address_components.district;
-                        upload_division(province, city, district);
-                    }
-                });
-
                 var introduction = $("#pond-introduction").code();
                 $("#pond-introduction").attr("value", introduction);
 
@@ -215,7 +200,7 @@
                 <hr/>
                 <form id="edit-fishzone-form" class="form-horizontal">
                     <input type="hidden" id="form-district-id" name="districtId" autocomplete="off"
-                           value="<c:if test='${not empty fishPond.district}'>{fishPond.district.districtId}</c:if>"/>
+                           value="<c:if test='${not empty fishPond.district}'>${fishPond.district.districtId}</c:if>"/>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="fish-zone-name">鱼塘名称</label>

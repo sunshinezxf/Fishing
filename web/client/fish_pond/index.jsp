@@ -144,6 +144,7 @@
                     var data = result.data;
                     var province = document.createElement("li");
                     province.innerHTML = "所有地区";
+                    province.setAttribute("id", "all-province")
                     province_container.append(province);
                     for (var i = 0; i < data.length; i++) {
                         var province = document.createElement("li");
@@ -197,6 +198,17 @@
                     $('.region-eject').addClass('display');
                 }
             });
+
+            function filter_all_province() {
+                $(".lists").hide();
+                hidepondeject();
+                hidefisheject();
+                if ($(".region-eject").hasClass('display')) {
+                    $(".lists").show();
+                    hideregioneject();
+                }
+            }
+
             $(".pond").click(function () {
                 $(".lists").hide();
                 hideregioneject();
@@ -260,7 +272,7 @@
     var counter = 0;
     var num = 8;
     var pageStart = 0, pageEnd = 0;
-    var provinceId = 'PROfvoefl31';
+    var provinceId = '';
     var cityId = '';
     var districtId = '';
 

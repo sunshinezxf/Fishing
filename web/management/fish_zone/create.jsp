@@ -84,21 +84,6 @@
             });
 
             $("#confirm-zone").click(function () {
-                var url = "http://apis.map.qq.com/ws/geocoder/v1";
-                var key = "D3EBZ-F3QHJ-KJVFC-FDXKG-4U3J5-VCB5K";
-                var address = $("#fish-zone-address").val();
-                var request = encodeURI(url + "?address=" + address + "&key=" + key + "&output=jsonp&callback=?");
-                $.getJSON(request, function (result) {
-                    if (result.status == 0) {
-                        $("#zone-longitude").val(result.result.location.lng);
-                        $("#zone-latitude").val(result.result.location.lat);
-                        var province = result.result.address_components.province;
-                        var city = result.result.address_components.city;
-                        var district = result.result.address_components.district;
-                        upload_division(province, city, district);
-                    }
-                });
-
                 var introduction = $("#pond-introduction").code();
                 $("#pond-introduction").attr("value", introduction);
 
