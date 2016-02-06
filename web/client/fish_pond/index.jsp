@@ -144,7 +144,6 @@
                 $(".lists").show();
                 hideregioneject();
             }
-            reload();
         }
 
         function province_wide() {
@@ -330,11 +329,15 @@
                                     + "<div style='margin-top: 0.2em; margin-bottom: 0.3em'>";
                             var fishes = data[i].fishes;
                             for (var f = 0; f < fishes.length; f++) {
-                                content += "<span class='label label-info'>" + fishes[f].fishName + "</span> "
+                                content += "<span class='label label-info'>" + fishes[f].fishName + "</span> ";
+                            }
+                            content += "</div>";
+                            if (data[i].district != null) {
+                                content += "<label>";
+                                content += data[i].district.city.province.provinceName + data[i].district.city.cityName + data[i].district.districtName;
+                                content += "</label>";
                             }
                             content += "</div>"
-                                    + "<label>南京市鼓楼区</label>"
-                                    + "</div>"
                                     + "<div class='media-right'>"
                                     + "<span class='date'>" + distance(data[i].longitude, data[i].latitude) + "</span>"
                                     + "</div>"
