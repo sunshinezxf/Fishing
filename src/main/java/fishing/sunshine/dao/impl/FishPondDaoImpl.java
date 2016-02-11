@@ -158,14 +158,16 @@ public class FishPondDaoImpl extends BaseDao implements FishPondDao {
 
     @Override
     public ResultData queryFishPondByPage(MobilePageParam param) {
+        boolean divisionFlag = false, pondTypeFlag = false;
         Set<String> ids = new HashSet<String>();
         ResultData result = new ResultData();
         MobilePage<FishPond> page = new MobilePage<FishPond>();
         FishPond pond = new FishPond();
         Map args = param.getParams();
         ResultData total;
-        if (!StringUtils.isEmpty(args.get("provinceId")) || !StringUtils.isEmpty(args.get("cityId")) || !StringUtils.isEmpty(args.get("districtId")) || !StringUtils.isEmpty(args.get("pondTypeId"))) {
+        if (!StringUtils.isEmpty(args.get("provinceId")) || !StringUtils.isEmpty(args.get("cityId")) || !StringUtils.isEmpty(args.get("districtId")) || !StringUtils.isEmpty(args.get("pondTypeId")) || !StringUtils.isEmpty(args.get("fishId"))) {
             if (!StringUtils.isEmpty(args.get("provinceId")) || !StringUtils.isEmpty(args.get("cityId")) || !StringUtils.isEmpty(args.get("districtId"))) {
+                divisionFlag = true;
                 List<String> divisionList = new ArrayList<String>();
                 if (!StringUtils.isEmpty(args.get("districtId"))) {
                     divisionList.add((String) args.get("districtId"));
@@ -186,11 +188,21 @@ public class FishPondDaoImpl extends BaseDao implements FishPondDao {
                 }
             }
             if (!StringUtils.isEmpty(args.get("pondTypeId"))) {
-                logger.debug("pondTypeId: " + args.get("pondTypeId"));
+                pondTypeFlag = true;
                 List<String> pondTypeList = new ArrayList<String>();
                 pondTypeList.add((String) args.get("pondTypeId"));
                 List<String> fishPondIds = sqlSession.selectList("pond.queryFishPondIdsByPondType", pondTypeList);
-                if (ids.size() > 0) {
+                if (divisionFlag) {
+                    ids.retainAll(fishPondIds);
+                } else {
+                    ids.addAll(fishPondIds);
+                }
+            }
+            if (!StringUtils.isEmpty(args.get("fishId"))) {
+                List<String> fishList = new ArrayList<String>();
+                fishList.add((String) args.get("fishId"));
+                List<String> fishPondIds = sqlSession.selectList("pond.queryFishPondIdsByFish", fishList);
+                if (divisionFlag || pondTypeFlag) {
                     ids.retainAll(fishPondIds);
                 } else {
                     ids.addAll(fishPondIds);
@@ -198,11 +210,19 @@ public class FishPondDaoImpl extends BaseDao implements FishPondDao {
             }
             String[] idsArray = new String[ids.size()];
             ids.toArray(idsArray);
-            total = queryFishPond(idsArray);
-            page.setTotal(((List<FishPond>) total.getData()).size());
-            if (total.getResponseCode() != ResponseCode.RESPONSE_OK) {
-                result.setResponseCode(ResponseCode.RESPONSE_ERROR);
-                result.setDescription(total.getDescription());
+            if (idsArray.length > 0) {
+                total = queryFishPond(idsArray);
+                page.setTotal(((List<FishPond>) total.getData()).size());
+                if (total.getResponseCode() != ResponseCode.RESPONSE_OK) {
+                    result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+                    result.setDescription(total.getDescription());
+                    return result;
+                }
+            } else {
+                page.setTotal(0);
+                page.setData(new ArrayList<FishPond>());
+                result.setResponseCode(ResponseCode.RESPONSE_NULL);
+                result.setData(page);
                 return result;
             }
             try {

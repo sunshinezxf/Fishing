@@ -215,6 +215,30 @@
             list_reload();
         }
 
+        function all_fish_type() {
+            fishId = '';
+            $(".lists").hide();
+            hideregioneject();
+            hidepondeject();
+            if ($(".fish-eject").hasClass('display')) {
+                $(".lists").show();
+                hidefisheject();
+            }
+            list_reload();
+        }
+
+        function fish_type(obj) {
+            fishId = obj;
+            $(".lists").hide();
+            hideregioneject();
+            hidepondeject();
+            if ($(".fish-eject").hasClass('display')) {
+                $(".lists").show();
+                hidefisheject();
+            }
+            list_reload();
+        }
+
         $(document).ready(function () {
             var province_container = $(".region-province");
             province_container.empty();
@@ -260,10 +284,12 @@
                     var data = result.data;
                     var fish = document.createElement("li");
                     fish.innerHTML = "所有鱼种";
+                    fish.setAttribute("onclick", "all_fish_type()");
                     fish_container.append(fish);
                     for (var i = 0; i < data.length; i++) {
                         var fish = document.createElement("li");
                         fish.innerHTML = data[i].fishName;
+                        fish.setAttribute("onclick", "fish_type('" + data[i].fishId + "')")
                         fish_container.append(fish);
                     }
                 }
@@ -348,6 +374,7 @@
     var cityId = '';
     var districtId = '';
     var pondTypeId = '';
+    var fishId = '';
 
     function list_reload() {
         var timer;
@@ -371,13 +398,20 @@
                                 provinceId: provinceId,
                                 cityId: cityId,
                                 districtId: districtId,
-                                pondTypeId: pondTypeId
+                                pondTypeId: pondTypeId,
+                                fishId: fishId
                             }
                         },
                         dataType: 'json',
                         success: function (result) {
                             var content = '';
                             var total = result.total;
+                            if (total == 0) {
+                                me.lock();
+                                me.noData();
+                                me.resetload();
+                                return;
+                            }
                             var length = result.data.length;
                             var data = result.data;
                             counter++;
@@ -445,12 +479,24 @@
                     data: {
                         start: pageStart,
                         length: num,
-                        params: {provinceId: provinceId, cityId: cityId, districtId: districtId, pondTypeId: pondTypeId}
+                        params: {
+                            provinceId: provinceId,
+                            cityId: cityId,
+                            districtId: districtId,
+                            pondTypeId: pondTypeId,
+                            fishId: fishId
+                        }
                     },
                     dataType: 'json',
                     success: function (result) {
                         var content = '';
                         var total = result.total;
+                        if (total == 0) {
+                            me.lock();
+                            me.noData();
+                            me.resetload();
+                            return;
+                        }
                         var length = result.data.length;
                         var data = result.data;
                         counter++;
