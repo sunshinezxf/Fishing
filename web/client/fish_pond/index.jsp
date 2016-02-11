@@ -92,6 +92,7 @@
         }
 
         function init_district_list(obj) {
+            cityId = obj;
             hidedistrict();
             var require_district_url = "${path.concat('/division/')}" + obj + "/district";
             $.get(require_district_url, function (result) {
@@ -101,10 +102,12 @@
                     var data = result.data;
                     var district = document.createElement("li");
                     district.innerHTML = "全市";
+                    district.setAttribute("onclick", "city_wide()");
                     district_container.append(district);
                     for (var i = 0; i < data.length; i++) {
                         var district = document.createElement("li");
                         district.innerHTML = data[i].districtName;
+                        district.setAttribute("onclick", "district_wide('" + data[i].districtId + "')");
                         district_container.append(district);
                     }
                 }
@@ -114,6 +117,7 @@
         }
 
         function init_city_list(obj) {
+            provinceId = obj;
             hidecity();
             var require_city_url = "${path.concat('/division/')}" + obj + "/city";
             $.get(require_city_url, function (result) {
@@ -123,6 +127,7 @@
                     var data = result.data;
                     var city = document.createElement("li");
                     city.innerHTML = "全省";
+                    city.setAttribute("onclick", "province_wide()");
                     city_container.append(city);
                     for (var i = 0; i < data.length; i++) {
                         var city = document.createElement("li");
@@ -137,6 +142,9 @@
 
 
         function nation_wide() {
+            provinceId = '';
+            cityId = '';
+            districtId = '';
             $(".lists").hide();
             hidepondeject();
             hidefisheject();
@@ -144,9 +152,12 @@
                 $(".lists").show();
                 hideregioneject();
             }
+            list_reload();
         }
 
         function province_wide() {
+            cityId = '';
+            districtId = '';
             $(".lists").hide();
             hidepondeject();
             hidefisheject();
@@ -154,7 +165,31 @@
                 $(".lists").show();
                 hideregioneject();
             }
+            list_reload();
+        }
 
+        function city_wide() {
+            districtId = '';
+            $(".lists").hide();
+            hidepondeject();
+            hidefisheject();
+            if ($(".region-eject").hasClass('display')) {
+                $(".lists").show();
+                hideregioneject();
+            }
+            list_reload();
+        }
+
+        function district_wide(obj) {
+            districtId = obj;
+            $(".lists").hide();
+            hidepondeject();
+            hidefisheject();
+            if ($(".region-eject").hasClass('display')) {
+                $(".lists").show();
+                hideregioneject();
+            }
+            list_reload();
         }
 
         $(document).ready(function () {
@@ -288,11 +323,84 @@
     var cityId = '';
     var districtId = '';
 
-    function reload() {
-        counter = 0;
-        pageStart = 0;
-        pageEnd = 0;
-        $('.lists').empty();
+    function list_reload() {
+        var timer;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            $('.lists').empty();
+            $('.dropload-down').remove();
+            counter = 0;
+            pageStart = 0;
+            pageEnd = 0;
+            $('.content').dropload({
+                scrollArea: window,
+                loadDownFn: function (me) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "${path.concat('/fishzone/index')}",
+                        data: {
+                            start: pageStart,
+                            length: num,
+                            params: {provinceId: provinceId, cityId: cityId, districtId: districtId}
+                        },
+                        dataType: 'json',
+                        success: function (result) {
+                            var content = '';
+                            var total = result.total;
+                            var length = result.data.length;
+                            var data = result.data;
+                            counter++;
+                            pageEnd = num * counter;
+                            pageStart = pageEnd;
+                            for (var i = 0; i < length; i++) {
+                                var url = "http://www.njuat.com/fishzone/" + data[i].fishPondId;
+                                content += "<a class='item opacity' href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=" + encodeURIComponent(url) + "&response_type=code&scope=snsapi_base&state=view#wechat_redirect'>"
+                                        + "<div class='media'>"
+                                        + "<div class='media-left'>"
+                                        + "<img class='img-rounded' src='${path}" + data[i].thumbnail + "' />"
+                                        + "</div>"
+                                        + "<div class='media-body'>"
+                                        + "<h3>" + data[i].fishPondName + "</h3>"
+                                        + "<div style='margin-top: 0.2em; margin-bottom: 0.3em'>";
+                                var fishes = data[i].fishes;
+                                for (var f = 0; f < fishes.length; f++) {
+                                    content += "<span class='label label-info'>" + fishes[f].fishName + "</span> ";
+                                }
+                                content += "</div>";
+                                if (data[i].district != null) {
+                                    content += "<label>";
+                                    content += data[i].district.city.province.provinceName + data[i].district.city.cityName + data[i].district.districtName;
+                                    content += "</label>";
+                                }
+                                content += "</div>"
+                                        + "<div class='media-right'>"
+                                        + "<span class='date'>" + distance(data[i].longitude, data[i].latitude) + "</span>"
+                                        + "</div>"
+                                        + '</div>'
+                                        + '</a>';
+                                if ((counter - 1) * num + i + 1 >= total) {
+                                    // 锁定
+                                    me.lock();
+                                    // 无数据
+                                    me.noData();
+                                    break;
+                                }
+                            }
+                            // 为了测试，延迟1秒加载
+                            setTimeout(function () {
+                                $('.lists').append(content);
+                                // 每次数据加载完，必须重置
+                                me.resetload();
+                            }, 500);
+                        },
+                        error: function (xhr, type) {
+                            // 即使加载出错，也得重置
+                            me.resetload();
+                        }
+                    });
+                }
+            });
+        });
     }
 
     $(function () {
