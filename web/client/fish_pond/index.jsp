@@ -140,7 +140,6 @@
             });
         }
 
-
         function nation_wide() {
             provinceId = '';
             cityId = '';
