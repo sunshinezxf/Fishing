@@ -1,6 +1,5 @@
 package fishing.sunshine.dao.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import fishing.sunshine.dao.BaseDao;
 import fishing.sunshine.dao.FishPondDao;
 import fishing.sunshine.model.*;
@@ -165,29 +164,41 @@ public class FishPondDaoImpl extends BaseDao implements FishPondDao {
         FishPond pond = new FishPond();
         Map args = param.getParams();
         ResultData total;
-        if (!StringUtils.isEmpty(args.get("provinceId")) || !StringUtils.isEmpty(args.get("cityId")) || !StringUtils.isEmpty(args.get("districtId"))) {
-            List<String> divisionList = new ArrayList<String>();
-            if (!StringUtils.isEmpty(args.get("districtId"))) {
-                divisionList.add((String) args.get("districtId"));
-            } else if (!StringUtils.isEmpty(args.get("cityId"))) {
-                Map<String, String> division = new HashMap<String, String>();
-                division.put("cityId", (String) args.get("cityId"));
-                divisionList = sqlSession.selectList("district.queryDistrictIds", division);
-            } else if (!StringUtils.isEmpty(args.get("provinceId"))) {
-                Map<String, String> division = new HashMap<String, String>();
-                division.put("provinceId", (String) args.get("provinceId"));
-                divisionList = sqlSession.selectList("district.queryDistrictIds", division);
+        if (!StringUtils.isEmpty(args.get("provinceId")) || !StringUtils.isEmpty(args.get("cityId")) || !StringUtils.isEmpty(args.get("districtId")) || !StringUtils.isEmpty(args.get("pondTypeId"))) {
+            if (!StringUtils.isEmpty(args.get("provinceId")) || !StringUtils.isEmpty(args.get("cityId")) || !StringUtils.isEmpty(args.get("districtId"))) {
+                List<String> divisionList = new ArrayList<String>();
+                if (!StringUtils.isEmpty(args.get("districtId"))) {
+                    divisionList.add((String) args.get("districtId"));
+                } else if (!StringUtils.isEmpty(args.get("cityId"))) {
+                    Map<String, String> division = new HashMap<String, String>();
+                    division.put("cityId", (String) args.get("cityId"));
+                    divisionList = sqlSession.selectList("district.queryDistrictIds", division);
+                } else if (!StringUtils.isEmpty(args.get("provinceId"))) {
+                    Map<String, String> division = new HashMap<String, String>();
+                    division.put("provinceId", (String) args.get("provinceId"));
+                    divisionList = sqlSession.selectList("district.queryDistrictIds", division);
+                }
+                if (!StringUtils.isEmpty(divisionList)) {
+                    List<String> fishPondIds = sqlSession.selectList("pond.queryFishPondIdsByDivision", divisionList);
+                    if (!StringUtils.isEmpty(fishPondIds) && fishPondIds.size() > 0) {
+                        ids.addAll(fishPondIds);
+                    }
+                }
             }
-            if (!StringUtils.isEmpty(divisionList)) {
-                List<String> fishPondIds = sqlSession.selectList("pond.queryFishPondIdsByDivision", divisionList);
-                if (!StringUtils.isEmpty(fishPondIds) && fishPondIds.size() > 0) {
+            if (!StringUtils.isEmpty(args.get("pondTypeId"))) {
+                logger.debug("pondTypeId: " + args.get("pondTypeId"));
+                List<String> pondTypeList = new ArrayList<String>();
+                pondTypeList.add((String) args.get("pondTypeId"));
+                List<String> fishPondIds = sqlSession.selectList("pond.queryFishPondIdsByPondType", pondTypeList);
+                if (ids.size() > 0) {
+                    ids.retainAll(fishPondIds);
+                } else {
                     ids.addAll(fishPondIds);
                 }
             }
             String[] idsArray = new String[ids.size()];
             ids.toArray(idsArray);
             total = queryFishPond(idsArray);
-            logger.debug(JSONObject.toJSONString(total));
             page.setTotal(((List<FishPond>) total.getData()).size());
             if (total.getResponseCode() != ResponseCode.RESPONSE_OK) {
                 result.setResponseCode(ResponseCode.RESPONSE_ERROR);

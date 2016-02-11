@@ -310,4 +310,15 @@
             #{item}
         </foreach>
     </select>
+
+    <select id="queryFishPondIdsByPondType" resultType="java.lang.String">
+        SELECT fztm.fish_zone_id
+        FROM fish_zone_type_mapping fztm
+        WHERE 1 = 1
+        AND fztm.del_flag = 0
+        AND fztm.fish_zone_type_id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

@@ -191,6 +191,30 @@
             list_reload();
         }
 
+        function all_pond_type() {
+            pondTypeId = '';
+            $(".lists").hide();
+            hideregioneject();
+            hidefisheject();
+            if ($(".pond-eject").hasClass('display')) {
+                $(".lists").show();
+                hidepondeject();
+            }
+            list_reload();
+        }
+
+        function pond_type(obj) {
+            pondTypeId = obj;
+            $(".lists").hide();
+            hideregioneject();
+            hidefisheject();
+            if ($(".pond-eject").hasClass('display')) {
+                $(".lists").show();
+                hidepondeject();
+            }
+            list_reload();
+        }
+
         $(document).ready(function () {
             var province_container = $(".region-province");
             province_container.empty();
@@ -218,10 +242,12 @@
                     var data = result.data;
                     var pond = document.createElement("li");
                     pond.innerHTML = "所有类型";
+                    pond.setAttribute("onclick", "all_pond_type()");
                     pond_container.append(pond);
                     for (var i = 0; i < data.length; i++) {
                         var pond = document.createElement("li");
                         pond.innerHTML = data[i].pondTypeName;
+                        pond.setAttribute("onclick", "pond_type('" + data[i].pondTypeId + "')")
                         pond_container.append(pond);
                     }
                 }
@@ -321,6 +347,7 @@
     var provinceId = '';
     var cityId = '';
     var districtId = '';
+    var pondTypeId = '';
 
     function list_reload() {
         var timer;
@@ -340,7 +367,12 @@
                         data: {
                             start: pageStart,
                             length: num,
-                            params: {provinceId: provinceId, cityId: cityId, districtId: districtId}
+                            params: {
+                                provinceId: provinceId,
+                                cityId: cityId,
+                                districtId: districtId,
+                                pondTypeId: pondTypeId
+                            }
                         },
                         dataType: 'json',
                         success: function (result) {
@@ -413,7 +445,7 @@
                     data: {
                         start: pageStart,
                         length: num,
-                        params: {provinceId: provinceId, cityId: cityId, districtId: districtId}
+                        params: {provinceId: provinceId, cityId: cityId, districtId: districtId, pondTypeId: pondTypeId}
                     },
                     dataType: 'json',
                     success: function (result) {
