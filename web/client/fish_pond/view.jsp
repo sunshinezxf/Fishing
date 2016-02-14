@@ -169,6 +169,7 @@
                 var url = "${path.concat('/comment/create')}";
                 var comment = $("#summernote").code();
                 var parent = $("#insert-parent").val();
+                $("#summernote").code("");
                 $.post(url, {
                     openId: openId,
                     fishPondId: fishPondId,

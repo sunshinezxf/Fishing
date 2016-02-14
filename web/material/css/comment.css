@@ -59,3 +59,8 @@ a {
     color: rgba(0, 0, 0, .87);
     line-height: 1.3;
 }
+
+.ui.comments .comment .comments {
+    margin: 0 0 .5em .5em;
+    padding: 1em 0 1em 1em
+}
