@@ -15,13 +15,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="${path.concat('/material/plugins/weui/weui.min.css')}"/>
     <link rel="stylesheet" href="${path.concat('/material/css/fishpond.css')}"/>
-    <link rel="stylesheet" href="${path.concat('/material/plugins/semantic-ui/semantic.min.css')}">
+    <link rel="stylesheet" href="${path.concat('/material/css/comment.css')}"/>
+    <link rel="stylesheet" href="${path.concat('/material/plugins/summernote-master/dist/summernote.css')}"/>
+    <link rel="stylesheet" href="${path.concat('/material/plugins/Font-Awesome-master/css/font-awesome.min.css')}"/>
     <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript"
+            src="${path.concat('/material/plugins/jquery/jquery-migrate-1.2.1.min.js')}"></script>
+    <script type="text/javascript"
             src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="${path.concat('/material/plugins/semantic-ui/semantic.min.js')}"></script>
+    <script type="text/javascript"
+            src="${path.concat('/material/plugins/summernote-master/dist/summernote.min.js')}"></script>
+    <script type="text/javascript"
+            src="${path.concat('/material/plugins/summernote-master/lang/summernote-zh-CN.js')}"></script>
     <script type="text/javascript" src="${path.concat('/material/js/date.js')}"></script>
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <title>${fishPond.fishPondName}</title>
@@ -82,6 +88,12 @@
             var fishPondId = "${fishPond.fishPondId}";
             var openId = "${openId}";
 
+            $("#cancel-fishpond-comment").click(function () {
+                $("#fishpond-comment").fadeOut();
+                $("#comment-fishpond").fadeIn();
+                $("#comment-list").fadeIn();
+            });
+
             function load_comment() {
                 var comment_list_url = "${path.concat('/comment/')}" + fishPondId;
                 $.get(comment_list_url, function (result) {
@@ -109,7 +121,7 @@
                         content_html += "</div>"; //text div end
                         if (result[i].wechat != openId) {
                             content_html += "<div class=\"actions\">"; //action div start
-                            content_html += "<a class=\"reply comment-list-item\" data-toggle=\"modal\" data-target=\"#myModal\" onclick='modal(\"" + result[i].commentId + "\")'>回复";
+                            content_html += "<a class=\"reply comment-list-item\" onclick='modal(\"" + result[i].commentId + "\")'>回复";
                             content_html += "</a>";
                             content_html += "</div>"; //action div end
                         }
@@ -137,7 +149,7 @@
                                 content_html += "</div>"; //text div end
                                 if (result[i].commentList[j].wechat != openId) {
                                     content_html += "<div class=\"actions\">"; //action div start
-                                    content_html += "<a class=\"reply comment-list-item\" data-toggle=\"modal\" data-target=\"#myModal\" onclick='modal(\"" + result[i].commentId + "\")'>回复";
+                                    content_html += "<a class=\"reply comment-list-item\" onclick='modal(\"" + result[i].commentId + "\")'>回复";
                                     content_html += "</a>";
                                     content_html += "</div>"; //action div end
                                 }
@@ -155,7 +167,7 @@
 
             $("#submit-fishpond-comment").click(function () {
                 var url = "${path.concat('/comment/create')}";
-                var comment = $("#comment-content").val();
+                var comment = $("#summernote").code();
                 var parent = $("#insert-parent").val();
                 $.post(url, {
                     openId: openId,
@@ -170,11 +182,14 @@
 
         function modal(parent_id) {
             $("#insert-parent").attr("value", parent_id);
+            $("#comment-fishpond").fadeOut();
+            $("#comment-list").fadeOut();
+            $("#fishpond-comment").fadeIn();
         }
     </script>
 </head>
-<body ontouchstart>
-<div class="container">
+<body>
+<div id="fishpond" class="container">
     <c:if test="${not empty fishPond.thumbnail}">
         <div class="row">
             <img src="${path}${fishPond.thumbnail}" class="img-responsive" width="100%" height="auto"/>
@@ -233,52 +248,34 @@
         <div class="ui comments">
             <h4 class="ui header">评论区</h4>
 
-            <div id="comment-fishpond" class="ui blue labeled submit icon button" data-toggle="modal"
-                 data-target="#myModal"><i class="icon edit"></i>
-                评论
-            </div>
+            <button type="button" id="comment-fishpond" class="btn btn-primary" onclick="modal()">评论
+                <i class="glyphicon glyphicon-pencil"></i>
+            </button>
 
             <div id="comment-list" style="margin-top: 0.5em; margin-bottom: 0.5em;"></div>
-
-        </div>
-    </div>
-</div>
-
-<!-- 模态框（Modal） -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close"
-                        data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-                <h4 class="modal-title" id="myModalLabel">
-                    评论
-                </h4>
-            </div>
-            <div class="modal-body">
+            <div id="fishpond-comment" class="row container">
                 <form id="insert-comment-form" class="ui reply form">
                     <input type="hidden" id="insert-parent" name="parentId" value=""/>
 
-                    <div class="field">
-                        <textarea id="comment-content" placeholder="说说你对此钓场的看法吧"></textarea>
+                    <div id="summernote"></div>
+                    <div class="form-inline" style="margin-top: 0.3em">
+                        <button type="button" id="cancel-fishpond-comment" class="btn btn-success">取消</button>
+                        <button type="submit" id="submit-fishpond-comment" class="btn btn-primary">发表</button>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">取消
-                </button>
-                <button type="button" id="submit-fishpond-comment" class="btn btn-primary" data-dismiss="modal">
-                    评论
-                </button>
-            </div>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal -->
 </div>
 </body>
+<script>
+    $(document).ready(function () {
+        $("#fishpond-comment").hide();
+        $("#summernote").summernote({
+            lang: "zh-CN",
+            height: 200,
+            toolbar: [['insert', ['picture']]]
+        });
+    });
+</script>
 </html>
