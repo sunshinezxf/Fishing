@@ -53,4 +53,20 @@ public class CommentServiceImpl implements CommentService {
         }
         return result;
     }
+
+    @Override
+    public ResultData queryTopic() {
+        ResultData result = new ResultData();
+        ResultData query = commentDao.queryTopic();
+        result.setResponseCode(query.getResponseCode());
+        if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            result.setData(query.getData());
+            if (((List<Comment>) query.getData()).size() == 0) {
+                result.setResponseCode(ResponseCode.RESPONSE_NULL);
+            }
+        } else {
+            result.setDescription(query.getDescription());
+        }
+        return result;
+    }
 }

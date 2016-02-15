@@ -47,6 +47,15 @@
         ORDER BY create_time DESC
     </select>
 
+    <select id="queryTopic" resultMap="commentVo">
+        SELECT fish_zone_comment_id, fish_man_id, fish_zone_comment_content, fish_zone_comment_parent, create_time
+        FROM fish_zone_comment
+        WHERE 1 = 1
+        AND del_flag = 0
+        AND (fish_zone_comment_parent is NULL or fish_zone_comment_parent = '')
+        ORDER BY create_time DESC
+    </select>
+
     <select id="queryFishPond" parameterType="java.util.HashMap" resultMap="fishPondVo">
         SELECT fz.fish_zone_id, fz.fish_zone_name
         FROM fish_zone fz, fish_zone_comment fzc

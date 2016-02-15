@@ -10,4 +10,6 @@ public interface CommentDao {
     ResultData addComment(Comment comment);
 
     ResultData queryComment(Comment comment);
+
+    ResultData queryTopic();
 }

@@ -48,4 +48,19 @@ public class CommentDaoImpl extends BaseDao implements CommentDao {
             return result;
         }
     }
+
+    @Override
+    public ResultData queryTopic() {
+        ResultData result = new ResultData();
+        try {
+            List<Comment> list = sqlSession.selectList("comment.queryTopic");
+            result.setData(list);
+        } catch (Exception e) {
+            logger.debug(e.getMessage());
+            result.setResponseCode(ResponseCode.RESPONSE_ERROR);
+            result.setDescription(e.getMessage());
+        } finally {
+            return result;
+        }
+    }
 }

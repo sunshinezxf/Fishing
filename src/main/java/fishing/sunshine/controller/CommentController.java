@@ -1,7 +1,5 @@
 package fishing.sunshine.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import fishing.sunshine.form.CommentForm;
 import fishing.sunshine.model.Comment;
 import fishing.sunshine.model.FishPond;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +51,17 @@ public class CommentController {
         fishPond.setFishPondId(fishPondId);
         comment.setFishPond(fishPond);
         ResultData content = commentService.queryComment(comment);
+        if (content.getResponseCode() == ResponseCode.RESPONSE_OK) {
+            list = (List<Comment>) content.getData();
+        }
+        return list;
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET, value = "/topic")
+    public List<Comment> topic() {
+        List<Comment> list = new ArrayList<Comment>();
+        ResultData content = commentService.queryTopic();
         if (content.getResponseCode() == ResponseCode.RESPONSE_OK) {
             list = (List<Comment>) content.getData();
         }
