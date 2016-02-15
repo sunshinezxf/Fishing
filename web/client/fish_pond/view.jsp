@@ -280,7 +280,9 @@
             height: 200,
             toolbar: [['insert', ['picture']]],
             onImageUpload: function (files, editor, welEditable) {
-                upload_image(files[0], editor, welEditable);
+                for (var i = 0; i < files.length; i++) {
+                    upload_image(files[i], editor, welEditable);
+                }
             }
         });
     });
