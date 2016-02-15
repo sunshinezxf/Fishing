@@ -252,9 +252,8 @@
     <div class="pond-review cell">
 
         <div class="ui comments">
-            <h4 class="ui header">评论区</h4>
 
-            <button type="button" id="comment-fishpond" class="btn btn-primary" onclick="modal()">评论
+            <button type="button" id="comment-fishpond" class="btn btn-primary" onclick="modal()">渔汛
                 <i class="glyphicon glyphicon-pencil"></i>
             </button>
 
