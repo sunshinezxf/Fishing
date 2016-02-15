@@ -1,6 +1,5 @@
 package fishing.sunshine.dao.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import fishing.sunshine.dao.BaseDao;
 import fishing.sunshine.dao.CommentDao;
 import fishing.sunshine.model.Comment;
@@ -38,7 +37,6 @@ public class CommentDaoImpl extends BaseDao implements CommentDao {
     @Override
     public ResultData queryComment(Comment comment) {
         ResultData result = new ResultData();
-        logger.debug(JSONObject.toJSONString(comment));
         try {
             List<Comment> list = sqlSession.selectList("comment.queryComment", comment);
             result.setData(list);

@@ -170,13 +170,16 @@
                 var comment = $("#summernote").code();
                 var parent = $("#insert-parent").val();
                 $("#summernote").code("");
+                $("#fishpond-comment").fadeOut();
+                $("#comment-fishpond").fadeIn();
+                $("#comment-list").fadeIn();
                 $.post(url, {
                     openId: openId,
                     fishPondId: fishPondId,
                     comment: comment,
                     parentId: parent
                 }, function () {
-                    load_comment();
+                    setTimeout(load_comment(), 1000);
                 });
             });
         });
@@ -255,15 +258,15 @@
 
             <div id="comment-list" style="margin-top: 0.5em; margin-bottom: 0.5em;"></div>
             <div id="fishpond-comment" class="row container">
-                <form id="insert-comment-form" class="ui reply form">
+                <div id="insert-comment-form" class="ui reply form">
                     <input type="hidden" id="insert-parent" name="parentId" value=""/>
 
                     <div id="summernote"></div>
                     <div class="form-inline" style="margin-top: 0.3em">
                         <button type="button" id="cancel-fishpond-comment" class="btn btn-success">取消</button>
-                        <button type="submit" id="submit-fishpond-comment" class="btn btn-primary">发表</button>
+                        <button type="button" id="submit-fishpond-comment" class="btn btn-primary">发表</button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -275,8 +278,31 @@
         $("#summernote").summernote({
             lang: "zh-CN",
             height: 200,
-            toolbar: [['insert', ['picture']]]
+            toolbar: [['insert', ['picture']]],
+            onImageUpload: function (files, editor, welEditable) {
+                upload_image(files[0], editor, welEditable);
+            }
         });
     });
+
+    function upload_image(file, editor, welEditable) {
+        var url = "${path.concat('/picture/upload')}";
+        var data = new FormData();
+        data.append("picture", file);
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: url,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                if (result.responseCode == "RESPONSE_OK") {
+                    var url = "${path}" + result.data;
+                    $('#summernote').summernote('editor.insertImage', url);
+                }
+            }
+        });
+    }
 </script>
 </html>
