@@ -169,7 +169,7 @@
                 var url = "${path.concat('/comment/create')}";
                 var comment = $("#summernote").code();
                 var reg = /(<\s*img[^>]*)style[=\s\"\']+[^\"\']*[\"\']?([^>]*>)/gi;
-                comment = comment.replace(reg, "$1$2");
+                comment = comment.replace(reg, "$1 class='img-responsive center-block' $2");
                 var parent = $("#insert-parent").val();
                 $("#summernote").code("");
                 $("#fishpond-comment").fadeOut();

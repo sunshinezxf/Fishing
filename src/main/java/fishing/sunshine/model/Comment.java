@@ -25,7 +25,7 @@ public class Comment extends SunshineEntity {
         this();
         this.wechat = form.getOpenId();
         this.fishPond.setFishPondId(form.getFishPondId());
-        this.comment = form.getComment().replaceAll("<img", "<img class='img-responsive center-block'");
+        this.comment = form.getComment();
         this.parentId = form.getParentId();
     }
 
