@@ -168,6 +168,8 @@
             $("#submit-fishpond-comment").click(function () {
                 var url = "${path.concat('/comment/create')}";
                 var comment = $("#summernote").code();
+                var reg = /(<\s*img[^>]*)style[=\s\"\']+[^\"\']*[\"\']?([^>]*>)/gi;
+                comment = comment.replace(reg, "$1$2");
                 var parent = $("#insert-parent").val();
                 $("#summernote").code("");
                 $("#fishpond-comment").fadeOut();

@@ -1,7 +1,6 @@
 package fishing.sunshine.model;
 
 import fishing.sunshine.form.CommentForm;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ public class Comment extends SunshineEntity {
         this();
         this.wechat = form.getOpenId();
         this.fishPond.setFishPondId(form.getFishPondId());
-        this.comment = form.getComment();
+        this.comment = form.getComment().replaceAll("<img", "<img class='img-responsive center-block'");
         this.parentId = form.getParentId();
     }
 
