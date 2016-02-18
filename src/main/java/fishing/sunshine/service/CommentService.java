@@ -1,6 +1,7 @@
 package fishing.sunshine.service;
 
 import fishing.sunshine.model.Comment;
+import fishing.sunshine.pagination.MobilePageParam;
 import fishing.sunshine.util.ResultData;
 
 /**
@@ -11,5 +12,5 @@ public interface CommentService {
 
     ResultData queryComment(Comment comment);
 
-    ResultData queryTopic();
+    ResultData queryTopic(MobilePageParam param);
 }

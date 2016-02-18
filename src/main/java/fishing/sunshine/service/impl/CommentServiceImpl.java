@@ -2,6 +2,7 @@ package fishing.sunshine.service.impl;
 
 import fishing.sunshine.dao.CommentDao;
 import fishing.sunshine.model.Comment;
+import fishing.sunshine.pagination.MobilePageParam;
 import fishing.sunshine.service.CommentService;
 import fishing.sunshine.util.IDGenerator;
 import fishing.sunshine.util.ResponseCode;
@@ -55,15 +56,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public ResultData queryTopic() {
+    public ResultData queryTopic(MobilePageParam param) {
         ResultData result = new ResultData();
-        ResultData query = commentDao.queryTopic();
+        ResultData query = commentDao.queryTopic(param);
         result.setResponseCode(query.getResponseCode());
         if (query.getResponseCode() == ResponseCode.RESPONSE_OK) {
             result.setData(query.getData());
-            if (((List<Comment>) query.getData()).size() == 0) {
-                result.setResponseCode(ResponseCode.RESPONSE_NULL);
-            }
         } else {
             result.setDescription(query.getDescription());
         }
