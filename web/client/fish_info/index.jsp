@@ -26,7 +26,7 @@
     <c:if test="${not empty configuration}">
         <script type="text/javascript">
             wx.config({
-                debug: true,
+                debug: false,
                 appId: '${appId}',
                 timestamp: '${configuration.timestamp}',
                 nonceStr: '${configuration.nonceStr}',
@@ -91,6 +91,89 @@
         // dropload
         $('.content').dropload({
             scrollArea: window,
+            domUp: {
+                domClass: 'dropload-up',
+                domRefresh: '<div class="dropload-refresh">↓下拉刷新</div>',
+                domUpdate: '<div class="dropload-update">↑释放更新</div>',
+                domLoad: '<div class="dropload-load"><span class="loading"></span>加载中</div>'
+            },
+            domDown: {
+                domClass: 'dropload-down',
+                domRefresh: '<div class="dropload-refresh">↑上拉加载更多</div>',
+                domLoad: '<div class="dropload-load"><span class="loading"></span>加载中</div>',
+                domNoData: '<div class="dropload-noData">没有更多了</div>'
+            },
+            loadUpFn: function (me) {
+                $('.lists').empty();
+                counter = 0;
+                pageStart = 0;
+                $.ajax({
+                    type: 'POST',
+                    url: "${path.concat('/comment/topic')}",
+                    data: {
+                        start: pageStart,
+                        length: num,
+                        params: {}
+                    },
+                    dataType: 'json',
+                    success: function (result) {
+                        var content = '';
+                        var total = result.total;
+                        if (total == 0) {
+                            me.lock();
+                            me.noData();
+                            me.resetload();
+                            return;
+                        }
+                        var length = result.data.length;
+                        var data = result.data;
+                        counter++;
+                        pageEnd = num * counter;
+                        pageStart = pageEnd;
+                        var reg = /(<\s*img[^>]*)class[=\s\"\']+[^\"\']*[\"\']?([^>]*>)/gi;
+                        for (var i = 0; i < length; i++) {
+                            var description = data[i].comment.replace(reg, "<div class='col-xs-2 col-md-2' style='padding-left: 0; margin: 0 0.5em'>$1 class='img-rounded' $2</div>");
+                            var url = "http://www.njuat.com/fishzone/" + data[i].fishPond.fishPondId;
+                            content += "<a class='item opacity' href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=" + encodeURIComponent(url) + "&response_type=code&scope=snsapi_base&state=view#wechat_redirect'>"
+                                    + "<div class='media'>"
+                                    + "<div class='media-left'>"
+                                    + "<h4 class='media-heading label label-info' style='font-size: 100%; line-height: 2'>渔讯</h4>&nbsp;&nbsp;"
+                                    + "</div>"
+                                    + "<div class='media-body'>"
+                                    + "<h4 class='media-heading'>"
+                                    + data[i].fishPond.fishPondName
+                                    + "<small style='margin-left: 2em'><i class='glyphicon glyphicon-calendar'></i>"
+                                    + (new Date(data[i].createAt)).format("yyyy-MM-dd")
+                                    + "</small>"
+                                    + "</h4>渔讯概览"
+                                    + description
+                                    + "</div>"
+                                    + "<div class='media-right'>"
+                                    + "<span class='date'>&gt;&gt;</span>"
+                                    + "</div>"
+                                    + "</div>"
+                                    + "</a>";
+                            if ((counter - 1) * num + i + 1 >= total) {
+                                // 锁定
+                                me.lock();
+                                // 无数据
+                                me.noData();
+                                break;
+                            }
+                        }
+                        // 为了测试，延迟1秒加载
+                        setTimeout(function () {
+                            $('.lists').append(content);
+                            // 每次数据加载完，必须重置
+                            me.resetload();
+                        }, 500);
+                    },
+                    error: function (xhr, type) {
+                        // 即使加载出错，也得重置
+                        me.resetload();
+                    }
+                });
+            },
             loadDownFn: function (me) {
                 $.ajax({
                     type: 'POST',
